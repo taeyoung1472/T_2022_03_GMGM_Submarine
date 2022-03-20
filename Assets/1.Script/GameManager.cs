@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [SerializeField] private GameObject player;
     [SerializeField] private RadarManager radarManager;
     [SerializeField] private User user;
     public User UserInfo { get { return user; } }
     public RadarManager RadarManager { get { return radarManager; } }
+    public GameObject Player { get { return player; } }
     private void Awake()
     {
         Instance = this;
