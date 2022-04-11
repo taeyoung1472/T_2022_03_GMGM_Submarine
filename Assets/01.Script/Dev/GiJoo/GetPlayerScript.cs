@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetPlayerScript : MonoBehaviour
+[CreateAssetMenu(menuName = "스크립트 에이블/Gijoo/플레이어 스탯")]
+public class GetPlayerScript : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private float playerMaxHp;//플레이어의 최대 HP
+    [SerializeField]
+    private float playerMaxMental;//플레이어의 최대 정신력
+    [SerializeField]
+    private float playerSpeed;//플레이어의 이동 속도
+    [SerializeField]
+    private float playerHandlingSpeed;//플레이어의 행동 속도
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float PMHp { get { return playerMaxHp;} set { playerMaxHp = value; } }
+    public float PMMp { get { return playerMaxMental; } set { playerMaxMental = value; } }
+    public float PSpd { get { return playerSpeed; } set { playerSpeed = value; } }
+    public float PMHS { get { return playerHandlingSpeed; } set { playerHandlingSpeed = value; } }
 }
