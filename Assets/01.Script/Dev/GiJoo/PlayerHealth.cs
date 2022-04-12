@@ -5,6 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
+    enum WherePos
+    {
+         arms = 0,
+         legs,
+         head,
+         stomach
+    }
+
     [Header("플레이어 기본 정보")]
     [SerializeField]
     private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
@@ -27,9 +35,12 @@ public class PlayerHealth : MonoBehaviour
         playerMentalNow = playerStatusData.PMMp;//플레이어의 현재 정신력을 Data 내에 저장된 최대 정신력으로 초기화
     }
 
-    private void Update()
+
+    public void Damaged(float damage) //대미지를 입었을 때
     {
-        HpCheck(playerHpNow);//현재 HP 체크하는 코드, 추후 맞을 때마다 체크하는 걸로 변경 예정
+        playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
+        HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
+        WoundPhysicCheck();//중상인지 경상인지 체크
     }
 
     public void HpCheck(float _playerHpNow) //현재 HP 체크하는 코드
@@ -51,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
         {
             isMinored = false; //경상이 False가 됨
             StopCoroutine(MinorWoundPhysic());//경상일 때의 코루틴을 중단함
+            SeriousWoundPhysicPos(); //중상 부위 체크
             StartCoroutine(SeriousWoundPhysic());//중상일 때의 코루틴을 실행함
         }
         else if (isMinored) //경상이 True고 중상이 False라면
@@ -67,7 +79,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
     }
-
+    
     public IEnumerator MinorWoundPhysic() //경상(외상)
     {
         while (true) //경상 코루틴이 실행중인 동안 계속
@@ -98,16 +110,34 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void SeriousWoundPhysicPos() //중상 위치
+    {
+        float where = Random.Range(0, 3); //확률, 각 각 동일하게 25%
+
+        switch(where)
+        {
+            case (float)WherePos.arms: break; // 핸들링 속도 줄어들게 하기
+
+            case (float)WherePos.legs: break; // 못 뛰게 하기, 근데 아직 뛰는 코드 구현 안됐으니까 이속 느리게 하기
+
+            case (float)WherePos.head: break; // 둘 다
+
+            case (float)WherePos.stomach: break; // 둘 다
+
+            default: break;
+        }
+
+    }
 
     public void PlayerWoundInfectionRandomCheck() //상처 감염 체크 코드
     {
         if (Random.Range(0, 99) >= playerInfectionPercent) //0부터 99의 수 중에 하나를 랜덤으로 고르고, 그 수가 확률보다 클 때 상처 감염이 발생함
         {
-            WoundInfection();
+            WoundInfection1Step(); //1단계의 상처 감염 발생
         }
     }
 
-    public void WoundInfection() //상처감염
+    public void WoundInfection1Step() //상처감염 1단계
     {
         playerStatusData.PSpd -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
         playerStatusData.PMHS -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
