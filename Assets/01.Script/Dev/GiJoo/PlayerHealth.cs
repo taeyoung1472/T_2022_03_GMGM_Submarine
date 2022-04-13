@@ -28,6 +28,8 @@ public class PlayerHealth : MonoBehaviour
 
     public float playerHpNow;//플레이어의 현재 Hp
     public float playerMentalNow;//플레이어의 현재 정신력
+    public float playerSpeedNow;//플레이어의 현재 이동 속도
+    public float playerHandlingNow;//플레이어의 현재 작업 속도
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
     private float playerBleedingCount;//플레이어의 과다출혈 스택
@@ -42,6 +44,8 @@ public class PlayerHealth : MonoBehaviour
     {
         playerHpNow = playerStatusData.PMHp;//플레이어의 현재 Hp를 Data 내에 저장된 최대 Hp로 초기화
         playerMentalNow = playerStatusData.PMMp;//플레이어의 현재 정신력을 Data 내에 저장된 최대 정신력으로 초기화
+        playerSpeedNow = playerStatusData.PSpd;//플레이어의 현재 이동 속도를 Data 내에 저장된 이동속도로 초기화
+        playerHandlingNow = playerStatusData.PMHS;//플레이어의 현재 작업 속도를 데이터 내에 저장된 이동속도로 초기화
     }
 
 
@@ -126,22 +130,22 @@ public class PlayerHealth : MonoBehaviour
         switch(where)
         {
             case (float)WherePos.arms:
-                playerStatusData.PMHS *= 0.95f;
-                break; // 핸들링 속도 줄어들게 하기, 정확한 수치가 정해지지 않아서 5% 깎게 만듦
+                playerHandlingNow -= playerStatusData.PMHS * 0.1f;
+                break; // 작업 속도 10% 줄어들게 하기
 
             case (float)WherePos.legs:
-                playerStatusData.PSpd *= 0.95f;
+                playerSpeedNow -= playerStatusData.PSpd * 0.05f;
                 break; // 못 뛰게 하기, 근데 아직 뛰는 코드 구현 안됐으니까 이속 느리게 하기
 
             case (float)WherePos.head:
-                playerStatusData.PMHS *= 0.95f;
-                playerStatusData.PSpd *= 0.95f;
-                break; // 둘 다
+                playerHandlingNow -= playerStatusData.PMHS * 0.05f;
+                playerSpeedNow -= playerStatusData.PSpd * 0.05f;
+                break; // 두 디버프 다 적용 됨
 
             case (float)WherePos.stomach:
-                playerStatusData.PMHS *= 0.95f;
-                playerStatusData.PSpd *= 0.95f; 
-                break; // 둘 다
+                playerHandlingNow -= playerStatusData.PMHS * 0.05f;
+                playerSpeedNow -= playerStatusData.PSpd * 0.05f;
+                break; // 두 디버프 다 적용 됨
 
             default: break;
         }
@@ -156,10 +160,22 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void WoundInfection1Step() //상처감염 1단계
+    public void WoundInfection1Step() //상처감염 1단계, 게임 내 시간으로 2일이 지나면 2단계로 넘어가게 만들어야 함
     {
-        playerStatusData.PSpd -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
-        playerStatusData.PMHS -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
+        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
+        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
+    }
+
+    public void WoundInfection2Step() //상처감염 2단계, 게임 내 시간으로 2일이 지나면 괴사 단계로 넘어가게 만들어야 함
+    {
+        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 추가로 감소함
+        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 추가로 감소함
+    }
+
+    public void WoundNecrosis() //상처 괴사
+    {
+        playerStatusData.PSpd -= playerStatusData.PSpd * 0.1f; //Data 상의 이동속도가 영구적으로 10% 감소함
+        playerStatusData.PMHS -= playerStatusData.PMHS * 0.1f; //Data 상의 작업속도가 영구적으로 10% 감소함
     }
 
     public void PlayerDiedbyExcessiveBleedimg() //과다출혈로 죽음

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine;
 public class PlayerMove_GiJoo : MonoBehaviour
 {
-    [SerializeField] private GetPlayerScript playerStatus;
 
     [SerializeField] private CharacterController cc;
     [SerializeField] private float sensitivity;
@@ -59,7 +58,8 @@ public class PlayerMove_GiJoo : MonoBehaviour
 
         }
         moveDir.y -= 9.8f * Time.deltaTime;
-        cc.Move(moveDir * Time.deltaTime * playerStatus.PSpd);
+        float speed = GetComponent<PlayerHealth>().playerSpeedNow;
+        cc.Move(moveDir * Time.deltaTime * speed);
     }
     public void Ray()
     {
