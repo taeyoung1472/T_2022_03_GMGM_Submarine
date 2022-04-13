@@ -5,6 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
+    /// <summary>
+    /// 해야할 일
+    /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기
+    /// 이미 중상이면 중상체크 반복하지 않기
+    /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기
+    /// 상처감염 2일 지나면 진화하는 거 구현
+    /// 정신병 구현
+    /// </summary>
+
     enum WherePos
     {
          arms = 0,
@@ -116,13 +125,23 @@ public class PlayerHealth : MonoBehaviour
 
         switch(where)
         {
-            case (float)WherePos.arms: break; // 핸들링 속도 줄어들게 하기
+            case (float)WherePos.arms:
+                playerStatusData.PMHS *= 0.95f;
+                break; // 핸들링 속도 줄어들게 하기, 정확한 수치가 정해지지 않아서 5% 깎게 만듦
 
-            case (float)WherePos.legs: break; // 못 뛰게 하기, 근데 아직 뛰는 코드 구현 안됐으니까 이속 느리게 하기
+            case (float)WherePos.legs:
+                playerStatusData.PSpd *= 0.95f;
+                break; // 못 뛰게 하기, 근데 아직 뛰는 코드 구현 안됐으니까 이속 느리게 하기
 
-            case (float)WherePos.head: break; // 둘 다
+            case (float)WherePos.head:
+                playerStatusData.PMHS *= 0.95f;
+                playerStatusData.PSpd *= 0.95f;
+                break; // 둘 다
 
-            case (float)WherePos.stomach: break; // 둘 다
+            case (float)WherePos.stomach:
+                playerStatusData.PMHS *= 0.95f;
+                playerStatusData.PSpd *= 0.95f; 
+                break; // 둘 다
 
             default: break;
         }
