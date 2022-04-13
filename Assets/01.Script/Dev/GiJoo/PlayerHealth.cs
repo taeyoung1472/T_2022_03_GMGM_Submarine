@@ -22,6 +22,12 @@ public class PlayerHealth : MonoBehaviour
          stomach
     }
 
+    enum WhatPsychosis
+    {
+        illusion = 0,
+        hallucination
+    }
+
     [Header("플레이어 기본 정보")]
     [SerializeField]
     private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
@@ -33,6 +39,8 @@ public class PlayerHealth : MonoBehaviour
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
     private float playerBleedingCount;//플레이어의 과다출혈 스택
+    private float illusionCount;//환각 스택
+    private float hallucination;//환청 스택
     private float playerInfectionPercent = 100f;//플레이어의 상처 감염 확률
 
     private bool isMinored = false;//경상인가? true 체크
@@ -125,24 +133,24 @@ public class PlayerHealth : MonoBehaviour
 
     public void SeriousWoundPhysicPos() //중상 위치
     {
-        float where = Random.Range(0, 3); //확률, 각 각 동일하게 25%
+        int where = Random.Range(0, 3); //확률, 각 각 동일하게 25%
 
         switch(where)
         {
-            case (float)WherePos.arms:
+            case (int)WherePos.arms:
                 playerHandlingNow -= playerStatusData.PMHS * 0.1f;
                 break; // 작업 속도 10% 줄어들게 하기
 
-            case (float)WherePos.legs:
+            case (int)WherePos.legs:
                 playerSpeedNow -= playerStatusData.PSpd * 0.05f;
                 break; // 못 뛰게 하기, 근데 아직 뛰는 코드 구현 안됐으니까 이속 느리게 하기
 
-            case (float)WherePos.head:
+            case (int)WherePos.head:
                 playerHandlingNow -= playerStatusData.PMHS * 0.05f;
                 playerSpeedNow -= playerStatusData.PSpd * 0.05f;
                 break; // 두 디버프 다 적용 됨
 
-            case (float)WherePos.stomach:
+            case (int)WherePos.stomach:
                 playerHandlingNow -= playerStatusData.PMHS * 0.05f;
                 playerSpeedNow -= playerStatusData.PSpd * 0.05f;
                 break; // 두 디버프 다 적용 됨
@@ -194,26 +202,54 @@ public class PlayerHealth : MonoBehaviour
     {
         if (_playerMentalNow <= playerStatusData.PMMp * 0.05) //만약 정신력이 5% 만큼 남았다면
         {
+            illusionCount = 3f;
+            hallucination = 3f;
+            playerSpeedNow -= (playerStatusData.PSpd * 0.2f);
+            playerHandlingNow -= (playerStatusData.PMHS * 0.2f);
             Debug.Log("정신 붕괴"); //정신 붕괴 상태이상이 일어남
         }
         else if (_playerMentalNow <= playerStatusData.PMMp * 0.25f) //만약 정신력이 25% 만큼 남았다면
         {
-            if (Random.Range(0, 99) <= 74) //75% 확률로 3단계 정신병에 걸림
+            if (Random.Range(0, 99) <= 74) //75% 확률로 정신병에 걸림
+            {
+                Whatpsychosis();
                 Debug.Log("3단계 정신병");
+            }
         }
         else if (_playerMentalNow <= playerStatusData.PMMp * 0.5f) //만약 정신력이 50% 만큼 남았다면
         {
-            if (Random.Range(0, 99) <= 49) //50% 확률로 3단계 정신병에 걸림
+            if (Random.Range(0, 99) <= 49) //50% 확률로 정신병에 걸림
+            {
+                Whatpsychosis();
                 Debug.Log("2단계 정신병");
+            }
         }
         else if (_playerMentalNow <= playerStatusData.PMMp * 0.75f) //만약 정신력이 75% 만큼 남았다면
         {
-            if(Random.Range(0,99) <= 24) //25% 확률로 3단계 정신병에 걸림
+            if (Random.Range(0, 99) <= 24) //25% 확률로 정신병에 걸림
+            {
+                Whatpsychosis();
                 Debug.Log("1단계 정신병");
+            }
         }
         else //정신력이 75%보다 크다면
         {
             Debug.Log("정상 상태"); //정상 상태임
+        }
+    }
+
+    public void Whatpsychosis() //어떤 정신병을 얻었는가
+    {
+        switch(Random.Range(0,1))
+        {
+            case (int)WhatPsychosis.illusion: //환각 정신병이면
+                illusionCount += 1; //환각 단계가 1 오른다
+                break;
+            case (int)WhatPsychosis.hallucination: //환청 정신병이면
+                hallucination += 1; //환청 단계가 1 오른다
+                break;
+            default:
+                break;
         }
     }
 
