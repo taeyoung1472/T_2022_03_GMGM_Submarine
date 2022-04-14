@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class GameManager_Gijoo : MonoBehaviour
 {
-    private int dayCount;
+    private GameManager instance;
 
-    public int DayCount { get { return dayCount; } set { dayCount = value; } }
+    public GameManager Instance 
+    { 
+
+        get { return instance; } 
+    }
 
 
 }
