@@ -19,10 +19,10 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.welcomeReceived))
         {
-            /*_packet.Write(Client.Instance.myId);
-            _packet.Write(UIManager.Instance.usernameField.text);
+            _packet.Write(Client.Instance.myId);
+            _packet.Write("aaa");//UIManager.Instance.usernameField.text);
 
-            SendTCPData(_packet);*/
+            SendTCPData(_packet);
         }
     }
     public static void PlayerMovement(bool[] _inputs)

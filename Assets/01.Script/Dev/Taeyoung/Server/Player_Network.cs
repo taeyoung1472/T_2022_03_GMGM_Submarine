@@ -18,39 +18,8 @@ public class Player_Network : MonoBehaviour
         id = _id;
         username = _username;
     }
-    void Update()
-    {
-        Ray();
-    }
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot)
     {
         transform.SetPositionAndRotation(pos, rot);
-    }
-    public void Ray()
-    {
-        Physics.Raycast(cam.position, cam.forward, out hit, 10, rayLayerMask);
-        if (hit.transform)
-        {
-            try
-            {
-                useAbleObject = hit.transform.GetComponent<UseAbleObject>();
-                rayInnfo_Name.text = useAbleObject.Name;
-                rayOutnfo_Desc.text = useAbleObject.Description;
-            }
-            catch
-            {
-                rayInnfo_Name.text = "";
-                rayOutnfo_Desc.text = "";
-            }
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                useAbleObject.Click();
-            }
-        }
-        else
-        {
-            rayInnfo_Name.text  = "";
-            rayOutnfo_Desc.text = "";
-        }
     }
 }

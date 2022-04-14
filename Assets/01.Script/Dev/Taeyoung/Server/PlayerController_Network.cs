@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerContorller_Network : MonoBehaviour
+public class PlayerController_Network : MonoBehaviour
 {
     [SerializeField] private float sensitivity, camLimit;
     [SerializeField] public Transform cam;
+    float rotVertical;
+    float rotHorizontal;
     private void Update()
     {
         PlayerRotate();
@@ -16,13 +18,11 @@ public class PlayerContorller_Network : MonoBehaviour
     }
     public void PlayerRotate()
     {
-        float x = transform.eulerAngles.y + Input.GetAxisRaw("Mouse X") * sensitivity;
-        float y = cam.localEulerAngles.x - Input.GetAxisRaw("Mouse Y") * sensitivity;
-        if (y < camLimit || y > 360 - camLimit)
-        {
-            cam.localEulerAngles = new Vector3(y, 0, 0);
-        }
-        transform.eulerAngles = new Vector3(0, x, 0);
+        rotHorizontal += Input.GetAxisRaw("Mouse X") * sensitivity * Time.deltaTime;
+        rotVertical += Input.GetAxisRaw("Mouse Y") * sensitivity * Time.deltaTime;
+        rotVertical = Mathf.Clamp(rotVertical, -camLimit, camLimit);
+        cam.localRotation = Quaternion.Euler(-rotVertical, 0, 0);
+        transform.rotation = Quaternion.Euler(0, rotHorizontal, 0);
     }
     private void SendInputToServer()
     {

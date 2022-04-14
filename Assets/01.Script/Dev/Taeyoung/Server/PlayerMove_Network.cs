@@ -2,26 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-public class Player : MonoBehaviour
+public class PlayerMove_Network : MonoBehaviour
 {
-    [SerializeField] private CharacterController cc;
-    [SerializeField] private float sensitivity;//speed, sensitivity;
+    [SerializeField] private float sensitivity;
     [SerializeField] private Transform cam;
     [SerializeField] private float camLimit;
-    [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask rayLayerMask;
-    [SerializeField] private Text rayInnfo_Name, rayOutnfo_Desc;
+    [SerializeField] private TextMesh nameTM;
+    private Text rayInnfo_Name, rayOutnfo_Desc;
     UseAbleObject useAbleObject;
-    Vector3 moveDir;
     RaycastHit hit;
-    bool isCanMove = true;
     int id;
     string username;
-    public bool IsCanMove { get { return isCanMove; } set { isCanMove = value; } }
     public void Inintialize(int _id, string _username)
     {
         id = _id;
         username = _username;
+        rayInnfo_Name = UIManager.Instance.RayInfoName;
+        rayOutnfo_Desc = UIManager.Instance.RayInfoDesc;
+        nameTM.text = username;
     }
     void Update()
     {
@@ -37,11 +36,6 @@ public class Player : MonoBehaviour
             cam.localEulerAngles = new Vector3(y, 0, 0);
         }
         transform.eulerAngles = new Vector3(0, x, 0);
-    }
-    public void DisableMove(bool isDiable)
-    {
-        IsCanMove = isDiable;
-        cc.enabled = isDiable;
     }
     public void Ray()
     {
@@ -66,8 +60,15 @@ public class Player : MonoBehaviour
         }
         else
         {
-            rayInnfo_Name.text  = "";
-            rayOutnfo_Desc.text = "";
+            try
+            {
+                rayInnfo_Name.text = "";
+                rayOutnfo_Desc.text = "";
+            }
+            catch 
+            {
+                
+            }
         }
     }
 }

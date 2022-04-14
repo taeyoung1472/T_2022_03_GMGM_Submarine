@@ -83,6 +83,7 @@ public class Client : MonoBehaviour
             {
                 if (socket != null)
                 {
+                    print("Send");
                     stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
                 }
             }
