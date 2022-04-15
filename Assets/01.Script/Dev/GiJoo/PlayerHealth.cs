@@ -34,6 +34,7 @@ public class PlayerHealth : MonoBehaviour
     private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
 
     private PlayerMove_GiJoo playerMove;
+    private GameManager_Gijoo gameManager;
 
     public float playerHpNow;//플레이어의 현재 Hp
     public float playerMentalNow;//플레이어의 현재 정신력
@@ -42,6 +43,7 @@ public class PlayerHealth : MonoBehaviour
     public float playerHandlingNow;//플레이어의 현재 작업 속도
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
+    private int daySinceWoundInfection = 0;
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
     private int hallucination;//환청 스택
@@ -60,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
         playerRunningSpeedNow = playerStatusData.PRSp;//플레이어의 현재 달리기 속도를 Data 내에 저장된 달리기속도로 초기화
         playerHandlingNow = playerStatusData.PMHS;//플레이어의 현재 작업 속도를 Data 내에 저장된 이동속도로 초기화
         playerMove = GetComponent<PlayerMove_GiJoo>();
+        gameManager = FindObjectOfType<GameManager_Gijoo>();
     }
 
     public void Update()
@@ -202,6 +205,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void WoundInfection1Step() //상처감염 1단계, 게임 내 시간으로 2일이 지나면 2단계로 넘어가게 만들어야 함
     {
+        daySinceWoundInfection = gameManager.dayCount;
         Debug.Log("상처가 점차 악화되고있습니다");
         playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
         playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함

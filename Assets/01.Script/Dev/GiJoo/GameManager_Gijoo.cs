@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class GameManager_Gijoo : MonoBehaviour
 {
-    private GameManager instance;
+    public int dayCount = 0;
+    private float dayTimer = 0f;
 
-    public GameManager Instance 
-    { 
 
-        get { return instance; } 
+    public IEnumerator NextDayComing()
+    {
+        while(true)
+        {
+            while(dayTimer <= 30f)
+            {
+                dayTimer += Time.deltaTime;
+                yield return null;
+            }
+            dayCount++;
+        }
     }
-
-
 }
