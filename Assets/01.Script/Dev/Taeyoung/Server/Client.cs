@@ -83,7 +83,6 @@ public class Client : MonoBehaviour
             {
                 if (socket != null)
                 {
-                    print("Send");
                     stream.BeginWrite(_packet.ToArray(), 0, _packet.Length(), null, null);
                 }
             }
@@ -253,7 +252,9 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.welcome, ClientManager.Welcome},
             { (int)ServerPackets.spawnPlayer, ClientManager.SpawnPlayer},
             { (int)ServerPackets.playerPositionAndRotation, ClientManager.PlayerPositionAndRotation},
+            { (int)ServerPackets.submarinePositionAndRotation, ClientManager.SubmarinePositionAndRotation},
             { (int)ServerPackets.playerDisconnected, ClientManager.PlayerDisconnected},
+            { (int)ServerPackets.textSended, ClientManager.TextSended},
             { (int)ServerPackets.playerHealth, ClientManager.PlayerHealth},
             { (int)ServerPackets.playerRespawned, ClientManager.PlayerRespawn},
             { (int)ServerPackets.createItemSpawner, ClientManager.CreateItemSpawner},

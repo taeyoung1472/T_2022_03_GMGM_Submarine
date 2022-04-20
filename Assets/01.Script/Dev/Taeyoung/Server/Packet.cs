@@ -10,6 +10,7 @@ public enum ServerPackets
     welcome = 1,
     spawnPlayer,
     playerPositionAndRotation,
+    submarinePositionAndRotation,
     playerDisconnected,
     playerHealth,
     playerRespawned,
@@ -23,6 +24,7 @@ public enum ServerPackets
     enemyPosition,
     enemyHealth,
     enemyThrowItem,
+    textSended,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -30,8 +32,11 @@ public enum ClientPackets
 {
     welcomeReceived = 1,
     playerMovement,
+    handlePlayerMove,
+    submarineMovement,
     playerShoot,
-    playerThrowItem
+    playerThrowItem,
+    textSend,
 }
 
 public class Packet : IDisposable
@@ -173,7 +178,7 @@ public class Packet : IDisposable
     public void Write(string _value)
     {
         Write(_value.Length); // Add the length of the string to the packet
-        buffer.AddRange(Encoding.ASCII.GetBytes(_value)); // Add the string itself
+        buffer.AddRange(Encoding.UTF8.GetBytes(_value)); // Add the string itself
     }
     /// <summary>Adds a Vector3 to the packet.</summary>
     /// <param name="_value">The Vector3 to add.</param>
@@ -182,6 +187,13 @@ public class Packet : IDisposable
         Write(_value.x);
         Write(_value.y);
         Write(_value.z);
+    }
+    /// <summary>Adds a Vector2 to the packet.</summary>
+    /// <param name="_value">The Vector2 to add.</param>
+    public void Write(Vector2 _value)
+    {
+        Write(_value.x);
+        Write(_value.y);
     }
     /// <summary>Adds a Quaternion to the packet.</summary>
     /// <param name="_value">The Quaternion to add.</param>
@@ -350,7 +362,7 @@ public class Packet : IDisposable
         try
         {
             int _length = ReadInt(); // Get the length of the string
-            string _value = Encoding.ASCII.GetString(readableBuffer, readPos, _length); // Convert the bytes to a string
+            string _value = Encoding.UTF8.GetString(readableBuffer, readPos, _length); // Convert the bytes to a string
             if (_moveReadPos && _value.Length > 0)
             {
                 // If _moveReadPos is true string is not empty
@@ -368,6 +380,12 @@ public class Packet : IDisposable
     public Vector3 ReadVector3(bool _moveReadPos = true)
     {
         return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
+    }
+    /// <summary>Reads a Vector2 from the packet.</summary>
+    /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
+    public Vector2 ReadVector2(bool _moveReadPos = true)
+    {
+        return new Vector3(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
     }
     /// <summary>Reads a Quaternion from the packet.</summary>
     /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>

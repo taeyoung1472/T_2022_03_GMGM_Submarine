@@ -17,6 +17,8 @@ public class GameManager_Network : MonoBehaviour
     public GameObject itemSpawnerPrefab;
     public GameObject projectilePrefab;
     public GameObject enemyPrefab;
+    [SerializeField] private Submarine_Network submarine;
+    public Submarine_Network Submarine { get => submarine; }
 
     private void Awake()
     {

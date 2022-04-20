@@ -7,7 +7,6 @@ public class ClientSend : MonoBehaviour
     {
         _packet.WriteLength();
         Client.Instance.tcp.SendData(_packet);
-
     }
     private static void SendUDPData(Packet _packet)
     {
@@ -20,7 +19,7 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.welcomeReceived))
         {
             _packet.Write(Client.Instance.myId);
-            _packet.Write("aaa");//UIManager.Instance.usernameField.text);
+            _packet.Write(UIManager_Network.Instance.NameText);
 
             SendTCPData(_packet);
         }
@@ -39,6 +38,27 @@ public class ClientSend : MonoBehaviour
             SendUDPData(_packet);
         }
     }
+    public static void SubmarineMovement(bool[] _inputs)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.submarineMovement))
+        {
+            _packet.Write(_inputs.Length);
+            foreach (bool _input in _inputs)
+            {
+                _packet.Write(_input);
+            }
+            SendUDPData(_packet);
+        }
+    }
+    public static void HandlePlayerMove(bool isMove, int id)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.handlePlayerMove))
+        {
+            _packet.Write(isMove);
+            _packet.Write(id);
+            SendUDPData(_packet);
+        }
+    }
     public static void PlayerShoot(Vector3 _facing)
     {
         using (Packet _packet = new Packet((int)ClientPackets.playerShoot))
@@ -53,6 +73,17 @@ public class ClientSend : MonoBehaviour
         using (Packet _packet = new Packet((int)ClientPackets.playerThrowItem))
         {
             _packet.Write(_facing);
+
+            SendTCPData(_packet);
+        }
+    }
+    public static void SendText(string userName, string text, int mode)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.textSend))
+        {
+            _packet.Write(userName);
+            _packet.Write(text);
+            _packet.Write(mode);
 
             SendTCPData(_packet);
         }

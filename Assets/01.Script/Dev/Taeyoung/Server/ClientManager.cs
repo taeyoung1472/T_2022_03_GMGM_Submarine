@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
+using System;
 public class ClientManager : MonoBehaviour
 {
     public static void Welcome(Packet _packet)
@@ -11,6 +12,7 @@ public class ClientManager : MonoBehaviour
 
         Debug.Log($"서버로부터 온 메시지 : {_msg}");
         Client.Instance.myId = _myId;
+        UIManager_Network.Instance.ConnectSucces();
         ClientSend.WelcomeReceved();
 
         Client.Instance.udp.Connect(((IPEndPoint)Client.Instance.tcp.socket.Client.LocalEndPoint).Port);
@@ -27,11 +29,33 @@ public class ClientManager : MonoBehaviour
     }
     public static void PlayerPositionAndRotation(Packet _packet)
     {
-        int _id = _packet.  ReadInt();
-        Vector3 _pos = _packet.ReadVector3();
-        Quaternion _rot = _packet.ReadQuaternion();
+        try
+        {
+            int _id = _packet.ReadInt();
+            Vector3 _pos = _packet.ReadVector3();
+            Quaternion _rot = _packet.ReadQuaternion();
+            Vector2 _dir = _packet.ReadVector2();
 
-        GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot);
+            GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot, _dir);
+        }
+        catch(Exception ex)
+        {
+            Debug.Log(ex);
+        }
+    }
+    public static void SubmarinePositionAndRotation(Packet _packet)
+    {
+        try
+        {
+            Vector3 _pos = _packet.ReadVector3();
+            Quaternion _rot = _packet.ReadQuaternion();
+
+            GameManager_Network.Instance.Submarine.SetPositionAndRotation(_pos, _rot);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(ex);
+        }
     }
     public static void PlayerDisconnected(Packet _packet)
     {
@@ -39,6 +63,14 @@ public class ClientManager : MonoBehaviour
 
         Destroy(GameManager_Network.players[_id].gameObject);
         GameManager_Network.players.Remove(_id);
+    }
+    public static void TextSended(Packet packet)
+    {
+        string userName = packet.ReadString();
+        string text = packet.ReadString();
+        int mode = packet.ReadInt();
+
+        ChatManager_Network.Instance.SendedText(userName, text, mode);
     }
 
     public static void PlayerHealth(Packet _packet)
@@ -130,5 +162,9 @@ public class ClientManager : MonoBehaviour
         /*int _enemyId = _packet.ReadInt();
         Vector3 _shootPosition = _packet.ReadVector3();
         GameManager_Network.Instance.SpawnProjectile_Enemy(_enemyId, _shootPosition);*/
+    }
+    public void SendedText(Packet packet)
+    {
+        ChatManager_Network.Instance.SendedText(packet.ReadString(), packet.ReadString(), packet.ReadInt());
     }
 }

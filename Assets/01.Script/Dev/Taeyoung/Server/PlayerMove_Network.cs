@@ -18,8 +18,8 @@ public class PlayerMove_Network : MonoBehaviour
     {
         id = _id;
         username = _username;
-        rayInnfo_Name = UIManager.Instance.RayInfoName;
-        rayOutnfo_Desc = UIManager.Instance.RayInfoDesc;
+        rayInnfo_Name = UIManager_Network.Instance.RayInfoName;
+        rayOutnfo_Desc = UIManager_Network.Instance.RayInfoDesc;
         nameTM.text = username;
     }
     void Update()
