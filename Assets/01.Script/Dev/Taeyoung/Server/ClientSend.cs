@@ -77,13 +77,11 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
-    public static void SendText(string userName, string text, int mode)
+    public static void SendText(string text)
     {
         using (Packet _packet = new Packet((int)ClientPackets.textSend))
         {
-            _packet.Write(userName);
             _packet.Write(text);
-            _packet.Write(mode);
 
             SendTCPData(_packet);
         }

@@ -66,11 +66,11 @@ public class ClientManager : MonoBehaviour
     }
     public static void TextSended(Packet packet)
     {
-        string userName = packet.ReadString();
+        int id = packet.ReadInt();
         string text = packet.ReadString();
-        int mode = packet.ReadInt();
+        bool isServer = packet.ReadBool();
 
-        ChatManager_Network.Instance.SendedText(userName, text, mode);
+        ChatManager_Network.Instance.SendedText(id, text, isServer);
     }
 
     public static void PlayerHealth(Packet _packet)
@@ -165,6 +165,6 @@ public class ClientManager : MonoBehaviour
     }
     public void SendedText(Packet packet)
     {
-        ChatManager_Network.Instance.SendedText(packet.ReadString(), packet.ReadString(), packet.ReadInt());
+        ChatManager_Network.Instance.SendedText(packet.ReadInt(), packet.ReadString(), packet.ReadBool());
     }
 }

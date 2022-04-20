@@ -1,43 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 public class ChatManager_Network : MonoBehaviour
 {
     public static ChatManager_Network Instance;
     [SerializeField] private GameObject textObject;
     [SerializeField] private Transform content;
+    [SerializeField] private InputField inputField;
     public void Awake()
     {
         if(Instance == null)
             Instance = this;
     }
-    public void SendedText(string userName, string sendedText, int mode)
+    public void SendedText(int id, string sendedText, bool isServer)
     {
         Chat_Network chat = Instantiate(textObject, content).GetComponent<Chat_Network>();
+        chat.transform.SetSiblingIndex(0);
         Color color;
-        switch (mode)
-        {
-            case 0://내가보냄
-                color = Color.green;
-                break;
-            case 1://다른 플레이어가 보냄
-                color = Color.white;
-                break;
-            case 2://시스템
-                color = Color.blue;
-                break;
-            default:
-                color = Color.white;
-                break;
-        }
-        chat.Set(userName, sendedText, color);
+        if(id == Client.Instance.myId)
+            color = Color.green;
+        else
+            color = Color.white;
+        if(isServer)
+            color = Color.blue;
+        chat.Set(isServer ? "System" : GameManager_Network.players[id].Username, sendedText, color);
         chat.gameObject.SetActive(true);
     }
-    [ContextMenu("테스트")]
+    public void SendChat(string input)
+    {
+        ClientSend.SendText(input);
+        inputField.text = "";
+    }
+    /*[ContextMenu("테스트")]
     public void SendChat()
     {
         ClientSend.SendText("Taeyoung", "Hello", 0);
         ClientSend.SendText("SuengHyeon", "Nice to meet you ^^", 1);
         ClientSend.SendText("System", "Game Started In Korea", 2);
-    }
+    }*/
 }
