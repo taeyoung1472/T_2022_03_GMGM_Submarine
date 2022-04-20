@@ -16,6 +16,7 @@ public class PlayerMove_GiJoo : MonoBehaviour
     Vector3 moveDir;
     RaycastHit hit;
     bool isCanMove = true;
+    public bool isCanRun = true;
     public bool IsCanMove { get { return isCanMove; } set { isCanMove = value; } }
     void Update()
     {
@@ -58,8 +59,24 @@ public class PlayerMove_GiJoo : MonoBehaviour
 
         }
         moveDir.y -= 9.8f * Time.deltaTime;
-        float speed = GetComponent<PlayerHealth>().playerSpeedNow;
-        cc.Move(moveDir * Time.deltaTime * speed);
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (isCanRun)
+            {
+                float runningSpeed = GetComponent<PlayerHealth>().playerRunningSpeedNow;
+                cc.Move(moveDir * Time.deltaTime * runningSpeed);
+            }
+            else
+            {
+                float speed = GetComponent<PlayerHealth>().playerSpeedNow;
+                cc.Move(moveDir * Time.deltaTime * speed);
+            }
+        }
+        else
+        {
+            float speed = GetComponent<PlayerHealth>().playerSpeedNow;
+            cc.Move(moveDir * Time.deltaTime * speed);
+        }
     }
     public void Ray()
     {

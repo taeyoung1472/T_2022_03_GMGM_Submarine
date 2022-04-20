@@ -12,10 +12,13 @@ public class GetPlayerScript : ScriptableObject
     [SerializeField]
     private float playerSpeed;//플레이어의 이동 속도
     [SerializeField]
+    private float playerRunningSpeed;//플레이어의 달리기 속도
+    [SerializeField]
     private float playerHandlingSpeed;//플레이어의 행동 속도
 
     public float PMHp { get { return playerMaxHp;} set { playerMaxHp = value; } }
     public float PMMp { get { return playerMaxMental; } set { playerMaxMental = value; } }
     public float PSpd { get { return playerSpeed; } set { playerSpeed = value; } }
+    public float PRSp { get { return playerRunningSpeed; } set { playerRunningSpeed = value; } }
     public float PMHS { get { return playerHandlingSpeed; } set { playerHandlingSpeed = value; } }
 }
