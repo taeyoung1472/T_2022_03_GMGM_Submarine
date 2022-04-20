@@ -8,10 +8,10 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// 해야할 일
     /// 이미 중상이면 중상체크 반복하지 않기(Clear!)
-    /// 내상 만들기
+    /// 내상 만들기 (하는 중)
     /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기(보류)
-    /// 상처감염 2일 지나면 진화하는 거 구현(대체)
+    /// 상처감염 2일 지나면 진화하는 거 구현(대체)(Clear!)
     /// 정신병 구현(보류)
     /// </summary>
 
@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
     public float playerHpNow;//플레이어의 현재 Hp
     public float playerMentalNow;//플레이어의 현재 정신력
     public float playerSpeedNow;//플레이어의 현재 이동 속도
-    public float playerRunningSpeedNow;
+    public float playerRunningSpeedNow;//플레이어의 현재 달리기 속도
     public float playerHandlingNow;//플레이어의 현재 작업 속도
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
@@ -52,7 +52,7 @@ public class PlayerHealth : MonoBehaviour
 
     private bool isMinored = false;//경상인가? true 체크
     private bool isSerioused = false;//중상인가? true 체크
-    private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
+    public bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
     
 
@@ -170,6 +170,7 @@ public class PlayerHealth : MonoBehaviour
                 playerHpTimer += Time.deltaTime; //계속 실제 시간과 동일하게 체크 시간이 증가함
                 yield return null; //1프레임 쉼
             }
+            yield return null;
             playerInfectionPercent -= 5f; //상처 감염 확률 5% 증가
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
         }
@@ -184,6 +185,7 @@ public class PlayerHealth : MonoBehaviour
                 playerHpTimer += Time.deltaTime; //계속 실제 시간과 동일하게 체크 시간이 증가함
                 yield return null; //1프레임 쉼
             }
+            yield return null;
             playerBleedingCount += 1; //과다 출혈 카운트가 1만큼 증가
             playerInfectionPercent -= 10f; //상처 감염 확률 10% 증가
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
@@ -230,6 +232,7 @@ public class PlayerHealth : MonoBehaviour
             if (Random.Range(0, 100) >= playerInfectionPercent) //0부터 99의 수 중에 하나를 랜덤으로 고르고, 그 수가 확률보다 클 때 상처 감염이 발생함
             {
                 woundInfectionCount = 1; //상처 감염 1단계 발생
+                WoundInfection1Step();
                 isWoundInfection = true;
             }
         }
@@ -237,10 +240,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void WoundInfectionDayCount()
     {
-        if(gameManager.dayCount - daySinceWoundInfection == 2 && daySinceWoundInfection != 0)// 상처 감염 발생 이후 2일이 지나면
+        if (gameManager.dayCount - daySinceWoundInfection == 2 && daySinceWoundInfection != 0)// 상처 감염 발생 이후 2일이 지나면
         {
             woundInfectionCount += 1; //상처 감염 1단계 증가
-            switch(woundInfectionCount)
+
+            switch (woundInfectionCount)
             {
                 case 1:
                     WoundInfection1Step();
@@ -255,6 +259,7 @@ public class PlayerHealth : MonoBehaviour
                     break;
             }
         }
+        
     }
 
     public void WoundInfection1Step() //상처감염 1단계, 게임 내 시간으로 2일이 지나면 2단계로 넘어가게 만들어야 함

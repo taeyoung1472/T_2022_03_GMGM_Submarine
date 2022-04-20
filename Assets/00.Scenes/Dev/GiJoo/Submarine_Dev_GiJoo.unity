@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a40b18a89ab70e409b1682669b8ae77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dayCount: 1
 --- !u!4 &561563181 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7578344471515531132, guid: af1ffe5e853a3af4d9f29c10de4b0e87, type: 3}

@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class GameManager_Gijoo : MonoBehaviour
 {
-    public int dayCount = 0;
+    public int dayCount = 1;
     private float dayTimer = 0f;
 
+    private PlayerHealth playerHealth;
+
+    private void Start()
+    {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+        StartCoroutine(NextDayComing());
+    }
 
     public IEnumerator NextDayComing()
     {
         while(true)
         {
-            while(dayTimer <= 30f)
+            while(dayTimer <= 600f)
             {
                 dayTimer += Time.deltaTime;
                 yield return null;
             }
+            dayTimer = 0f;
             dayCount++;
+            Debug.Log(dayCount + "ÀÏÂ÷.");
+            playerHealth.WoundInfectionDayCount();
         }
     }
 }
