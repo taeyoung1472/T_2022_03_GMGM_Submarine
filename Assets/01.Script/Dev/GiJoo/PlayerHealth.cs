@@ -43,14 +43,16 @@ public class PlayerHealth : MonoBehaviour
     public float playerHandlingNow;//플레이어의 현재 작업 속도
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
-    private int daySinceWoundInfection = 0;
+    private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
-    private int hallucination;//환청 스택
+    private int hallucinationCount;//환청 스택
+    private int woundInfectionCount;//상처 감염 스택
     private float playerInfectionPercent = 100f;//플레이어의 상처 감염 확률
 
     private bool isMinored = false;//경상인가? true 체크
     private bool isSerioused = false;//중상인가? true 체크
+    private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
     
 
@@ -78,11 +80,26 @@ public class PlayerHealth : MonoBehaviour
     public void Damaged(float damage) //대미지를 입었을 때
     {
         playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
-        if(Random.Range(0,100) >= 95)
+        if(Random.Range(0,100) >= 95)//맞을 때마다 5% 확률
         {
-
+            Disease(); // 질병 실행
         }
         HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
+    }
+
+    public void Disease() // 질병
+    {
+
+    }
+
+    public void Cold() // 감기
+    {
+
+    }
+
+    public void Virus() //바이러스
+    {
+
     }
 
     public void HpCheck(float _playerHpNow) //현재 HP 체크하는 코드
@@ -197,16 +214,44 @@ public class PlayerHealth : MonoBehaviour
 
     public void PlayerWoundInfectionRandomCheck() //상처 감염 체크 코드
     {
-        if (Random.Range(0, 100) >= playerInfectionPercent) //0부터 99의 수 중에 하나를 랜덤으로 고르고, 그 수가 확률보다 클 때 상처 감염이 발생함
+        if (!isWoundInfection)
         {
-            WoundInfection1Step(); //1단계의 상처 감염 발생
+            if (Random.Range(0, 100) >= playerInfectionPercent) //0부터 99의 수 중에 하나를 랜덤으로 고르고, 그 수가 확률보다 클 때 상처 감염이 발생함
+            {
+                woundInfectionCount = 1; //상처 감염 1단계 발생
+                isWoundInfection = true;
+            }
+        }
+    }
+
+    public void WoundInfectionDayCount()
+    {
+        if(gameManager.dayCount - daySinceWoundInfection == 2 && daySinceWoundInfection != 0)// 상처 감염 발생 이후 2일이 지나면
+        {
+            woundInfectionCount += 1; //상처 감염 1단계 증가
+            switch(woundInfectionCount)
+            {
+                case 1:
+                    WoundInfection1Step();
+                    break;
+                case 2:
+                    WoundInfection2Step();
+                    break;
+                case 3:
+                    WoundNecrosis();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     public void WoundInfection1Step() //상처감염 1단계, 게임 내 시간으로 2일이 지나면 2단계로 넘어가게 만들어야 함
     {
         daySinceWoundInfection = gameManager.dayCount;
+
         Debug.Log("상처가 점차 악화되고있습니다");
+
         playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
         playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
         playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
@@ -214,7 +259,10 @@ public class PlayerHealth : MonoBehaviour
 
     public void WoundInfection2Step() //상처감염 2단계, 게임 내 시간으로 2일이 지나면 괴사 단계로 넘어가게 만들어야 함
     {
+        daySinceWoundInfection = gameManager.dayCount;
+
         Debug.Log("상처에 검은 빛이 돌기 시작했습니다.");
+
         playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 추가로 감소함
         playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 추가로 감소함
         playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 추가로 감소함
@@ -222,10 +270,16 @@ public class PlayerHealth : MonoBehaviour
 
     public void WoundNecrosis() //상처 괴사
     {
+        daySinceWoundInfection = 0;
+        woundInfectionCount = 0;
+        isWoundInfection = false;
+
         Debug.Log("상처가 썩어 문드러졌습니다.");
+
         playerStatusData.PSpd -= playerStatusData.PSpd * 0.1f; //Data 상의 이동속도가 영구적으로 10% 감소함
         playerStatusData.PRSp -= playerRunningSpeedNow * 0.1f; //Data 상의 달리기속도가 영구적으로 10% 감소함
         playerStatusData.PMHS -= playerStatusData.PMHS * 0.1f; //Data 상의 작업속도가 영구적으로 10% 감소함
+
     }
 
     public void PlayerDiedbyExcessiveBleedimg() //과다출혈로 죽음
@@ -246,7 +300,7 @@ public class PlayerHealth : MonoBehaviour
         if (_playerMentalNow <= playerStatusData.PMMp * 0.05) //만약 정신력이 5% 만큼 남았다면
         {
             illusionCount = 3;
-            hallucination = 3;
+            hallucinationCount = 3;
             playerSpeedNow -= (playerStatusData.PSpd * 0.2f);
             playerRunningSpeedNow -= (playerStatusData.PRSp * 0.2f);
             playerHandlingNow -= (playerStatusData.PMHS * 0.2f);
@@ -290,16 +344,16 @@ public class PlayerHealth : MonoBehaviour
             case (int)WhatPsychosis.illusion: //환각 정신병이면
                 if (illusionCount < 3) //환각 최대 중첩 3단계 제한
                 {
-                    Debug.Log("뇌가 감각기관의 자극을 왜곡하여 받아들입니다.");
+                    Debug.Log("환각이 발생했습니다.");
                     illusionCount += 1; //환각 단계가 1 오른다
                     IfIllusion(); //환각 효과 코드 실행
                 }
                 break;
             case (int)WhatPsychosis.hallucination: //환청 정신병이면
-                if (hallucination < 3) //환청 최대 중첩 3단계 제한
+                if (hallucinationCount < 3) //환청 최대 중첩 3단계 제한
                 {
-                    Debug.Log("당신의 청각기관은 더 이상 정상적인 기능을 하지 못합니다.");
-                    hallucination += 1; //환청 단계가 1 오른다
+                    Debug.Log("환청이 발생했습니다.");
+                    hallucinationCount += 1; //환청 단계가 1 오른다
                     IfHallucination(); //환청 효과 코드 실행
                 }
                 break;
@@ -308,6 +362,10 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// 이 밑으로 일단 보류
+    /// </summary>
     public void IfIllusion()//여기서 환각 다룸
     {
         switch(illusionCount)//환각 카운트가 n일 때 n중첩 효과가 나옴
@@ -325,7 +383,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void IfHallucination()//여기서 환청 다룸
     {
-        switch (hallucination)//환청 카운트가 n일 때 n중첩 효과가 나옴
+        switch (hallucinationCount)//환청 카운트가 n일 때 n중첩 효과가 나옴
         {
             case 1:
                 break;
