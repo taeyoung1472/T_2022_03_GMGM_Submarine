@@ -89,12 +89,23 @@ public class PlayerHealth : MonoBehaviour
 
     public void Disease() // 질병
     {
-
+        Debug.Log("넘모 아파잉");
+       switch(Random.Range(0, 2))
+        {
+            case 0:
+                Cold(); //감기
+                break;
+            case 1:
+                Virus(); //바이러스
+                break;
+        }
     }
 
     public void Cold() // 감기
     {
-
+        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
+        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
+        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
     }
 
     public void Virus() //바이러스
