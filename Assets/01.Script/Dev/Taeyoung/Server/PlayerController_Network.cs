@@ -20,6 +20,13 @@ public class PlayerController_Network : MonoBehaviour
         rayInfoDesc = UIManager_Network.Instance.RayInfoDesc;
         player_Network = GetComponent<Player_Network>();
     }
+    public void Set()
+    {
+        foreach (Player_Network player in GameManager_Network.players.Values)
+        {
+            player.NameText.GetComponent<NickName>().Set(cam);
+        }
+    }
     private void Update()
     {
         PlayerRotate();

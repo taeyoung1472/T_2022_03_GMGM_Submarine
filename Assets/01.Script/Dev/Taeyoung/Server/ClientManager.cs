@@ -25,11 +25,21 @@ public class ClientManager : MonoBehaviour
         Vector3 _pos = _packet.ReadVector3();
         Quaternion _rot = _packet.ReadQuaternion();
 
+        print("Spawn : " + _id);
+
         GameManager_Network.Instance.SpawnPlayer(_id, _username, _pos, _rot);
+        GameManager_Network.players[Client.Instance.myId].gameObject.GetComponent<PlayerController_Network>().Set();
     }
     public static void PlayerPositionAndRotation(Packet _packet)
     {
-        try
+        int _id = _packet.ReadInt();
+        Vector3 _pos = _packet.ReadVector3();
+        Quaternion _rot = _packet.ReadQuaternion();
+        Vector2 _dir = _packet.ReadVector2();
+
+        print(_id);
+        GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot, _dir);
+        /*try
         {
             int _id = _packet.ReadInt();
             Vector3 _pos = _packet.ReadVector3();
@@ -41,7 +51,7 @@ public class ClientManager : MonoBehaviour
         catch(Exception ex)
         {
             Debug.Log(ex);
-        }
+        }*/
     }
     public static void SubmarinePositionAndRotation(Packet _packet)
     {

@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 1207923603759895268}
   - component: {fileID: 6617104579123086321}
   - component: {fileID: 4879106420088723408}
+  - component: {fileID: 8460629116007101721}
   m_Layer: 0
   m_Name: New Text
   m_TagString: Untagged
@@ -193,7 +194,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8849733993233093721}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -249,6 +250,18 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &8460629116007101721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8849733993233093721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 600461c4ed67acc4abd7beff8928eb67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5668638493567469137
 PrefabInstance:
   m_ObjectHideFlags: 0

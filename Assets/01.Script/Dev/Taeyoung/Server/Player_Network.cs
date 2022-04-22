@@ -16,6 +16,7 @@ public class Player_Network : MonoBehaviour
     public int Id { get { return id; } }
     public bool IsCanMove { get { return isCanMove; } set { isCanMove = value; } }
     public string Username { get { return username; } set { username = value; } }
+    public GameObject NameText { get { return nameTextMesh.gameObject; } }
     public void Inintialize(int _id, string _username)
     {
         id = _id;

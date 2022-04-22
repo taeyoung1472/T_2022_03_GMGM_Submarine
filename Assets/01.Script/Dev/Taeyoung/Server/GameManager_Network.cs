@@ -45,6 +45,7 @@ public class GameManager_Network : MonoBehaviour
             _player = Instantiate(playerPrefab, _position, _rotation);
         }
         _player.GetComponent<Player_Network>().Inintialize(_id, _username);
+        print($"Spawn Player : {_id}");
         players.Add(_id, _player.GetComponent<Player_Network>());
     }
 
