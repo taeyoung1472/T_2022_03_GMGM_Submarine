@@ -15,5 +15,5 @@ MonoBehaviour:
   playerMaxHp: 100
   playerMaxMental: 100
   playerSpeed: 10
-  playerRunningSpeed: 15
+  playerRunningSpeed: 20
   playerHandlingSpeed: 10

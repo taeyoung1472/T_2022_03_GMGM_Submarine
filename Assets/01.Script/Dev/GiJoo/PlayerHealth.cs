@@ -83,14 +83,14 @@ public class PlayerHealth : MonoBehaviour
         playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
         if(Random.Range(0,100) >= 95)//맞을 때마다 5% 확률
         {
-            Disease(); // 질병 실행
+            
         }
         HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
     }
 
     public void Disease() // 질병
     {
-        Debug.Log("넘모 아파잉");
+        Debug.Log("질병 발생");
        switch(Random.Range(0, 2))
         {
             case 0:
@@ -307,11 +307,13 @@ public class PlayerHealth : MonoBehaviour
             SceneManager.LoadScene(0); //일단 죽음 구현하기 전에 LoadScene 해놓음
         }
     }
+
     public void MentalDamaged(float damage) //정신력에 대미지를 입었을 때
     {
         playerMentalNow -= damage; //정신력이 받은 대미지만큼 깎임
         MentalCheck(playerMentalNow); //현재 정신력을 토대로 정신력을 체크함
     }
+
     public void MentalCheck(float _playerMentalNow) //현재 정신력 체크하는 코드
     {
         if (_playerMentalNow <= playerStatusData.PMMp * 0.05) //만약 정신력이 5% 만큼 남았다면
