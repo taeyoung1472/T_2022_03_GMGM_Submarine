@@ -8,10 +8,11 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// 해야할 일
     /// 내상 만들기 (하는 중)
-    /// 질병 만들기 (하는 중)
+    /// 질병 만들기 (하는 중) (감기 완료)
     /// 
     /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기(보류)
+    /// 피로 구현(보류)
     /// 정신병 구현(보류)
     /// </summary>
 
@@ -71,11 +72,18 @@ public class PlayerHealth : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))//대미지 실험용 코드
+        if (Input.GetKeyDown(KeyCode.Q))//대미지 실험용 코드
         {
             Damaged(10);
             MentalDamaged(10);
         }
+    }
+    
+    public void ChangeSpeedStatus(float percent)
+    {
+        playerSpeedNow -= (playerStatusData.PSpd * (percent / 100));//플레이어의 현재 이동 속도
+        playerRunningSpeedNow -= (playerStatusData.PRSp * (percent / 100));//플레이어의 현재 달리기 속도
+        playerHandlingNow -= (playerStatusData.PMHS * (percent / 100));//플레이어의 현재 작업 속도
     }
 
     #region 외상 부분
@@ -84,7 +92,7 @@ public class PlayerHealth : MonoBehaviour
         playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
         if(Random.Range(0,100) >= 95)//맞을 때마다 5% 확률
         {
-            Disease();
+            InnerBox();
         }
         HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
     }
@@ -128,7 +136,8 @@ public class PlayerHealth : MonoBehaviour
         }
         else //둘 다 False라면
         {
-            StopAllCoroutines();//모든 코루틴을 중단함
+            StopCoroutine(MinorWoundPhysic()); //코루틴 2개 다 종료
+            StopCoroutine(SeriousWoundPhysic());
             playerHpTimer = 0f;//체크 시간이 증가하는 도중에 끊겼을 수 있으므로 다시 0으로 초기화
             playerBleedingCount = 0;//과다출혈 스택이 0이 됨
             playerInfectionPercent = 100f;//상처 감염 확률이 다시 0%로 돌아옴
@@ -256,9 +265,7 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("상처가 점차 악화되고있습니다");
 
-        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
-        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
-        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
+        ChangeSpeedStatus(5);
     }
 
     public void WoundInfection2Step() //상처감염 2단계, 게임 내 시간으로 2일이 지나면 괴사 단계로 넘어가게 만들어야 함
@@ -267,9 +274,7 @@ public class PlayerHealth : MonoBehaviour
 
         Debug.Log("상처에 검은 빛이 돌기 시작했습니다.");
 
-        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 추가로 감소함
-        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 추가로 감소함
-        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 추가로 감소함
+        ChangeSpeedStatus(5);
     }
 
     public void WoundNecrosis() //상처 괴사
@@ -286,6 +291,77 @@ public class PlayerHealth : MonoBehaviour
 
     }
     #endregion
+    #region 내상 부분
+    public void InnerBox() //내상
+    {
+        switch(Random.Range(0,2))
+        {
+            case 0: //내장 파열
+                BustGuts();
+                break;
+            case 1: //뇌진탕
+                Concussion();
+                break;
+        }
+    }
+    public void BustGuts()
+    {
+        ChangeSpeedStatus(15);
+    }
+    public void Concussion()
+    {
+        //화면 일그러져야됨
+    }
+    #endregion
+    #region 질병 부분
+    public void Disease() // 질병
+    {
+        Debug.Log("질병 발생");
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                Cold(); //감기
+                break;
+            case 1:
+                Virus(); //바이러스
+                break;
+        }
+    }
+
+    public void Cold() // 감기
+    {
+        Debug.Log("콜록");
+        ChangeSpeedStatus(5);
+        StartCoroutine(Cough()); //기침 코루틴 실행
+    }
+
+    IEnumerator Cough() //기침 콜록콜록
+    {
+        while (true)
+        {
+            float coughTime = Random.Range(20f, 40f); //20~40초마다
+            yield return new WaitForSeconds(coughTime);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1 << 15); //원형 콜라이더 생성해서 그 주위에 있는 플레이어 레이어가 맞게되면
+            if (hitColliders != null) //충돌을 했으면
+            {
+                foreach (var hitCollider in hitColliders) //모든 충돌체에 적용될 때까지 계속 증가
+                {
+                    if (hitCollider.gameObject != this.gameObject) //이 코루틴 실행한 애한테는 적용되면 안되니까 제외
+                    {
+                        Debug.Log("감기를 옮겼습니다.");
+                        hitCollider.GetComponent<PlayerHealth>().Cold();
+                    }
+                }
+            }
+        }
+    }
+
+    public void Virus() //바이러스
+    {
+        Debug.Log("으웩");
+        ChangeSpeedStatus(5);
+    }
+    #endregion
     #region 정신력 부분
     public void MentalDamaged(float damage) //정신력에 대미지를 입었을 때
     {
@@ -299,9 +375,7 @@ public class PlayerHealth : MonoBehaviour
         {
             illusionCount = 3;
             hallucinationCount = 3;
-            playerSpeedNow -= (playerStatusData.PSpd * 0.2f);
-            playerRunningSpeedNow -= (playerStatusData.PRSp * 0.2f);
-            playerHandlingNow -= (playerStatusData.PMHS * 0.2f);
+            ChangeSpeedStatus(20);
             Debug.Log("정신 붕괴"); //정신 붕괴 상태이상이 일어남
         }
         else if (_playerMentalNow <= playerStatusData.PMMp * 0.25f) //만약 정신력이 25% 만큼 남았다면
@@ -361,65 +435,11 @@ public class PlayerHealth : MonoBehaviour
     }
     #endregion
     #endregion
-    #region 질병 부분
-    public void Disease() // 질병
-    {
-        Debug.Log("질병 발생");
-        switch (Random.Range(0, 2))
-        {
-            case 0:
-                Cold(); //감기
-                break;
-            case 1:
-                Virus(); //바이러스
-                break;
-        }
-    }
-
-    public void Cold() // 감기
-    {
-        Debug.Log("콜록");
-        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
-        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
-        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
-        StartCoroutine(Cough()); //기침 코루틴 실행
-    }
-
-    IEnumerator Cough() //기침 콜록콜록
-    {
-        while (true)
-        {
-            float coughTime = Random.Range(20f, 40f); //20~40초마다
-            yield return new WaitForSeconds(coughTime);
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1<<15); //원형 콜라이더 생성해서 그 주위에 있는 플레이어 레이어가 맞게되면
-            if(hitColliders != null) //충돌을 했으면
-            {
-                foreach(var hitCollider in hitColliders) //모든 충돌체에 적용될 때까지 계속 증가
-                {
-                    if (hitCollider.gameObject != this.gameObject) //이 코루틴 실행한 애한테는 적용되면 안되니까 제외
-                    {
-                        Debug.Log("감기를 옮겼습니다.");
-                        hitCollider.GetComponent<PlayerHealth>().Cold();
-                    }
-                }
-            }
-        }
-    }
-
-    public void Virus() //바이러스
-    {
-        Debug.Log("으웩");
-        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
-        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
-        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
-    }
-    #endregion
-
-
 
     /// <summary>
     /// 이 밑으로 일단 보류
     /// </summary>
+    #region 정신병 부분
     public void IfIllusion()//여기서 환각 다룸
     {
         switch(illusionCount)//환각 카운트가 n일 때 n중첩 효과가 나옴
@@ -449,5 +469,6 @@ public class PlayerHealth : MonoBehaviour
                 break;
         }
     }
+    #endregion
 
 }
