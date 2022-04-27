@@ -7,12 +7,11 @@ public class PlayerHealth : MonoBehaviour
 {
     /// <summary>
     /// 해야할 일
-    /// 이미 중상이면 중상체크 반복하지 않기(Clear!)
     /// 내상 만들기 (하는 중)
     /// 질병 만들기 (하는 중)
+    /// 
     /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기(보류)
-    /// 상처감염 2일 지나면 진화하는 거 구현(대체)(Clear!)
     /// 정신병 구현(보류)
     /// </summary>
 
@@ -30,6 +29,7 @@ public class PlayerHealth : MonoBehaviour
         hallucination
     }
 
+
     [Header("플레이어 기본 정보")]
     [SerializeField]
     private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
@@ -42,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
     public float playerSpeedNow;//플레이어의 현재 이동 속도
     public float playerRunningSpeedNow;//플레이어의 현재 달리기 속도
     public float playerHandlingNow;//플레이어의 현재 작업 속도
+    public float radius;//감기 코루틴에서 쏘는 원형 콜라이더의 범위
 
     private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
     private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
@@ -53,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
 
     private bool isMinored = false;//경상인가? true 체크
     private bool isSerioused = false;//중상인가? true 체크
-    public bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
+    private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
     
 
@@ -77,41 +78,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-
+    #region 외상 부분
     public void Damaged(float damage) //대미지를 입었을 때
     {
         playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
         if(Random.Range(0,100) >= 95)//맞을 때마다 5% 확률
         {
-            
+            Disease();
         }
         HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
-    }
-
-    public void Disease() // 질병
-    {
-        Debug.Log("질병 발생");
-       switch(Random.Range(0, 2))
-        {
-            case 0:
-                Cold(); //감기
-                break;
-            case 1:
-                Virus(); //바이러스
-                break;
-        }
-    }
-
-    public void Cold() // 감기
-    {
-        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
-        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
-        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
-    }
-
-    public void Virus() //바이러스
-    {
-
     }
 
     public void HpCheck(float _playerHpNow) //현재 HP 체크하는 코드
@@ -176,6 +151,7 @@ public class PlayerHealth : MonoBehaviour
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
         }
     }
+    #region 중상
     public IEnumerator SeriousWoundPhysic() //중상(외상)
     {
         while (true) //중상 코루틴이 실행중인 동안 계속
@@ -190,6 +166,7 @@ public class PlayerHealth : MonoBehaviour
             playerBleedingCount += 1; //과다 출혈 카운트가 1만큼 증가
             playerInfectionPercent -= 10f; //상처 감염 확률 10% 증가
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
+            PlayerDiedbyExcessiveBleeding(); //과다출혈로 사망하는지 체크
         }
     }
 
@@ -200,23 +177,23 @@ public class PlayerHealth : MonoBehaviour
         switch(where)
         {
             case (int)WherePos.arms:
-                Debug.Log("윽, 팔이 좀 아픈 것 같은데..?");
+                Debug.Log("팔아파");
                 playerHandlingNow -= playerStatusData.PMHS * 0.1f;
                 break; // 작업 속도 10% 줄어들게 하기
 
             case (int)WherePos.legs:
-                Debug.Log("다리가 끊어질 것 같아..");
+                Debug.Log("다리아파");
                 playerMove.isCanRun = false;
                 break; // 못 뛰게 하기
 
             case (int)WherePos.head:
-                Debug.Log("머리가 깨질 듯이 아픈데..?");
+                Debug.Log("머리아파");
                 playerHandlingNow -= playerStatusData.PMHS * 0.05f;
                 playerMove.isCanRun = false;
                 break; // 두 디버프 다 적용 됨
 
             case (int)WherePos.stomach:
-                Debug.Log("윽, 배가....");
+                Debug.Log("배아파");
                 playerHandlingNow -= playerStatusData.PMHS * 0.05f;
                 playerMove.isCanRun = false;
                 break; // 두 디버프 다 적용 됨
@@ -225,7 +202,17 @@ public class PlayerHealth : MonoBehaviour
         }
 
     }
-
+    public void PlayerDiedbyExcessiveBleeding() //과다출혈로 죽음
+    {
+        if (playerBleedingCount >= 15) //매 1분마다 1씩 증가하는 과다 출혈 카운트가 15가 됐을 때, 즉 15분이 지났을 때 실행함
+        {
+            Debug.Log("당신은 과다출혈로 사망했습니다.");
+            SceneManager.LoadScene(0); //일단 죽음 구현하기 전에 LoadScene 해놓음
+        }
+    }
+    #endregion
+    #endregion
+    #region 상처 감염
     public void PlayerWoundInfectionRandomCheck() //상처 감염 체크 코드
     {
         if (!isWoundInfection)
@@ -298,16 +285,8 @@ public class PlayerHealth : MonoBehaviour
         playerStatusData.PMHS -= playerStatusData.PMHS * 0.1f; //Data 상의 작업속도가 영구적으로 10% 감소함
 
     }
-
-    public void PlayerDiedbyExcessiveBleedimg() //과다출혈로 죽음
-    {
-        if(playerBleedingCount >= 15) //매 1분마다 1씩 증가하는 과다 출혈 카운트가 15가 됐을 때, 즉 15분이 지났을 때 실행함
-        {
-            Debug.Log("당신은 과다출혈로 사망했습니다.");
-            SceneManager.LoadScene(0); //일단 죽음 구현하기 전에 LoadScene 해놓음
-        }
-    }
-
+    #endregion
+    #region 정신력 부분
     public void MentalDamaged(float damage) //정신력에 대미지를 입었을 때
     {
         playerMentalNow -= damage; //정신력이 받은 대미지만큼 깎임
@@ -354,7 +333,7 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("정상 상태"); //정상 상태임
         }
     }
-
+    #region 정신병 부분
     public void Whatpsychosis() //어떤 정신병을 얻었는가
     {
         int whatPsychosis = Random.Range(0, 2);
@@ -380,6 +359,62 @@ public class PlayerHealth : MonoBehaviour
                 break;
         }
     }
+    #endregion
+    #endregion
+    #region 질병 부분
+    public void Disease() // 질병
+    {
+        Debug.Log("질병 발생");
+        switch (Random.Range(0, 2))
+        {
+            case 0:
+                Cold(); //감기
+                break;
+            case 1:
+                Virus(); //바이러스
+                break;
+        }
+    }
+
+    public void Cold() // 감기
+    {
+        Debug.Log("콜록");
+        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
+        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
+        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
+        StartCoroutine(Cough()); //기침 코루틴 실행
+    }
+
+    IEnumerator Cough() //기침 콜록콜록
+    {
+        while (true)
+        {
+            float coughTime = Random.Range(20f, 40f); //20~40초마다
+            yield return new WaitForSeconds(coughTime);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1<<15); //원형 콜라이더 생성해서 그 주위에 있는 플레이어 레이어가 맞게되면
+            if(hitColliders != null) //충돌을 했으면
+            {
+                foreach(var hitCollider in hitColliders) //모든 충돌체에 적용될 때까지 계속 증가
+                {
+                    if (hitCollider.gameObject != this.gameObject) //이 코루틴 실행한 애한테는 적용되면 안되니까 제외
+                    {
+                        Debug.Log("감기를 옮겼습니다.");
+                        hitCollider.GetComponent<PlayerHealth>().Cold();
+                    }
+                }
+            }
+        }
+    }
+
+    public void Virus() //바이러스
+    {
+        Debug.Log("으웩");
+        playerSpeedNow -= (playerStatusData.PSpd * 0.05f); //이동 속도가 5% 감소함
+        playerRunningSpeedNow -= (playerRunningSpeedNow * 0.05f); //달리기 속도가 5% 감소함
+        playerHandlingNow -= (playerStatusData.PMHS * 0.05f); //작업 속도가 5% 감소함
+    }
+    #endregion
+
 
 
     /// <summary>
