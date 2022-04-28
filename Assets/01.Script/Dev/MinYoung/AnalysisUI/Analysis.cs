@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class Analysis : MonoBehaviour
 {
-  [SerializeField]  private Text productName;
-  [SerializeField]  private Text productExplain;
-  [SerializeField]  private Text productPrice;
-  [SerializeField]  private Image productImage;
+  [SerializeField] private Text _productName;
+  [SerializeField] private Text _productExplain;
+  [SerializeField] private Text _productPrice;
+  [SerializeField] private Image _productImage;
   [SerializeField] private List< DescriptionItemSO> _description;
 
     public List<DescriptionItemSO>  Description 
@@ -25,10 +25,10 @@ public class Analysis : MonoBehaviour
     {
         foreach (DescriptionItemSO description in _description)
         {
-            productName.text = description._productName;
-            productExplain.text = description._productExplain;
-            productPrice.text = description._disposalPrice.ToString();
-            productImage.sprite = description._productPainting;
+            _productName.text = description._productName;
+            _productExplain.text = description._productExplain;
+            _productPrice.text = description._disposalPrice.ToString();
+            _productImage.sprite = description._productPainting;
         }
        
     }
