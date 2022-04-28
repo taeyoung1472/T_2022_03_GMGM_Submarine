@@ -7,9 +7,11 @@ public class PlayerHealth : MonoBehaviour
 {
     /// <summary>
     /// 해야할 일
-    /// 내상 만들기 (하는 중)
+    /// 
     /// 질병 만들기 (하는 중) (감기 완료)
     /// 
+    /// 
+    /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
     /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 피로 구현(보류)
@@ -30,7 +32,12 @@ public class PlayerHealth : MonoBehaviour
         hallucination
     }
 
-
+    [Header("토사물")]
+    [SerializeField]
+    private GameObject vomit;
+    [SerializeField]
+    private Transform vomitPos;
+    [Space(2f)]
     [Header("플레이어 기본 정보")]
     [SerializeField]
     private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
@@ -45,7 +52,6 @@ public class PlayerHealth : MonoBehaviour
     public float playerHandlingNow;//플레이어의 현재 작업 속도
     public float radius;//감기 코루틴에서 쏘는 원형 콜라이더의 범위
 
-    private float playerHpTimer;//플레이어가 얼마나 외상을 오래 입었는지 체크
     private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
@@ -55,6 +61,7 @@ public class PlayerHealth : MonoBehaviour
 
     private bool isMinored = false;//경상인가? true 체크
     private bool isSerioused = false;//중상인가? true 체크
+    private bool isInnerBox = false;//내상인가? true 체크
     private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
     
@@ -77,6 +84,10 @@ public class PlayerHealth : MonoBehaviour
             Damaged(10);
             MentalDamaged(10);
         }
+        if (Input.GetKeyDown(KeyCode.E))//질병 실험용 코드
+        {
+            Disease();
+        }
     }
     
     public void ChangeSpeedStatus(float percent)
@@ -90,9 +101,10 @@ public class PlayerHealth : MonoBehaviour
     public void Damaged(float damage) //대미지를 입었을 때
     {
         playerHpNow -= damage; //Hp가 받은 대미지만큼 깎임
-        if(Random.Range(0,100) >= 95)//맞을 때마다 5% 확률
+        if(Random.Range(0,100) >= 95 && !isInnerBox)//맞을 때마다 5% 확률
         {
-            InnerBox();
+           isInnerBox = true;
+           StartCoroutine(InnerBox());
         }
         HpCheck(playerHpNow); //현재 Hp를 토대로 Hp를 체크함
     }
@@ -136,9 +148,8 @@ public class PlayerHealth : MonoBehaviour
         }
         else //둘 다 False라면
         {
-            StopCoroutine(MinorWoundPhysic()); //코루틴 2개 다 종료
-            StopCoroutine(SeriousWoundPhysic());
-            playerHpTimer = 0f;//체크 시간이 증가하는 도중에 끊겼을 수 있으므로 다시 0으로 초기화
+            StopCoroutine(MinorWoundPhysic()); //코루틴 종료
+            StopCoroutine(SeriousWoundPhysic()); //코루틴 종료
             playerBleedingCount = 0;//과다출혈 스택이 0이 됨
             playerInfectionPercent = 100f;//상처 감염 확률이 다시 0%로 돌아옴
         }
@@ -149,13 +160,7 @@ public class PlayerHealth : MonoBehaviour
     {
         while (true) //경상 코루틴이 실행중인 동안 계속
         {
-            playerHpTimer = 0f; //체크 시간이 다시 0으로 초기화됨
-            while (playerHpTimer <= 120f) //체크 시간이 120초, 즉 2분이 될 때까지
-            {
-                playerHpTimer += Time.deltaTime; //계속 실제 시간과 동일하게 체크 시간이 증가함
-                yield return null; //1프레임 쉼
-            }
-            yield return null;
+            yield return new WaitForSeconds(120f);
             playerInfectionPercent -= 5f; //상처 감염 확률 5% 증가
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
         }
@@ -164,14 +169,8 @@ public class PlayerHealth : MonoBehaviour
     public IEnumerator SeriousWoundPhysic() //중상(외상)
     {
         while (true) //중상 코루틴이 실행중인 동안 계속
-        {
-            playerHpTimer = 0f; //체크 시간이 다시 0으로 초기화됨
-            while (playerHpTimer <= 60f) //체크 시간이 60초, 즉 1분이 될 때까지
-            {
-                playerHpTimer += Time.deltaTime; //계속 실제 시간과 동일하게 체크 시간이 증가함
-                yield return null; //1프레임 쉼
-            }
-            yield return null;
+        {   
+            yield return new WaitForSeconds(60f);
             playerBleedingCount += 1; //과다 출혈 카운트가 1만큼 증가
             playerInfectionPercent -= 10f; //상처 감염 확률 10% 증가
             PlayerWoundInfectionRandomCheck(); //현재 상처 감염 확률을 토대로 상처 감염이 됐는지 안 됐는지 확인함
@@ -292,9 +291,10 @@ public class PlayerHealth : MonoBehaviour
     }
     #endregion
     #region 내상 부분
-    public void InnerBox() //내상
+    public IEnumerator InnerBox() //내상
     {
-        switch(Random.Range(0,2))
+        int randomInnerBox = Random.Range(0, 2);
+        switch (randomInnerBox)
         {
             case 0: //내장 파열
                 BustGuts();
@@ -303,14 +303,33 @@ public class PlayerHealth : MonoBehaviour
                 Concussion();
                 break;
         }
+        yield return new WaitForSeconds(900f);
+        switch (randomInnerBox)
+        {
+            case 0: //내장 파열 2단계
+                SeriousBustGuts();
+                break;
+            case 1: //뇌진탕 2단계
+                SeriousConcussion();
+                break;
+        }
+
     }
     public void BustGuts()
+    {
+        ChangeSpeedStatus(15);
+    }
+    public void SeriousBustGuts()
     {
         ChangeSpeedStatus(15);
     }
     public void Concussion()
     {
         //화면 일그러져야됨
+    }
+    public void SeriousConcussion()
+    {
+        //화면 더 더 일그러져야됨
     }
     #endregion
     #region 질병 부분
@@ -360,6 +379,17 @@ public class PlayerHealth : MonoBehaviour
     {
         Debug.Log("으웩");
         ChangeSpeedStatus(5);
+        StartCoroutine(Vomit());
+    }
+
+    IEnumerator Vomit()
+    {
+        while (true)
+        {
+            float vomitTime = Random.Range(20f, 40f); //20~40초마다
+            yield return new WaitForSeconds(vomitTime);
+            Instantiate(vomit, vomitPos.position, vomitPos.rotation); //토 생성
+        }
     }
     #endregion
     #region 정신력 부분
