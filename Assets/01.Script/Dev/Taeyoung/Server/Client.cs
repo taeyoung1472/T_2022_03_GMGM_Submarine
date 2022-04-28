@@ -255,6 +255,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.submarinePositionAndRotation, ClientManager.SubmarinePositionAndRotation},
             { (int)ServerPackets.playerDisconnected, ClientManager.PlayerDisconnected},
             { (int)ServerPackets.textSended, ClientManager.TextSended},
+            { (int)ServerPackets.audioSended, ClientManager.AudioSended},
+            { (int)ServerPackets.objectSended, ClientManager.ObjectSended},
             { (int)ServerPackets.playerHealth, ClientManager.PlayerHealth},
             { (int)ServerPackets.playerRespawned, ClientManager.PlayerRespawn},
             { (int)ServerPackets.createItemSpawner, ClientManager.CreateItemSpawner},

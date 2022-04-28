@@ -7,6 +7,9 @@ public class GameManager_Network : MonoBehaviour
     public static GameManager_Network Instance;
 
     public static Dictionary<int, Player_Network> players = new Dictionary<int, Player_Network>();
+
+    public static Dictionary<int, bool> isPlayersSpawn = new Dictionary<int, bool>();
+    public static Dictionary<int, NetworkObject> netObjects = new Dictionary<int, NetworkObject>();
     //public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();
     //public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();
     //public static Dictionary<int, ProjectileManager> projectiles_enemies = new Dictionary<int, ProjectileManager>();
@@ -33,7 +36,7 @@ public class GameManager_Network : MonoBehaviour
         }
     }
 
-    public void SpawnPlayer(int _id, string _username, Vector3 _position, Quaternion _rotation)
+    public GameObject SpawnPlayer(int _id, string _username, Vector3 _position, Quaternion _rotation)
     {
         GameObject _player;
         if (_id == Client.Instance.myId)
@@ -45,8 +48,8 @@ public class GameManager_Network : MonoBehaviour
             _player = Instantiate(playerPrefab, _position, _rotation);
         }
         _player.GetComponent<Player_Network>().Inintialize(_id, _username);
-        print($"Spawn Player : {_id}");
         players.Add(_id, _player.GetComponent<Player_Network>());
+        return _player;
     }
 
     public void CreateItemSpawner(int _spawnerId, Vector3 _positon, bool _hasItem)

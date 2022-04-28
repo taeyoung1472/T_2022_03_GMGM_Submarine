@@ -13,6 +13,14 @@ public class ChatManager_Network : MonoBehaviour
         if(Instance == null)
             Instance = this;
     }
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            inputField.interactable = true;
+            inputField.ActivateInputField();
+        }
+    }
     public void SendedText(int id, string sendedText, bool isServer)
     {
         Chat_Network chat = Instantiate(textObject, content).GetComponent<Chat_Network>();
@@ -23,7 +31,7 @@ public class ChatManager_Network : MonoBehaviour
         else
             color = Color.white;
         if(isServer)
-            color = Color.blue;
+            color = Color.yellow;
         chat.Set(isServer ? "System" : GameManager_Network.players[id].Username, sendedText, color);
         chat.gameObject.SetActive(true);
     }
@@ -31,6 +39,7 @@ public class ChatManager_Network : MonoBehaviour
     {
         ClientSend.SendText(input);
         inputField.text = "";
+        inputField.interactable = false;
     }
     /*[ContextMenu("Å×½ºÆ®")]
     public void SendChat()

@@ -86,5 +86,35 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
+    public static void RequestSpawnAgain(int id)
+    {
+        using (Packet _packet = new Packet((int)ClientPackets.requestSpawnAgain))
+        {
+            _packet.Write(id);
+
+            SendTCPData(_packet);
+        }
+    }
+    public static void SendAudio(Vector3 pos, AudioPacketId audioId)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.audioSend))
+        {
+            packet.Write((int)audioId);
+            packet.Write(pos);
+
+            SendTCPData(packet);
+        }
+    }
+    public static void RequestInstantObject(ObjectEnum index, Vector3 pos, Quaternion rot)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.requestSpawnObject))
+        {
+            packet.Write((int)index);
+            packet.Write(pos);
+            packet.Write(rot);
+
+            SendTCPData(packet);
+        }
+    }
     #endregion
 }

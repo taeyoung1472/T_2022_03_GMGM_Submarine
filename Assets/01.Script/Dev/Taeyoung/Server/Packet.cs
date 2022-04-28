@@ -4,7 +4,6 @@ using System.Text;
 using UnityEngine;
 
 /// <summary>Sent from server to client.</summary>
-/// <summary>Sent from server to client.</summary>
 public enum ServerPackets
 {
     welcome = 1,
@@ -25,6 +24,9 @@ public enum ServerPackets
     enemyHealth,
     enemyThrowItem,
     textSended,
+    audioSended,
+    objectSended,
+    objectPositionAndRotation,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -37,6 +39,9 @@ public enum ClientPackets
     playerShoot,
     playerThrowItem,
     textSend,
+    audioSend,
+    requestSpawnAgain,
+    requestSpawnObject,
 }
 
 public class Packet : IDisposable

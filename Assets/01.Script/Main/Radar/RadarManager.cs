@@ -9,7 +9,7 @@ public class RadarManager : MonoBehaviour
     {
         foreach (Radar item in radars)
         {
-            item.AddTarget(rtgt);
+            //item.AddTarget(rtgt);
         }
     }
 }

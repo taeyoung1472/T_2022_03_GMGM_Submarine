@@ -25,10 +25,27 @@ public class ClientManager : MonoBehaviour
         Vector3 _pos = _packet.ReadVector3();
         Quaternion _rot = _packet.ReadQuaternion();
 
-        print("Spawn : " + _id);
-
-        GameManager_Network.Instance.SpawnPlayer(_id, _username, _pos, _rot);
-        GameManager_Network.players[Client.Instance.myId].gameObject.GetComponent<PlayerController_Network>().Set();
+        GameObject obj = null;
+        if (!GameManager_Network.isPlayersSpawn.ContainsKey(_id) || !GameManager_Network.isPlayersSpawn[_id])
+        {
+            try
+            {
+                obj = GameManager_Network.Instance.SpawnPlayer(_id, _username, _pos, _rot);
+                GameManager_Network.players[Client.Instance.myId].gameObject.GetComponent<PlayerController_Network>().Set();
+                GameManager_Network.isPlayersSpawn.Add(_id, true);
+                print(GameManager_Network.players[_id]);
+                print("플레이어 생성 성공");
+            }
+            catch (Exception ex)
+            {
+                print($"플레이어 생성중 오류 다시생성 : {_id} {ex}");
+                Destroy(obj);
+                GameManager_Network.players.Remove(_id);
+                print(GameManager_Network.players[_id]);
+                GameManager_Network.isPlayersSpawn[_id] = false;
+                ClientSend.RequestSpawnAgain(_id);
+            }
+        }
     }
     public static void PlayerPositionAndRotation(Packet _packet)
     {
@@ -37,8 +54,14 @@ public class ClientManager : MonoBehaviour
         Quaternion _rot = _packet.ReadQuaternion();
         Vector2 _dir = _packet.ReadVector2();
 
-        print(_id);
-        GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot, _dir);
+        try
+        {
+            GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot, _dir);
+        }
+        catch
+        {
+            ClientSend.RequestSpawnAgain(_id);
+        }
         /*try
         {
             int _id = _packet.ReadInt();
@@ -82,7 +105,21 @@ public class ClientManager : MonoBehaviour
 
         ChatManager_Network.Instance.SendedText(id, text, isServer);
     }
+    public static void AudioSended(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 pos = packet.ReadVector3();
 
+        AudioPacket.Instance.PlayAudio(id, pos);
+    }
+    public static void ObjectSended(Packet packet)
+    {
+        int id = packet.ReadInt();
+        int index = packet.ReadInt();
+        Vector3 pos = packet.ReadVector3();
+        Quaternion rot = packet.ReadQuaternion();
+        InstantObjectManager_Network.Instance.InstantObject(id, index, pos, rot);
+    }
     public static void PlayerHealth(Packet _packet)
     {
         /*int _id = _packet.ReadInt();

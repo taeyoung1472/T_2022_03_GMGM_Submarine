@@ -7,8 +7,4 @@ public class RadarTarget : MonoBehaviour
     [SerializeField] private Sprite radarSprite;
     [SerializeField] private float size;
     public Sprite RadarSprite { get { return radarSprite; } }
-    public void Start()
-    {
-        GameManager.Instance.RadarManager.AddTarget(this);
-    }
 }

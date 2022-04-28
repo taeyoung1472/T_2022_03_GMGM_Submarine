@@ -168,6 +168,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Body Type 23
       objectReference: {fileID: 0}
+    - target: {fileID: 3681894705018586907, guid: efda4c6f2649642d5ababc9e983b99b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4058701035856076193, guid: efda4c6f2649642d5ababc9e983b99b6, type: 3}
       propertyPath: m_RootOrder
       value: 0
