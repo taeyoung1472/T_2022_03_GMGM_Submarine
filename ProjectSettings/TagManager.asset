@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - RadarTarget
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -16,12 +17,12 @@ TagManager:
   - RadarCollider
   - ItemObject
   - Terrain
-  - 
-  - 
-  - 
-  - 
-  - 
   - Player
+  - 
+  - 
+  - 
+  - 
+  - 
   - 
   - 
   - 
