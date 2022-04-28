@@ -9,6 +9,7 @@ public class SupplementaryGoods: MonoBehaviour
     [SerializeField] private Image productImage;
     [SerializeField] private Text productName;
     [SerializeField] private GameObject panel,content;
+
     public List<DescriptionItemSO> Description
     {
         get => _description;
@@ -20,11 +21,13 @@ public class SupplementaryGoods: MonoBehaviour
     }
     private void Awake()
     {
+        int i = 0;
         foreach (DescriptionItemSO description in _description)
         {
             GameObject obj = Instantiate(panel, content.transform);
             obj.SetActive(true);
-            obj.GetComponent<ItemPanel>().Set(description._productPainting, description._productName);
+            obj.GetComponent<SupplementPanel>().Set(_description[i]);
+            i++;
         }
     }
 }

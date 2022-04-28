@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class BuyGoods : MonoBehaviour
 {
     [SerializeField] private List<DescriptionItemSO> _description;
-    [SerializeField] private GameObject panel;
-    [SerializeField] private GameObject[] content = new GameObject[3];
-    [SerializeField] private GameObject tooltipPanel;
+    [SerializeField] private GameObject _panel;
+    [SerializeField] private GameObject[] _content = new GameObject[3];
+    [SerializeField] private GameObject _tooltipPanel;
 
-    // false ¸é ¾Æ´Ô
-    [SerializeField] bool isTooltip = false;
-    
+    [SerializeField] bool _isTooltip = false;   // false ¸é ¾Æ´Ô
+
     public List<DescriptionItemSO> Description
     {
-        get  => _description;
+        get => _description;
         set
         {
             _description = value;
@@ -39,59 +38,53 @@ public class BuyGoods : MonoBehaviour
                 case DescriptionItemSO.Item.Tool:
                     index = 2;
                     break;
-
                 case DescriptionItemSO.Item.Analsysis:
-
                     break;
                 default:
-
                     break;
             }
-            GameObject obj = Instantiate(panel, content[index].transform);
+            GameObject obj = Instantiate(_panel, _content[index].transform);
+            obj.GetComponent<ItemPanel>().SetBuyGoods(this, _description[i]);
             obj.SetActive(true);
-            obj.GetComponent<ItemPanel>().SetImage(_description[i]._productPainting);
-            obj.GetComponent<ItemPanel>().SetBuyGoods(this.GetComponent<BuyGoods>(),
-                _description[i]._productPainting,
-                _description[i]._productName,
-                _description[i]._productExplain);
             index = 0;
         }
         Tooltip(false);
     }
-    private void Start()
-    {
 
-    }
     private void Update()
     {
 
-        if (isTooltip)
+        if (_isTooltip)
         {
             Vector3 mousePos = Input.mousePosition;
             mousePos.z = 0;
-            tooltipPanel.transform.position = mousePos;
+            _tooltipPanel.transform.position = mousePos;
         }
 
     }
 
-    public void Tooltip(bool isTooltip)
+    public void Tooltip(bool isTooltip, DescriptionItemSO itemSo = null)
     {
-        if (isTooltip) StartCoroutine(Delay());
-        else tooltipPanel.SetActive(isTooltip);
-        this.isTooltip = isTooltip;
+        if (!isTooltip)
+        {
+            _tooltipPanel.SetActive(isTooltip);
+            return;
+        }
+        if (isTooltip)
+        {
+            StartCoroutine(Delay());
+        }
+        this._isTooltip = isTooltip;
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 0;
-        tooltipPanel.transform.position = mousePos;
+        _tooltipPanel.transform.position = mousePos;
+        _tooltipPanel.GetComponent<ToolTipPanel>().Set(itemSo);
     }
 
     private IEnumerator Delay()
     {
         yield return new WaitForSeconds(0.5f);
-        tooltipPanel.SetActive(isTooltip);
+        _tooltipPanel.SetActive(_isTooltip);
         yield break;
     }
-
-
-
-
 }
