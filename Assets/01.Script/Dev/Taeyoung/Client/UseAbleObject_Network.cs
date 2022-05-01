@@ -8,8 +8,7 @@ public class UseAbleObject_Network : MonoBehaviour, IUseAble_Network
     [SerializeField] private UseAbleState state;
     [SerializeField] private string name;
     [SerializeField] private string description;
-    [SerializeField] private UnityEvent<int> runEvent;
-    [SerializeField] private UnityEvent<int> stopEvent;
+    [SerializeField] private int packetId;
     public bool IsToggled { get { return isToggled; } }
     public string Name { get { return name; } }
     public string Description { get { return description; } }
@@ -22,30 +21,20 @@ public class UseAbleObject_Network : MonoBehaviour, IUseAble_Network
                 if (isToggled)
                 {
                     isToggled = false;
-                    StartCoroutine(Stop(id));
+                    ClientSend.Controll(packetId, false);
                 }
                 else
                 {
                     isToggled = true;
-                    StartCoroutine(Run(id));
+                    ClientSend.Controll(packetId, true);
                 }
                 break;
             case UseAbleState.ClickBtn:
-                StartCoroutine(Run(id));
+                ClientSend.Controll(packetId, true);
                 break;
             case UseAbleState.Inform:
                 break;
         }
-    }
-    public virtual IEnumerator Run(int id)
-    {
-        yield return new WaitForEndOfFrame();
-        runEvent?.Invoke(id);
-    }
-    public virtual IEnumerator Stop(int id)
-    {
-        yield return new WaitForEndOfFrame();
-        stopEvent?.Invoke(id);
     }
 }
 public interface IUseAble_Network

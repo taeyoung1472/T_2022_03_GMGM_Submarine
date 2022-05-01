@@ -12,6 +12,7 @@ public class UIManager_Network : MonoBehaviour
     [SerializeField] private Button connecButton;
     [SerializeField] private Text rayInfoName;
     [SerializeField] private Text rayInfoDesc;
+    [SerializeField] private MenuManager menuManager;
     bool isConnectSucces;
     public Text RayInfoName { get { return rayInfoName; } }
     public Text RayInfoDesc { get { return rayInfoDesc; } }
@@ -54,8 +55,9 @@ public class UIManager_Network : MonoBehaviour
     }
     public void ConnectSucces()
     {
-        panel.SetActive(false);
-        isConnectSucces = true;
-        connecButton.interactable = true;
+        menuManager.GoGame_Multi();
+        //panel.SetActive(false);
+        //isConnectSucces = true;
+        //connecButton.interactable = true;
     }
 }

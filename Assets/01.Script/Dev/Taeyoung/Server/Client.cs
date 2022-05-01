@@ -21,6 +21,7 @@ public class Client : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         if (Instance == null)
         {
             Instance = this;
@@ -269,6 +270,8 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.enemyPosition, ClientManager.EnemyPosition },
             { (int)ServerPackets.enemyHealth, ClientManager.EnemyHealth },
             { (int)ServerPackets.enemyThrowItem, ClientManager.EnemyThrowItem },
+            { (int)ServerPackets.networkPosition, ClientManager.NetworkPosition },
+            { (int)ServerPackets.networkRotation, ClientManager.NetworkRotation },
         };
         Debug.Log("패킷 초기설정 완료");
     }

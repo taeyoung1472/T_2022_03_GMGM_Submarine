@@ -210,8 +210,12 @@ public class ClientManager : MonoBehaviour
         Vector3 _shootPosition = _packet.ReadVector3();
         GameManager_Network.Instance.SpawnProjectile_Enemy(_enemyId, _shootPosition);*/
     }
-    public void SendedText(Packet packet)
+    public static void NetworkPosition(Packet packet)
     {
-        ChatManager_Network.Instance.SendedText(packet.ReadInt(), packet.ReadString(), packet.ReadBool());
+        GameManager_Network.Instance.netTransform[packet.ReadInt()].SetPosition(packet.ReadVector3());
+    }
+    public static void NetworkRotation(Packet packet)
+    {
+        GameManager_Network.Instance.netTransform[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
     }
 }

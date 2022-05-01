@@ -27,6 +27,8 @@ public enum ServerPackets
     audioSended,
     objectSended,
     objectPositionAndRotation,
+    networkPosition,
+    networkRotation,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -42,6 +44,7 @@ public enum ClientPackets
     audioSend,
     requestSpawnAgain,
     requestSpawnObject,
+    controll,
 }
 
 public class Packet : IDisposable

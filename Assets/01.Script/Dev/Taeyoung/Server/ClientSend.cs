@@ -116,5 +116,15 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
+    public static void Controll(int id, bool isPostive)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.controll))
+        {
+            packet.Write(id);
+            packet.Write(isPostive);
+
+            SendTCPData(packet);
+        }
+    }
     #endregion
 }

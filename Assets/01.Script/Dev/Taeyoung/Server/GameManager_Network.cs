@@ -10,6 +10,7 @@ public class GameManager_Network : MonoBehaviour
 
     public static Dictionary<int, bool> isPlayersSpawn = new Dictionary<int, bool>();
     public static Dictionary<int, NetworkObject> netObjects = new Dictionary<int, NetworkObject>();
+    public List<NetworkTransform> netTransform = new List<NetworkTransform>();
     //public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();
     //public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();
     //public static Dictionary<int, ProjectileManager> projectiles_enemies = new Dictionary<int, ProjectileManager>();
