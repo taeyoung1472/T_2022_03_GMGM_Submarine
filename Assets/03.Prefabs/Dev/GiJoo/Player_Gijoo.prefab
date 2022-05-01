@@ -170,7 +170,7 @@ MonoBehaviour:
   cc: {fileID: 5408045109374430292}
   sensitivity: 10
   cam: {fileID: 5408045109506948056}
-  camLimit: 0
+  camLimit: 50
   jumpForce: 3
   rayLayerMask:
     serializedVersion: 2

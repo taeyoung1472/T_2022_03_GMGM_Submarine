@@ -504,6 +504,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 892815555}
     - target: {fileID: 2460808706150980154, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: camLimit
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460808706150980154, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: rayInnfo_Name
       value: 
       objectReference: {fileID: 1115653747}

@@ -403,6 +403,13 @@ public class PlayerHealth : MonoBehaviour
             Instantiate(vomit, vomitPos.position, vomitPos.rotation); //토 생성
         }
     }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.layer == LayerMask.NameToLayer("Vomit"))
+        {
+            Virus();
+        }
+    }
     #endregion
     #region 정신력 부분
     public void MentalDamaged(float damage) //정신력에 대미지를 입었을 때
@@ -477,13 +484,6 @@ public class PlayerHealth : MonoBehaviour
     }
     #endregion
     #endregion
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if (hit.gameObject.layer == LayerMask.NameToLayer("Vomit"))
-        {
-            Virus();
-        }
-    }
     /// <summary>
     /// 이 밑으로 일단 보류
     /// </summary>
