@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// 해야할 일
     /// 
-    /// 질병 만들기 (하는 중) (감기 완료)
+    /// 질병 만들기 (하는 중) (감기 완료)(감염 완료)
     /// 
     /// 
     /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
@@ -62,6 +62,8 @@ public class PlayerHealth : MonoBehaviour
     private bool isMinored = false;//경상인가? true 체크
     private bool isSerioused = false;//중상인가? true 체크
     private bool isInnerBox = false;//내상인가? true 체크
+    private bool isCold = false;//감기인가? true 체크
+    private bool isVirus = false;//바이러스인가? true 체크
     private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
     
@@ -349,9 +351,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void Cold() // 감기
     {
-        Debug.Log("콜록");
-        ChangeSpeedStatus(5);
-        StartCoroutine(Cough()); //기침 코루틴 실행
+        if (!isCold)
+        {
+            Debug.Log("콜록");
+            ChangeSpeedStatus(5);
+            StartCoroutine(Cough()); //기침 코루틴 실행
+            isCold = true;
+        }
     }
 
     IEnumerator Cough() //기침 콜록콜록
@@ -360,6 +366,7 @@ public class PlayerHealth : MonoBehaviour
         {
             float coughTime = Random.Range(20f, 40f); //20~40초마다
             yield return new WaitForSeconds(coughTime);
+            Debug.Log("으엥취힑ㄱㄻ!!!!!");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1 << 15); //원형 콜라이더 생성해서 그 주위에 있는 플레이어 레이어가 맞게되면
             if (hitColliders != null) //충돌을 했으면
             {
@@ -377,17 +384,22 @@ public class PlayerHealth : MonoBehaviour
 
     public void Virus() //바이러스
     {
-        Debug.Log("으웩");
-        ChangeSpeedStatus(5);
-        StartCoroutine(Vomit());
+        if (!isVirus)
+        {
+            Debug.Log("으웩");
+            ChangeSpeedStatus(5);
+            StartCoroutine(Vomit());
+            isVirus = true;
+        }
     }
 
-    IEnumerator Vomit()
+    IEnumerator Vomit() //토
     {
         while (true)
         {
             float vomitTime = Random.Range(20f, 40f); //20~40초마다
             yield return new WaitForSeconds(vomitTime);
+            Debug.Log("브웛럵를ㄴ걹억ㄹ러러ㅓ러");
             Instantiate(vomit, vomitPos.position, vomitPos.rotation); //토 생성
         }
     }
@@ -465,7 +477,13 @@ public class PlayerHealth : MonoBehaviour
     }
     #endregion
     #endregion
-
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.layer == LayerMask.NameToLayer("Vomit"))
+        {
+            Virus();
+        }
+    }
     /// <summary>
     /// 이 밑으로 일단 보류
     /// </summary>
