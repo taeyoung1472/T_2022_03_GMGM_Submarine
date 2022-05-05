@@ -12,8 +12,6 @@ public class PlayerHealth : MonoBehaviour
     /// 
     /// 
     /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
-    /// 중상 부위에 따른 이동 속도, 작업 속도 치료 되면 감소 스택 원래대로 되돌아오게 하기(보류)
-    /// 상처감염 치료되면 이동 속도, 작업 속도 감소 스택 원래대로 되돌아오게 하기(보류)
     /// 피로 구현(보류)
     /// 정신병 구현(보류)
     /// </summary>
@@ -50,9 +48,10 @@ public class PlayerHealth : MonoBehaviour
     public float playerSpeedNow;//플레이어의 현재 이동 속도
     public float playerRunningSpeedNow;//플레이어의 현재 달리기 속도
     public float playerHandlingNow;//플레이어의 현재 작업 속도
-    public float radius;//감기 코루틴에서 쏘는 원형 콜라이더의 범위
+    public float radius;//기침 코루틴에서 쏘는 원형 콜라이더의 범위
 
     private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
+    private int daySinceCold = 0;//감기가 시작된 날짜
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
     private int hallucinationCount;//환청 스택
@@ -63,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
     private bool isSerioused = false;//중상인가? true 체크
     private bool isInnerBox = false;//내상인가? true 체크
     private bool isCold = false;//감기인가? true 체크
+    private bool isPneumonia = false;//폐렴인가? true 체크
     private bool isVirus = false;//바이러스인가? true 체크
     private bool isWoundInfection = false;//상처감염이 시작되었는가? true 체크
 
@@ -354,6 +354,7 @@ public class PlayerHealth : MonoBehaviour
         if (!isCold)
         {
             Debug.Log("콜록");
+            daySinceCold = gameManager.dayCount;
             ChangeSpeedStatus(5);
             StartCoroutine(Cough()); //기침 코루틴 실행
             isCold = true;
@@ -374,13 +375,41 @@ public class PlayerHealth : MonoBehaviour
                 {
                     if (hitCollider.gameObject != this.gameObject) //이 코루틴 실행한 애한테는 적용되면 안되니까 제외
                     {
-                        Debug.Log("감기를 옮겼습니다.");
-                        hitCollider.GetComponent<PlayerHealth>().Cold();
+                        if (!isPneumonia)
+                        {
+                            Debug.Log("감기를 옮겼습니다.");
+                            hitCollider.GetComponent<PlayerHealth>().Cold();
+                        }
+                        else
+                        {
+                            Debug.Log("폐렴을 옮겼습니다.");
+                            hitCollider.GetComponent<PlayerHealth>().Pneumonia();
+                        }
                     }
                 }
             }
         }
     }
+
+    public void ColdDayCount() //감기 시간 체크
+    {
+        if(gameManager.dayCount - daySinceCold == 5 && daySinceCold != 0)
+        {
+            Pneumonia();
+            daySinceCold = 0;
+        }
+    }
+
+    public void Pneumonia() //폐렴
+    {
+        if (!isPneumonia)
+        {
+            Debug.Log("꾸엑..");
+            isPneumonia = true;
+            ChangeSpeedStatus(5);
+        }
+    }
+
 
     public void Virus() //바이러스
     {
