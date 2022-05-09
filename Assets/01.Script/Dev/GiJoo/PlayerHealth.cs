@@ -9,9 +9,9 @@ public class PlayerHealth : MonoBehaviour
     /// 해야할 일
     /// 
     /// 추후 각각 코드 분리해야 함, region 대로 분리하면 될 듯
+    /// 피로 구현
     /// 
     /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
-    /// 피로 구현(보류)
     /// 정신병 구현(보류)
     /// --------------------------------------------------------
     /// 치료시 구현해야 할 것
@@ -57,10 +57,12 @@ public class PlayerHealth : MonoBehaviour
     private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
     private int daySinceCold = 0;//감기가 시작된 날짜
     private int daySincePneumonia = 0;//폐렴이 시작된 날짜
+    private int daySinceSleep = 0;//잠을 안 잔 날짜
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
     private int hallucinationCount;//환청 스택
     private int woundInfectionCount;//상처 감염 스택
+    private int tiredCount = 0;//피로 스택
     private float playerInfectionPercent = 100f;//플레이어의 상처 감염 확률
 
     private bool isMinored = false;//경상인가? true 체크
@@ -94,6 +96,10 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))//질병 실험용 코드
         {
             Disease();
+        }
+        if (Input.GetKeyDown(KeyCode.R))//잠 실험용 코드
+        {
+            Sleep();
         }
     }
     
@@ -525,6 +531,41 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     #endregion
+    #endregion
+    #region 피로 부분
+    public void Sleep()
+    {
+        daySinceSleep = gameManager.dayCount;
+        ChangeSpeedStatus(-5 * tiredCount);
+        tiredCount = 0;
+    }
+    public void SleepDayCount()
+    {
+        if (daySinceSleep != 0)
+        {
+            switch (gameManager.dayCount - daySinceSleep)
+            {
+                case 1:
+                    ChangeSpeedStatus(5);
+                    ++tiredCount;
+                    break;
+                case 3:
+                    ChangeSpeedStatus(5);
+                    ++tiredCount;
+                    break;
+                case 5:
+                    ChangeSpeedStatus(5);
+                    ++tiredCount;
+                    break;
+                case 7:
+                    ChangeSpeedStatus(-15);
+                    tiredCount = 0;
+                    Sleep();
+
+                    break;
+            }
+        }
+    }
     #endregion
     /// <summary>
     /// 이 밑으로 일단 보류
