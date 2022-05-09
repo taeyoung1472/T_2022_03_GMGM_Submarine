@@ -8,12 +8,16 @@ public class PlayerHealth : MonoBehaviour
     /// <summary>
     /// 해야할 일
     /// 
-    /// 질병 만들기 (하는 중) (감기 완료)(감염 완료)
-    /// 
+    /// 추후 각각 코드 분리해야 함, region 대로 분리하면 될 듯
     /// 
     /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
     /// 피로 구현(보류)
     /// 정신병 구현(보류)
+    /// --------------------------------------------------------
+    /// 치료시 구현해야 할 것
+    /// daySince~ 변수들의 값이 0이 되어야 함
+    /// 속도저하 원래대로 되돌아가야 함
+    /// 토사물 치우는 거 만들어야 함
     /// </summary>
 
     enum WherePos
@@ -52,6 +56,7 @@ public class PlayerHealth : MonoBehaviour
 
     private int daySinceWoundInfection = 0;//상처 감염이 시작된 날짜
     private int daySinceCold = 0;//감기가 시작된 날짜
+    private int daySincePneumonia = 0;//폐렴이 시작된 날짜
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
     private int hallucinationCount;//환청 스택
@@ -217,7 +222,7 @@ public class PlayerHealth : MonoBehaviour
         if (playerBleedingCount >= 15) //매 1분마다 1씩 증가하는 과다 출혈 카운트가 15가 됐을 때, 즉 15분이 지났을 때 실행함
         {
             Debug.Log("당신은 과다출혈로 사망했습니다.");
-            SceneManager.LoadScene(0); //일단 죽음 구현하기 전에 LoadScene 해놓음
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //일단 죽음 구현하기 전에 LoadScene 해놓음
         }
     }
     #endregion
@@ -367,7 +372,7 @@ public class PlayerHealth : MonoBehaviour
         {
             float coughTime = Random.Range(20f, 40f); //20~40초마다
             yield return new WaitForSeconds(coughTime);
-            Debug.Log("으엥취힑ㄱㄻ!!!!!");
+            Debug.Log("기침이 나와요");
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius, 1 << 15); //원형 콜라이더 생성해서 그 주위에 있는 플레이어 레이어가 맞게되면
             if (hitColliders != null) //충돌을 했으면
             {
@@ -405,11 +410,19 @@ public class PlayerHealth : MonoBehaviour
         if (!isPneumonia)
         {
             Debug.Log("꾸엑..");
+            daySincePneumonia = gameManager.dayCount;
             isPneumonia = true;
             ChangeSpeedStatus(5);
         }
     }
 
+    public void PneumoniaDayCount() //폐렴 시간 체크
+    {
+        if(gameManager.dayCount - daySincePneumonia == 7 && daySincePneumonia != 0)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
 
     public void Virus() //바이러스
     {
@@ -428,7 +441,7 @@ public class PlayerHealth : MonoBehaviour
         {
             float vomitTime = Random.Range(20f, 40f); //20~40초마다
             yield return new WaitForSeconds(vomitTime);
-            Debug.Log("브웛럵를ㄴ걹억ㄹ러러ㅓ러");
+            Debug.Log("토가 나와요");
             Instantiate(vomit, vomitPos.position, vomitPos.rotation); //토 생성
         }
     }

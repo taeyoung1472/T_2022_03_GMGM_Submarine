@@ -29,6 +29,7 @@ public class GameManager_Gijoo : MonoBehaviour
             Debug.Log(dayCount + "ÀÏÂ÷.");
             playerHealth.WoundInfectionDayCount();
             playerHealth.ColdDayCount();
+            playerHealth.PneumoniaDayCount();
         }
     }
 }
