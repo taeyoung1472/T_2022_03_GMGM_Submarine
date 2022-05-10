@@ -9,14 +9,18 @@ public class PlayerHealth : MonoBehaviour
     /// 해야할 일
     /// 
     /// 추후 각각 코드 분리해야 함, region 대로 분리하면 될 듯
-    /// 피로 구현
     /// 
-    /// 내상 만들기 (뇌진탕 보류) (내장 파열 완료)
-    /// 정신병 구현(보류)
+    /// ★ 네가 구현해야 할 것 ★
+    /// 
+    /// 정신병 2개 (환각, 환청)
+    /// 피로로 인한 시야 흐려짐, 화면 깜빡거림
+    /// 뇌진탕으로 인한 화면 울렁거림, 소리 울림 (소리 울림 부분은 피치나 그런 거 조절하면 될 듯)
+    /// 
     /// --------------------------------------------------------
     /// 치료시 구현해야 할 것
     /// daySince~ 변수들의 값이 0이 되어야 함
     /// 속도저하 원래대로 되돌아가야 함
+    /// 치료는 speedDownCount 변수의 값을 낮춤으로써 하되, 중상 부위에 대한 치료는 수치를 직접적으로 조절할 것.
     /// 토사물 치우는 거 만들어야 함
     /// </summary>
 
@@ -58,6 +62,7 @@ public class PlayerHealth : MonoBehaviour
     private int daySinceCold = 0;//감기가 시작된 날짜
     private int daySincePneumonia = 0;//폐렴이 시작된 날짜
     private int daySinceSleep = 0;//잠을 안 잔 날짜
+    private int speedDownCount = 0;//스피드 다운 스택
     private int playerBleedingCount;//플레이어의 과다출혈 스택
     private int illusionCount;//환각 스택
     private int hallucinationCount;//환청 스택
@@ -86,6 +91,11 @@ public class PlayerHealth : MonoBehaviour
         gameManager = FindObjectOfType<GameManager_Gijoo>();
     }
 
+    private void Start()
+    {
+        daySinceSleep = gameManager.dayCount;//잠 안 잔 날짜를 초기화
+    }
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))//대미지 실험용 코드
@@ -103,11 +113,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     
-    public void ChangeSpeedStatus(float percent)
+    public void ChangeSpeedStatus()
     {
-        playerSpeedNow -= (playerStatusData.PSpd * (percent / 100));//플레이어의 현재 이동 속도
-        playerRunningSpeedNow -= (playerStatusData.PRSp * (percent / 100));//플레이어의 현재 달리기 속도
-        playerHandlingNow -= (playerStatusData.PMHS * (percent / 100));//플레이어의 현재 작업 속도
+        Debug.Log("속도 저하 중첩 : " + speedDownCount + ", 현재 속도 저하도 : " + speedDownCount * 5 + "%");
+        playerSpeedNow = playerStatusData.PSpd - playerStatusData.PSpd * (speedDownCount * 0.05f);//플레이어의 현재 이동 속도
+        playerRunningSpeedNow = playerStatusData.PRSp - playerStatusData.PRSp * (speedDownCount * 0.05f);//플레이어의 현재 달리기 속도
+        playerHandlingNow = playerStatusData.PMHS - playerStatusData.PSpd * (speedDownCount * 0.05f);//플레이어의 현재 작업 속도
     }
 
     #region 외상 부분
@@ -276,8 +287,8 @@ public class PlayerHealth : MonoBehaviour
         daySinceWoundInfection = gameManager.dayCount;
 
         Debug.Log("상처가 점차 악화되고있습니다");
-
-        ChangeSpeedStatus(5);
+        speedDownCount++;
+        ChangeSpeedStatus();
     }
 
     public void WoundInfection2Step() //상처감염 2단계, 게임 내 시간으로 2일이 지나면 괴사 단계로 넘어가게 만들어야 함
@@ -285,8 +296,8 @@ public class PlayerHealth : MonoBehaviour
         daySinceWoundInfection = gameManager.dayCount;
 
         Debug.Log("상처에 검은 빛이 돌기 시작했습니다.");
-
-        ChangeSpeedStatus(5);
+        speedDownCount++;
+        ChangeSpeedStatus();
     }
 
     public void WoundNecrosis() //상처 괴사
@@ -330,11 +341,13 @@ public class PlayerHealth : MonoBehaviour
     }
     public void BustGuts()
     {
-        ChangeSpeedStatus(15);
+        speedDownCount += 3;
+        ChangeSpeedStatus();
     }
     public void SeriousBustGuts()
     {
-        ChangeSpeedStatus(15);
+        speedDownCount += 3;
+        ChangeSpeedStatus();
     }
     public void Concussion()
     {
@@ -366,7 +379,8 @@ public class PlayerHealth : MonoBehaviour
         {
             Debug.Log("콜록");
             daySinceCold = gameManager.dayCount;
-            ChangeSpeedStatus(5);
+            speedDownCount++;
+            ChangeSpeedStatus();
             StartCoroutine(Cough()); //기침 코루틴 실행
             isCold = true;
         }
@@ -418,7 +432,8 @@ public class PlayerHealth : MonoBehaviour
             Debug.Log("꾸엑..");
             daySincePneumonia = gameManager.dayCount;
             isPneumonia = true;
-            ChangeSpeedStatus(5);
+            speedDownCount++;
+            ChangeSpeedStatus();
         }
     }
 
@@ -435,7 +450,8 @@ public class PlayerHealth : MonoBehaviour
         if (!isVirus)
         {
             Debug.Log("으웩");
-            ChangeSpeedStatus(5);
+            speedDownCount++;
+            ChangeSpeedStatus();
             StartCoroutine(Vomit());
             isVirus = true;
         }
@@ -468,11 +484,12 @@ public class PlayerHealth : MonoBehaviour
 
     public void MentalCheck(float _playerMentalNow) //현재 정신력 체크하는 코드
     {
-        if (_playerMentalNow <= playerStatusData.PMMp * 0.05) //만약 정신력이 5% 만큼 남았다면
+        if (_playerMentalNow <= playerStatusData.PMMp * 0.05f) //만약 정신력이 5% 만큼 남았다면
         {
             illusionCount = 3;
             hallucinationCount = 3;
-            ChangeSpeedStatus(20);
+            speedDownCount += 4;
+            ChangeSpeedStatus();
             Debug.Log("정신 붕괴"); //정신 붕괴 상태이상이 일어남
         }
         else if (_playerMentalNow <= playerStatusData.PMMp * 0.25f) //만약 정신력이 25% 만큼 남았다면
@@ -535,8 +552,10 @@ public class PlayerHealth : MonoBehaviour
     #region 피로 부분
     public void Sleep()
     {
+        Debug.Log("Zzzzzz....");
         daySinceSleep = gameManager.dayCount;
-        ChangeSpeedStatus(-5 * tiredCount);
+        speedDownCount -= tiredCount;
+        ChangeSpeedStatus();
         tiredCount = 0;
     }
     public void SleepDayCount()
@@ -546,20 +565,24 @@ public class PlayerHealth : MonoBehaviour
             switch (gameManager.dayCount - daySinceSleep)
             {
                 case 1:
-                    ChangeSpeedStatus(5);
+                    Debug.Log("피곤해...");
+                    speedDownCount++;
+                    ChangeSpeedStatus();
                     ++tiredCount;
                     break;
                 case 3:
-                    ChangeSpeedStatus(5);
+                    Debug.Log("눈 앞이 침침해...");
+                    speedDownCount++;
+                    ChangeSpeedStatus();
                     ++tiredCount;
                     break;
                 case 5:
-                    ChangeSpeedStatus(5);
+                    Debug.Log("슬슬 잠이 오는데....");
+                    speedDownCount++;
+                    ChangeSpeedStatus();
                     ++tiredCount;
                     break;
                 case 7:
-                    ChangeSpeedStatus(-15);
-                    tiredCount = 0;
                     Sleep();
 
                     break;
@@ -567,9 +590,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     #endregion
-    /// <summary>
-    /// 이 밑으로 일단 보류
-    /// </summary>
     #region 정신병 부분
     public void IfIllusion()//여기서 환각 다룸
     {

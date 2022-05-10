@@ -30,6 +30,7 @@ public class GameManager_Gijoo : MonoBehaviour
             playerHealth.WoundInfectionDayCount();
             playerHealth.ColdDayCount();
             playerHealth.PneumoniaDayCount();
+            playerHealth.SleepDayCount();
         }
     }
 }
