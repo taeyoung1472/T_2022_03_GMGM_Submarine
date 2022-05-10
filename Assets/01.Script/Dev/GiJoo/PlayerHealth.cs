@@ -314,6 +314,7 @@ public class PlayerHealth : MonoBehaviour
 
     }
     #endregion
+    //내상에서 뇌진탕 부분 작업
     #region 내상 부분
     public IEnumerator InnerBox() //내상
     {
@@ -590,6 +591,7 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     #endregion
+    //정신병 부분 풀 작업
     #region 정신병 부분
     public void IfIllusion()//여기서 환각 다룸
     {
