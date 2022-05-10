@@ -27,8 +27,8 @@ public class Player_Network : MonoBehaviour
     {
         dir.Normalize();
         moveDir = dir;
-        animator.SetFloat("Horizontal", dir.x);
-        animator.SetFloat("Vertical", dir.y);
+        animator.SetFloat("X", dir.x);
+        animator.SetFloat("Y", dir.y);
         transform.SetPositionAndRotation(pos, rot);
         model.localPosition = Vector3.zero;
     }

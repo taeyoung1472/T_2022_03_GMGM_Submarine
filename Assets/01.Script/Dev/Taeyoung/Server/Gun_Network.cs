@@ -84,7 +84,7 @@ public class Gun_Network : MonoBehaviour
             //GameObject obj = Instantiate(hitParticle, hit.point, rot);
             if (hit.transform.CompareTag("HitBox"))
             {
-                hit.transform.GetComponent<HitBox>().Damaged(gunData.damage);
+                hit.transform.GetComponent<Hitbox_Network>().Hit(gunData.damage);
             }
         }
     }

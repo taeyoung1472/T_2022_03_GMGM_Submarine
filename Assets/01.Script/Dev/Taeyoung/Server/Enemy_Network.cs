@@ -20,15 +20,17 @@ public class Enemy_Network : MonoBehaviour
     {
         animator.SetTrigger("Attack");
     }
-    public void Damaged(float damage) 
-    {
-        if (isDead) return;
-        animator.SetTrigger("Hit");
-    }
     public void Dead()
     {
         isDead = true;
         animator.SetTrigger("Dead");
+        Destroy(gameObject, 2f);
+    }
+    public void Damaged(float damage) 
+    {
+        if (isDead) return;
+        ClientSend.EnemyHit(id, damage);
+        animator.SetTrigger("Hit");
     }
     enum State
     {

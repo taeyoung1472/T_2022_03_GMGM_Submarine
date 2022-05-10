@@ -126,5 +126,15 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
+    public static void EnemyHit(int id, float damage)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.controll))
+        {
+            packet.Write(id);
+            packet.Write(damage);
+
+            SendTCPData(packet);
+        }
+    }
     #endregion
 }

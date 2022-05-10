@@ -45,6 +45,7 @@ public enum ClientPackets
     requestSpawnAgain,
     requestSpawnObject,
     controll,
+    enemyHit,
 }
 
 public class Packet : IDisposable

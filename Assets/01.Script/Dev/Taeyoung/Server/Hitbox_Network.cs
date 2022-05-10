@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class Hitbox_Network : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Enemy_Network enemy;
+    [SerializeField] private float damageValue;
+    public void Hit(float dmg)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        enemy.Damaged(dmg * damageValue);
     }
 }
