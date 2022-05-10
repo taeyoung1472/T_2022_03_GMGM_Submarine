@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using DG.Tweening;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private CharacterController cc;
@@ -11,6 +12,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask rayLayerMask;
     [SerializeField] private Text rayInnfo_Name, rayOutnfo_Desc;
+    [SerializeField] private AnimationCurve curve;
+    [SerializeField] private Vector2 recoilValue = Vector2.zero;
+    [SerializeField] private int id;
+    public int ID { get { return id; } }
     UseAbleObject useAbleObject;
     Vector3 moveDir;
     RaycastHit hit;
@@ -24,8 +29,8 @@ public class PlayerMove : MonoBehaviour
     }
     public void PlayerRotate()
     {
-        float x = transform.eulerAngles.y + Input.GetAxisRaw("Mouse X") * sensitivity;
-        float y = cam.localEulerAngles.x - Input.GetAxisRaw("Mouse Y") * sensitivity;
+        float x = transform.eulerAngles.y + Input.GetAxisRaw("Mouse X") * sensitivity + recoilValue.x;
+        float y = cam.localEulerAngles.x - Input.GetAxisRaw("Mouse Y") * sensitivity + recoilValue.y;
         if(y < camLimit || y > 360 - camLimit)
         {
             cam.localEulerAngles = new Vector3(y, 0, 0);
@@ -85,5 +90,26 @@ public class PlayerMove : MonoBehaviour
             rayInnfo_Name.text  = "";
             rayOutnfo_Desc.text = "";
         }
+    }
+    public void Recoil(Vector2 value, float time)
+    {
+        StartCoroutine(Recol(time, value));
+    }
+    IEnumerator Recol(float time, Vector2 value)
+    {
+        Camera camera = cam.GetComponent<Camera>();
+        float defaultFOV = camera.fieldOfView;
+        camera.fieldOfView = defaultFOV * 1.035f;
+        float fixValue = 1f / time;
+        float curTime = 0;
+        while(1 >= curTime)
+        {
+            curTime += Time.deltaTime * fixValue;
+            recoilValue.y = curve.Evaluate(curTime) * value.y;
+            recoilValue.x = curve.Evaluate(curTime) * value.x;
+            yield return null;
+        }
+        recoilValue = Vector2.zero;
+        camera.fieldOfView = defaultFOV;
     }
 }

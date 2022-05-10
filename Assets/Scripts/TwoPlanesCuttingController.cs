@@ -14,6 +14,10 @@ public class TwoPlanesCuttingController : MonoBehaviour {
 
     private MaterialPropertyBlock m_MaterialPropertyBlock;
 
+    private void Reset()
+    {
+        rend = GetComponent<Renderer>();
+    }
     private void Awake()
     {
         m_MaterialPropertyBlock = new MaterialPropertyBlock();

@@ -39,7 +39,7 @@ public class PlayerController_Network : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            ClientSend.SendAudio(transform.position, AudioPacketId.Test);
+            ClientSend.SendAudio(transform.position, AudioEnum.Test);
             ClientSend.RequestInstantObject(ObjectEnum.Test, transform.position + Vector3.up * 3, Quaternion.identity);
         }
     }

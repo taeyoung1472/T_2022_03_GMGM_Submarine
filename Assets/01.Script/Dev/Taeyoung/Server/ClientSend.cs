@@ -95,7 +95,7 @@ public class ClientSend : MonoBehaviour
             SendTCPData(_packet);
         }
     }
-    public static void SendAudio(Vector3 pos, AudioPacketId audioId)
+    public static void SendAudio(Vector3 pos, AudioEnum audioId)
     {
         using (Packet packet = new Packet((int)ClientPackets.audioSend))
         {

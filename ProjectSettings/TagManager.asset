@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RadarTarget
   - Door
+  - HitBox
   layers:
   - Default
   - TransparentFX
@@ -19,9 +20,9 @@ TagManager:
   - Terrain
   - Player
   - SubmarinePart
-  - 
-  - 
-  - 
+  - PlayerCheck
+  - Enemy
+  - Map
   - 
   - 
   - 

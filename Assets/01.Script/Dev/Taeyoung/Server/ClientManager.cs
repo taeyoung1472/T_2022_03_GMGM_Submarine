@@ -62,19 +62,6 @@ public class ClientManager : MonoBehaviour
         {
             ClientSend.RequestSpawnAgain(_id);
         }
-        /*try
-        {
-            int _id = _packet.ReadInt();
-            Vector3 _pos = _packet.ReadVector3();
-            Quaternion _rot = _packet.ReadQuaternion();
-            Vector2 _dir = _packet.ReadVector2();
-
-            GameManager_Network.players[_id].SetPositionAndRotation(_pos, _rot, _dir);
-        }
-        catch(Exception ex)
-        {
-            Debug.Log(ex);
-        }*/
     }
     public static void SubmarinePositionAndRotation(Packet _packet)
     {
@@ -120,96 +107,6 @@ public class ClientManager : MonoBehaviour
         Quaternion rot = packet.ReadQuaternion();
         InstantObjectManager_Network.Instance.InstantObject(id, index, pos, rot);
     }
-    public static void PlayerHealth(Packet _packet)
-    {
-        /*int _id = _packet.ReadInt();
-        float _health = _packet.ReadFloat();
-
-        GameManager_Network.players[_id].SetHealth(_health);*/
-    }
-    public static void PlayerRespawn(Packet _packet)
-    {
-        /*int _id = _packet.ReadInt();
-
-        GameManager_Network.players[_id].Respawn();*/
-    }
-    public static void CreateItemSpawner(Packet _packet)
-    {
-        /*int _spawnerId = _packet.ReadInt();
-        Vector3 _spawnPosition = _packet.ReadVector3();
-        bool _hasItem = _packet.ReadBool();
-
-        GameManager_Network.Instance.CreateItemSpawner(_spawnerId, _spawnPosition, _hasItem);*/
-    }
-    public static void ItemSpawned(Packet _packet)
-    {
-        /*int _spawnerId = _packet.ReadInt();
-
-        GameManager_Network.itemSpawners[_spawnerId].ItemSpawned();*/
-    }
-    public static void ItemPickedUp(Packet _packet)
-    {
-        /*int _spawnerId = _packet.ReadInt();
-        int _byPlayer = _packet.ReadInt();
-
-        GameManager_Network.itemSpawners[_spawnerId].ItemPickedUp();
-        GameManager_Network.players[_byPlayer].itemCount++;*/
-    }
-    public static void SpawnProjectile(Packet _packet)
-    {
-        /*int _projectileId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-        int _throwByPlayer = _packet.ReadInt();
-
-        GameManager_Network.Instance.SpawnProjectile(_projectileId, _position);
-        GameManager_Network.players[_throwByPlayer].itemCount--;*/
-    }
-    public static void ProjectilePosition(Packet _packet)
-    {
-        /*int _projectileId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-
-        GameManager_Network.projectiles[_projectileId].transform.position = _position;*/
-    }
-    public static void ProjectileExploded(Packet _packet)
-    {
-        /*int _projectileId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-
-        GameManager_Network.projectiles[_projectileId].Explode(_position);*/
-    }
-    public static void SpawnEnemy(Packet _packet)
-    {
-        /*int _enemyId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-
-        GameManager_Network.Instance.SpawnEnemy(_enemyId, _position);*/
-    }
-
-    public static void EnemyPosition(Packet _packet)
-    {
-        /*int _enemyId = _packet.ReadInt();
-        Vector3 _position = _packet.ReadVector3();
-
-        if (GameManager_Network.enemies.TryGetValue(_enemyId, out EnemyManager _enemy))
-        {
-            _enemy.transform.position = _position;
-        }*/
-    }
-
-    public static void EnemyHealth(Packet _packet)
-    {
-        /*int _enemyId = _packet.ReadInt();
-        float _health = _packet.ReadFloat();
-
-        GameManager_Network.enemies[_enemyId].SetHealth(_health);*/
-    }
-    public static void EnemyThrowItem(Packet _packet)
-    {
-        /*int _enemyId = _packet.ReadInt();
-        Vector3 _shootPosition = _packet.ReadVector3();
-        GameManager_Network.Instance.SpawnProjectile_Enemy(_enemyId, _shootPosition);*/
-    }
     public static void NetworkPosition(Packet packet)
     {
         GameManager_Network.Instance.netTransform[packet.ReadInt()].SetPosition(packet.ReadVector3());
@@ -217,5 +114,13 @@ public class ClientManager : MonoBehaviour
     public static void NetworkRotation(Packet packet)
     {
         GameManager_Network.Instance.netTransform[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
+    }
+    public static void Raycast(Packet packet)
+    {
+        RaycastHit hit;
+        if (RaycastManager.instance.ShootRaycast(packet.ReadVector3(), packet.ReadVector3(),packet.ReadInt(), out hit, packet.ReadFloat()))
+        {
+            print(hit.transform.name);
+        }
     }
 }

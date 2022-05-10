@@ -5,7 +5,6 @@ using UnityEngine;
 public class RepairTool : MonoBehaviour
 {
     [SerializeField] private float repairSpeed;
-    [SerializeField] private RepairUI repairUI;
     [SerializeField] private Transform firePos;
     [SerializeField] private LayerMask layer;
     [SerializeField] private float range = 5f;
@@ -13,9 +12,17 @@ public class RepairTool : MonoBehaviour
     RaycastHit hit;
     [SerializeField] SubmarinePart part;
     float startTime, startHp;
+    private RepairUI repairUI;
     public void OnEnable()
     {
+        StopAllCoroutines();
         particle.Stop();
+        repairUI = ToolManager.instance.RepairUI;
+    }
+    public void OnDisable()
+    {
+        repairUI.gameObject.SetActive(false);
+        StopAllCoroutines();
     }
     public void Update()
     {

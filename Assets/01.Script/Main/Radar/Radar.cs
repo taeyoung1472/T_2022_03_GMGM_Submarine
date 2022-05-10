@@ -6,13 +6,16 @@ public class Radar : MonoBehaviour
 {
     [SerializeField] private Transform radar;
     [SerializeField] private float speed;
+    [SerializeField] private float range;
     [SerializeField] private RadarStat state;
     [SerializeField] private GameObject virtualTargetTamplate;
     [SerializeField] private Transform submarine;
     [SerializeField] Vector3 fixVecX, fixVecY;
     private Queue<GameObject> virtualTarget = new Queue<GameObject>();
+    float calculRange;
     public void Start()
     {
+        CalculRange();
         switch (state)
         {
             case RadarStat.XZ:
@@ -41,10 +44,11 @@ public class Radar : MonoBehaviour
             Vector3 tgtVecY = new Vector3(pivotVec.x * fixVecY.x, pivotVec.y * fixVecY.y, pivotVec.z * fixVecY.z);
             float xPos = tgtVecX.magnitude * Mathf.Sign(tgtVecX.x != 0 ? tgtVecX.x : tgtVecX.y != 0 ? tgtVecX.y : tgtVecX.z);
             float yPos = tgtVecY.magnitude * Mathf.Sign(tgtVecY.x != 0 ? tgtVecY.x : tgtVecY.y != 0 ? tgtVecY.y : tgtVecY.z);
-            Vector2 spotPos = new Vector2(-xPos, -yPos) * 0.05f;
+            Vector2 spotPos = new Vector2(-xPos, -yPos) * calculRange;
 
             GameObject tgt = virtualTarget.Dequeue();
             tgt.SetActive(true);
+            tgt.transform.localScale = Vector3.one * other.GetComponent<RadarTarget>().Size;
             VirtualTarget vTarget = tgt.GetComponent<VirtualTarget>();
             if (spotPos.magnitude > 0.75f) { spotPos = spotPos.normalized * 0.75f; }
             vTarget.Set(new Vector3(spotPos.x, 0.15f, spotPos.y), other.GetComponent<RadarTarget>().RadarSprite, EnqueueObject);
@@ -54,6 +58,10 @@ public class Radar : MonoBehaviour
     {
         targetObject.SetActive(false);
         virtualTarget.Enqueue(targetObject);
+    }
+    public void CalculRange()
+    {
+        calculRange = 1f / range;
     }
     #region Legarcy Code
     //private List<RadarTarget> targets;

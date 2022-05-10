@@ -22,6 +22,7 @@ public class DoorControll : ControllAbleObject
 
     public override void ControllPositive(Action callBack)
     {
+        print("A");
         Sequence seq = DOTween.Sequence();
         seq.Append(transform.DOLocalMove(openPos, time));
         seq.AppendCallback(() => callBack());
