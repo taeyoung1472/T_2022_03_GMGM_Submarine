@@ -9,6 +9,14 @@ public class ToolTipPanel : MonoBehaviour
     [SerializeField] private Image _productImage;
     [SerializeField] private Text _explainText;
     DescriptionItemSO desc;
+
+    public DescriptionItemSO _DescriptionItemSO
+    {
+        get
+        {
+            return desc;
+        }
+    }
     public void Set(DescriptionItemSO desc)
     {
         _nameText.text = desc.name;

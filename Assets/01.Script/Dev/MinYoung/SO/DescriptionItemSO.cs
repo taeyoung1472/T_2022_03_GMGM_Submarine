@@ -8,6 +8,7 @@ public class DescriptionItemSO : ScriptableObject
     public int _disposalPrice; // 물건 처분 가격
     public string _productExplain; // 물건 설명
     public Sprite _productPainting; //물건 그림
+    public int _productCount;
     public bool isAnalsiys;
     public Item item;
     public enum Item
