@@ -23,7 +23,7 @@ TagManager:
   - PlayerCheck
   - Enemy
   - Map
-  - 
+  - LocalPlayer
   - 
   - 
   - 

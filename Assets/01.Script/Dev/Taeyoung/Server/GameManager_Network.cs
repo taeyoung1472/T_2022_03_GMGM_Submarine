@@ -10,7 +10,7 @@ public class GameManager_Network : MonoBehaviour
 
     public static Dictionary<int, bool> isPlayersSpawn = new Dictionary<int, bool>();
     public static Dictionary<int, NetworkObject> netObjects = new Dictionary<int, NetworkObject>();
-    public List<NetworkTransform> netTransform = new List<NetworkTransform>();
+    public Dictionary<int, NetworkTransform> netTransform = new Dictionary<int, NetworkTransform>();
     //public static Dictionary<int, ItemSpawner> itemSpawners = new Dictionary<int, ItemSpawner>();
     //public static Dictionary<int, ProjectileManager> projectiles = new Dictionary<int, ProjectileManager>();
     //public static Dictionary<int, ProjectileManager> projectiles_enemies = new Dictionary<int, ProjectileManager>();
@@ -77,5 +77,11 @@ public class GameManager_Network : MonoBehaviour
         /*GameObject _enemy = Instantiate(enemyPrefab, _position, Quaternion.identity);
         _enemy.GetComponent<EnemyManager>().Initialize(_id);
         enemies.Add(_id, _enemy.GetComponent<EnemyManager>());*/
+    }
+    public void InitNetworkTransform(int id, string name)
+    {
+        NetworkTransform netTrans = GameObject.Find(name).AddComponent<NetworkTransform>();
+        netTransform[id] = netTrans;
+        netTrans.ID = id;
     }
 }

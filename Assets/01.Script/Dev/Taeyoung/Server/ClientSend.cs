@@ -18,6 +18,7 @@ public class ClientSend : MonoBehaviour
     {
         using (Packet _packet = new Packet((int)ClientPackets.welcomeReceived))
         {
+            print("Welcome ¹ÞÀ½");
             _packet.Write(Client.Instance.myId);
             _packet.Write(UIManager_Network.Instance.NameText);
 

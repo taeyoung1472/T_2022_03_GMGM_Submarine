@@ -6,6 +6,7 @@ using System;
 public class UIManager_Network : MonoBehaviour
 {
     public static UIManager_Network Instance;
+    [SerializeField] private GameObject loadingPanel;
     [SerializeField] private GameObject panel;
     [SerializeField] private InputField nameInputField;
     [SerializeField] private InputField ipInputField;
@@ -36,6 +37,7 @@ public class UIManager_Network : MonoBehaviour
             Client.Instance.port = Convert.ToInt32(ipAddress[1].Trim());
             Client.Instance.ConnectToServer();
             connecButton.interactable = false;
+            loadingPanel.SetActive(true);
             isConnectSucces = false;
             StartCoroutine(CheckConnect());
         }
@@ -51,6 +53,7 @@ public class UIManager_Network : MonoBehaviour
         {
             print("연결실패!");
             connecButton.interactable = true;
+            loadingPanel.SetActive(false);
         }
     }
     public void ConnectSucces()

@@ -109,11 +109,23 @@ public class ClientManager : MonoBehaviour
     }
     public static void NetworkPosition(Packet packet)
     {
-        GameManager_Network.Instance.netTransform[packet.ReadInt()].SetPosition(packet.ReadVector3());
+        try
+        {
+            GameManager_Network.Instance.netTransform[packet.ReadInt()].SetPosition(packet.ReadVector3());
+        }
+        catch { /*아직 초기화(Init)이 되지 않은상황*/}
     }
     public static void NetworkRotation(Packet packet)
     {
-        GameManager_Network.Instance.netTransform[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
+        try
+        {
+            GameManager_Network.Instance.netTransform[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
+        }
+        catch { /*아직 초기화(Init)이 되지 않은상황*/}
+    }
+    public static void NetworkTransformInit(Packet packet)
+    {
+        GameManager_Network.Instance.InitNetworkTransform(packet.ReadInt(), packet.ReadString());
     }
     public static void Raycast(Packet packet)
     {
@@ -122,5 +134,11 @@ public class ClientManager : MonoBehaviour
         {
             print(hit.transform.name);
         }
+    }
+    public static void SpawnEnemy(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 pos = packet.ReadVector3();
+        EnemySpawner.instance.SpawnEnemy(id, pos);
     }
 }

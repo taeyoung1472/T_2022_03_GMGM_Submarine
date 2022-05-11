@@ -29,6 +29,7 @@ public enum ServerPackets
     objectPositionAndRotation,
     networkPosition,
     networkRotation,
+    networkTransformInit,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -47,6 +48,7 @@ public enum ClientPackets
     controll,
     enemyHit,
 }
+
 
 public class Packet : IDisposable
 {

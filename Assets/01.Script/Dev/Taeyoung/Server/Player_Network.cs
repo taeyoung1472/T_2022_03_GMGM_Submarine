@@ -7,7 +7,7 @@ public class Player_Network : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Transform model;
     [SerializeField] private TextMesh nameTextMesh;
-    public Vector3 moveDir;
+    Vector2 moveDir;
     UseAbleObject useAbleObject;
     RaycastHit hit;
     bool isCanMove = true;
@@ -26,9 +26,9 @@ public class Player_Network : MonoBehaviour
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot, Vector2 dir)
     {
         dir.Normalize();
-        moveDir = dir;
-        animator.SetFloat("X", dir.x);
-        animator.SetFloat("Y", dir.y);
+        moveDir = Vector2.Lerp(moveDir, dir, Time.deltaTime * 2.5f);
+        animator.SetFloat("X", moveDir.x);
+        animator.SetFloat("Y", moveDir.y);
         transform.SetPositionAndRotation(pos, rot);
         model.localPosition = Vector3.zero;
     }

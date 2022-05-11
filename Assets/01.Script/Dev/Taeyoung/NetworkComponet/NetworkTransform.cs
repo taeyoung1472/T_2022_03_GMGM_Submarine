@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NetworkTransform : MonoBehaviour
 {
+    int id;
+    public int ID { get { return id; } set { id = value; } }
     public void SetPosition(Vector3 pos)
     {
         transform.localPosition = pos;
