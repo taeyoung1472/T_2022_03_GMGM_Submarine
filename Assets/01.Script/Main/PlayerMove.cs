@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private CharacterController cc;
-    [SerializeField] private float speed, sensitivity;
+    public float speed, sensitivity;
     [SerializeField] private Transform cam;
     [SerializeField] private float camLimit;
     [SerializeField] private float jumpForce;
@@ -24,6 +24,7 @@ public class PlayerMove : MonoBehaviour
     }
     public void PlayerRotate()
     {
+        
         float x = transform.eulerAngles.y + Input.GetAxisRaw("Mouse X") * sensitivity;
         float y = cam.localEulerAngles.x - Input.GetAxisRaw("Mouse Y") * sensitivity;
         if(y < camLimit || y > 360 - camLimit)
