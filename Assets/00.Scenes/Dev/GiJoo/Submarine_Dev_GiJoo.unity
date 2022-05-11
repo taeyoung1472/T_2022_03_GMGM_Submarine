@@ -271,6 +271,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &926774394 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4977828437453153092, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+  m_PrefabInstance: {fileID: 2460808705851370067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1115653747 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6575857513975619690, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
@@ -482,6 +487,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1747211500898439815, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: vomit
+      value: 
+      objectReference: {fileID: 5243898676069730324, guid: 8b563b0294376eb4a8ab631912ef67c9, type: 3}
+    - target: {fileID: 1747211500898439815, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: vomitPos
+      value: 
+      objectReference: {fileID: 926774394}
     - target: {fileID: 2427530353019039074, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: rayInnfo_Name
       value: 
@@ -491,6 +504,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 892815555}
     - target: {fileID: 2460808706150980154, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: camLimit
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2460808706150980154, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: rayInnfo_Name
       value: 
       objectReference: {fileID: 1115653747}
@@ -498,13 +515,21 @@ PrefabInstance:
       propertyPath: rayOutnfo_Desc
       value: 
       objectReference: {fileID: 892815555}
+    - target: {fileID: 4977828437453153092, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4977828437453153092, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -512,7 +537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -520,15 +545,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5408045109374430299, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -545,6 +570,10 @@ PrefabInstance:
     - target: {fileID: 5408045109374430303, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
       propertyPath: m_Name
       value: Player_Gijoo
+      objectReference: {fileID: 0}
+    - target: {fileID: 5408045109506948063, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2427530353019039074, guid: d5ac940786a60af499a262bca1e5814c, type: 3}
