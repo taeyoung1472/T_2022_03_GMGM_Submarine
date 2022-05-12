@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Vector2 recoilValue = Vector2.zero;
     [SerializeField] private int id;
     public int ID { get { return id; } }
+    public float Speed { get { return speed; } set { speed = value; } }
     UseAbleObject useAbleObject;
     Vector3 moveDir;
     RaycastHit hit;

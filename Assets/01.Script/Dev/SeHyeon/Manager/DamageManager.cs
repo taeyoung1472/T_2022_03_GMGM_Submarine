@@ -11,15 +11,14 @@ public class DamageManager : MonoBehaviour
     int submergence = 0;
     float mrSpeed ;
     public static DamageManager instance;
-    PlayerMove playerMove;
+    [SerializeField] private PlayerMove playerMove;
     float move;
     [SerializeField] List<Room> rooms = new List<Room>();
 
     public Action<int, int> OnHit;
     private void Awake()
     {
-        playerMove =GameObject.Find("Player").GetComponent<PlayerMove>();
-        move = playerMove.speed;
+        move = playerMove.Speed;
         mrSpeed = move;
         if(instance == null)
         {
@@ -40,9 +39,9 @@ public class DamageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"스피드{move}");
-        Debug.Log($"초당 침수:{flood}");
-        Debug.Log($"침수:{submergence}");
+        Debug.Log($"스피드     :{move}");
+        Debug.Log($"초당 침수  :{flood}");
+        Debug.Log($"침수       :{submergence}");
 
             timer+=Time.deltaTime;
             if(timer>1)

@@ -9,7 +9,7 @@ public enum ServerPackets
     welcome = 1,
     spawnPlayer,
     playerPositionAndRotation,
-    submarinePositionAndRotation,
+    mapPositionAndRotation,
     playerDisconnected,
     playerHealth,
     playerRespawned,

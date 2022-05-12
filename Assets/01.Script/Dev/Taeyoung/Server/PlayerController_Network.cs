@@ -11,9 +11,10 @@ public class PlayerController_Network : MonoBehaviour
     private Player_Network player_Network;
     float rotVertical;
     float rotHorizontal;
-    bool hasUseAbleObject;
-    UseAbleObject_Network useAbleObject;
-
+    bool hasUseAbleObjectNetwork;
+    bool hasUseAbleObjectClient;
+    UseAbleObject_Network useAbleObjectNetwork;
+    UseAbleObject_Client useAbleObjectClient;
     private void Awake()
     {
         rayInnfo_Name = UIManager_Network.Instance.RayInfoName;
@@ -30,17 +31,18 @@ public class PlayerController_Network : MonoBehaviour
     private void Update()
     {
         PlayerRotate();
-        if (hasUseAbleObject)
+        if (hasUseAbleObjectNetwork)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                useAbleObject.Click(player_Network);
+                useAbleObjectNetwork.Click(player_Network);
             }
-        }
-        if (Input.GetKeyDown(KeyCode.P))
+        }else if (hasUseAbleObjectClient)
         {
-            ClientSend.SendAudio(transform.position, AudioEnum.Test);
-            ClientSend.RequestInstantObject(ObjectEnum.Test, transform.position + Vector3.up * 3, Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                useAbleObjectClient.Click();
+            }
         }
     }
     private void FixedUpdate()
@@ -55,22 +57,33 @@ public class PlayerController_Network : MonoBehaviour
         {
             try
             {
-                useAbleObject = hit.transform.GetComponent<UseAbleObject_Network>();
-                rayInnfo_Name.text = useAbleObject.Name;
-                rayInfoDesc.text = useAbleObject.Description;
-                hasUseAbleObject = true;
+                useAbleObjectNetwork = hit.transform.GetComponent<UseAbleObject_Network>();
+                rayInnfo_Name.text = useAbleObjectNetwork.Name;
+                rayInfoDesc.text = useAbleObjectNetwork.Description;
+                hasUseAbleObjectNetwork = true;
             }
             catch
             {
-                Debug.LogError($"Errored : {hit.transform.name} 은 UseAbleObject가 없습니다!");
+                try
+                {
+                    useAbleObjectClient = hit.transform.GetComponent<UseAbleObject_Client>();
+                    rayInnfo_Name.text = useAbleObjectClient.Name;
+                    rayInfoDesc.text = useAbleObjectClient.Description;
+                    hasUseAbleObjectClient = true;
+                }
+                catch
+                {
+                    Debug.LogError($"Errored : {hit.transform.name} 은 UseAbleObject가 없습니다!");
+                }
             }
         }
         else
         {
             rayInnfo_Name.text = "";
             rayInfoDesc.text = "";
-            useAbleObject = null;
-            hasUseAbleObject = false;
+            useAbleObjectNetwork = null;
+            hasUseAbleObjectNetwork = false;
+            hasUseAbleObjectClient = false;
         }
     }
     public void PlayerRotate()

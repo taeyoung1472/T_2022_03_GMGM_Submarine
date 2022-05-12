@@ -37,6 +37,10 @@ public class UseAbleObject_Network : MonoBehaviour, IUseAble_Network
         }
     }
 }
+public enum UseAbleType
+{
+    SubmarineControll,
+}
 public interface IUseAble_Network
 {
     public void Click(Player_Network pn);

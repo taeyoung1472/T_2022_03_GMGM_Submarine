@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Submarine_Network : MonoBehaviour
+public class Map_Network : MonoBehaviour
 {
     int controllingId;
     bool isControlling;
@@ -10,26 +10,26 @@ public class Submarine_Network : MonoBehaviour
     {
         transform.SetPositionAndRotation(pos, rot);
     }
-    public void StartControll(int id)
+    public void StartControll()
     {
-        controllingId = id;
+        controllingId = Client.Instance.myId;
         isControlling = true;
-        ClientSend.HandlePlayerMove(false, id);
+        ClientSend.HandlePlayerMove(false, controllingId);
     }
-    public void StopControll(int id)
+    public void StopControll()
     {
         isControlling = false;
-        ClientSend.HandlePlayerMove(true, id);
+        ClientSend.HandlePlayerMove(true, controllingId);
     }
     public void Update()
     {
         if (isControlling)
         {
             Controll();
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                StopControll(controllingId);
-            }
+            //if (Input.GetKeyDown(KeyCode.E))
+            //{
+            //    StopControll();
+            //}
         }
     }
     public void Controll()

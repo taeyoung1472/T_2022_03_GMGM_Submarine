@@ -253,7 +253,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.welcome, ClientManager.Welcome},
             { (int)ServerPackets.spawnPlayer, ClientManager.SpawnPlayer},
             { (int)ServerPackets.playerPositionAndRotation, ClientManager.PlayerPositionAndRotation},
-            { (int)ServerPackets.submarinePositionAndRotation, ClientManager.SubmarinePositionAndRotation},
+            { (int)ServerPackets.mapPositionAndRotation, ClientManager.MapPositionAndRotation},
             { (int)ServerPackets.playerDisconnected, ClientManager.PlayerDisconnected},
             { (int)ServerPackets.spawnEnemy, ClientManager.SpawnEnemy },
             { (int)ServerPackets.textSended, ClientManager.TextSended},

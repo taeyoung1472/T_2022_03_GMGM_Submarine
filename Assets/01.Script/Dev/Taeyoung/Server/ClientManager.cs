@@ -63,14 +63,14 @@ public class ClientManager : MonoBehaviour
             ClientSend.RequestSpawnAgain(_id);
         }
     }
-    public static void SubmarinePositionAndRotation(Packet _packet)
+    public static void MapPositionAndRotation(Packet _packet)
     {
         try
         {
             Vector3 _pos = _packet.ReadVector3();
             Quaternion _rot = _packet.ReadQuaternion();
 
-            GameManager_Network.Instance.Submarine.SetPositionAndRotation(_pos, _rot);
+            GameManager_Network.Instance.Map.SetPositionAndRotation(_pos, _rot);
         }
         catch (Exception ex)
         {
