@@ -7959,54 +7959,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Radar_XY
       objectReference: {fileID: 0}
-    - target: {fileID: 477009962222276307, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009962222276311, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: range
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009962222276311, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: state
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009963249370272, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009963249370272, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009963249370273, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.025
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009963249370334, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009963282842463, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009964041756201, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009964113418477, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009964127858311, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 477009964127858312, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
 --- !u!1 &1509940021

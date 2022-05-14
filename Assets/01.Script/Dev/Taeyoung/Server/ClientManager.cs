@@ -111,7 +111,7 @@ public class ClientManager : MonoBehaviour
     {
         try
         {
-            GameManager_Network.Instance.netTransform[packet.ReadInt()].SetPosition(packet.ReadVector3());
+            NetworkTransformManager.instance.NetTransforms[packet.ReadInt()].SetPosition(packet.ReadVector3());
         }
         catch { /*아직 초기화(Init)이 되지 않은상황*/}
     }
@@ -119,7 +119,7 @@ public class ClientManager : MonoBehaviour
     {
         try
         {
-            GameManager_Network.Instance.netTransform[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
+            NetworkTransformManager.instance.NetTransforms[packet.ReadInt()].SetRotation(packet.ReadQuaternion());
         }
         catch { /*아직 초기화(Init)이 되지 않은상황*/}
     }
@@ -140,5 +140,9 @@ public class ClientManager : MonoBehaviour
         int id = packet.ReadInt();
         Vector3 pos = packet.ReadVector3();
         EnemySpawner.instance.SpawnEnemy(id, pos);
+    }
+    public static void Sync(Packet packet)
+    {
+        SyncManager.instance.Sync(packet);
     }
 }

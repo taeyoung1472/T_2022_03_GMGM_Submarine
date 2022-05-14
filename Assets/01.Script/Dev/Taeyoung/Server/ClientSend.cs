@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 public class ClientSend : MonoBehaviour
 {
-    private static void SendTCPData(Packet _packet)
+    public static void SendTCPData(Packet _packet)
     {
         _packet.WriteLength();
         Client.Instance.tcp.SendData(_packet);
     }
-    private static void SendUDPData(Packet _packet)
+    public static void SendUDPData(Packet _packet)
     {
         _packet.WriteLength();
         Client.Instance.udp.SendData(_packet);
@@ -102,6 +102,7 @@ public class ClientSend : MonoBehaviour
         {
             packet.Write((int)audioId);
             packet.Write(pos);
+            AudioPacket.Instance.PlayAudio((int)audioId, pos);
 
             SendTCPData(packet);
         }
@@ -129,7 +130,7 @@ public class ClientSend : MonoBehaviour
     }
     public static void EnemyHit(int id, float damage)
     {
-        using (Packet packet = new Packet((int)ClientPackets.controll))
+        using (Packet packet = new Packet((int)ClientPackets.enemyHit))
         {
             packet.Write(id);
             packet.Write(damage);
@@ -137,5 +138,15 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
+    /*public static void ReturnInitCheck(int id, string name)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.returnInitNetworkTransform))
+        {
+            packet.Write(id);
+            packet.Write(bool);
+
+            SendTCPData(packet);
+        }
+    }*/
     #endregion
 }

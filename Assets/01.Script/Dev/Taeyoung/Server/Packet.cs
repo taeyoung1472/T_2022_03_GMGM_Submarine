@@ -30,6 +30,7 @@ public enum ServerPackets
     networkPosition,
     networkRotation,
     networkTransformInit,
+    sync,
 }
 
 /// <summary>Sent from client to server.</summary>
@@ -47,8 +48,8 @@ public enum ClientPackets
     requestSpawnObject,
     controll,
     enemyHit,
+    sync,
 }
-
 
 public class Packet : IDisposable
 {
