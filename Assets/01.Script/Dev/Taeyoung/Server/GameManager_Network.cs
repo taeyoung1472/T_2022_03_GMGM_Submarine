@@ -79,7 +79,6 @@ public class GameManager_Network : MonoBehaviour
     }
     public void InitNetworkTransform(int id, string name)
     {
-        print("Init ½ÇÇà");
         if (NetworkTransformManager.instance.NetTransforms.ContainsKey(id))
         {
             return;
@@ -87,6 +86,5 @@ public class GameManager_Network : MonoBehaviour
         NetworkTransform netTrans = GameObject.Find(name).AddComponent<NetworkTransform>();
         netTrans.ID = id;
         NetworkTransformManager.instance.NetTransforms.Add(id, netTrans);//NetTransforms[id] = netTrans;
-        print("AA");
     }
 }
