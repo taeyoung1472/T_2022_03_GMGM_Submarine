@@ -15,6 +15,7 @@ MonoBehaviour:
   _productName: "\uAC80"
   _disposalPrice: 300
   _productExplain: "\uB0A0\uCE74\uB86D\uC2B5\uB2C8\uB2E4"
-  _productPainting: {fileID: 21300000, guid: 33647ccd866165b46bdc96071c7298e0, type: 3}
+  _productPainting: {fileID: 21300000, guid: a78bcef87ec9f476fb0f83193e7115ac, type: 3}
+  _productCount: 0
   isAnalsiys: 0
   item: 2

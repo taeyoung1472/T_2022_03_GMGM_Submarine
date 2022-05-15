@@ -15,6 +15,7 @@ MonoBehaviour:
   _productName: "\uBD95\uB300"
   _disposalPrice: 200
   _productExplain: "\uBD95\uB300\uB2E4\uC6A9"
-  _productPainting: {fileID: 21300000, guid: 6e3492469b16a4d4daca2c372c5b7fb7, type: 3}
+  _productPainting: {fileID: 21300000, guid: 8b3a9479f3f6e467c886d3a545048297, type: 3}
+  _productCount: 0
   isAnalsiys: 0
   item: 0

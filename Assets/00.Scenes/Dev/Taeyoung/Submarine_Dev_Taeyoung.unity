@@ -3418,6 +3418,9 @@ MonoBehaviour:
     m_Bits: 0
   mapCheckSprite: {fileID: 0}
   targetCheckCollider: {fileID: 0}
+  isMapCheck: 1
+  isTargetCheck: 1
+  isLocalMapCheck: 0
 --- !u!1 &251593052
 GameObject:
   m_ObjectHideFlags: 0
@@ -6133,6 +6136,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Radar_XY
       objectReference: {fileID: 0}
+    - target: {fileID: 477009962222276307, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 477009962222276311, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
       propertyPath: range
       value: 250
@@ -8372,6 +8379,9 @@ MonoBehaviour:
     m_Bits: 0
   mapCheckSprite: {fileID: 0}
   targetCheckCollider: {fileID: 0}
+  isMapCheck: 1
+  isTargetCheck: 1
+  isLocalMapCheck: 0
 --- !u!4 &749364894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 480104, guid: 0bed5ae724ef46c4eaad3de70d021819, type: 3}
@@ -12001,6 +12011,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 14
       objectReference: {fileID: 0}
+    - target: {fileID: 4747077509301730841, guid: 59f5ef17f3744b543bfb2cb4eb72f802, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4774110073367833872, guid: 59f5ef17f3744b543bfb2cb4eb72f802, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -12056,6 +12070,10 @@ PrefabInstance:
     - target: {fileID: 5259429546755448370, guid: 59f5ef17f3744b543bfb2cb4eb72f802, type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5259429546755448370, guid: 59f5ef17f3744b543bfb2cb4eb72f802, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5539887351065401406, guid: 59f5ef17f3744b543bfb2cb4eb72f802, type: 3}
       propertyPath: m_Layer
@@ -15312,6 +15330,9 @@ MonoBehaviour:
     m_Bits: 0
   mapCheckSprite: {fileID: 0}
   targetCheckCollider: {fileID: 0}
+  isMapCheck: 1
+  isTargetCheck: 1
+  isLocalMapCheck: 0
 --- !u!114 &1322659653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19371,6 +19392,10 @@ PrefabInstance:
     - target: {fileID: 477009962222276307, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
       propertyPath: m_Name
       value: Radar_YZ
+      objectReference: {fileID: 0}
+    - target: {fileID: 477009962222276307, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 477009962222276311, guid: 67524365a5d11f84c84f4fa0d30c2710, type: 3}
       propertyPath: range

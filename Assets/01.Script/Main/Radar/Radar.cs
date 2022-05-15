@@ -16,6 +16,9 @@ public class Radar : MonoBehaviour
     [SerializeField] private LayerMask mapCheckLayer;
     [SerializeField] private Sprite mapCheckSprite;
     [SerializeField] private Transform targetCheckCollider;
+    [SerializeField] private bool isMapCheck = true;
+    [SerializeField] private bool isTargetCheck = true;
+    [SerializeField] private bool isLocalMapCheck = false;
     private Queue<GameObject> virtualTarget = new Queue<GameObject>();
     float calculRange;
     public void Start()
@@ -33,7 +36,10 @@ public class Radar : MonoBehaviour
                 fixVecX = Vector3.right; fixVecY = Vector3.up; otherVec = Vector3.forward;
                 break;
         }
-        StartCoroutine(MapCheckCorutine());
+        if (isMapCheck)
+        {
+            StartCoroutine(MapCheckCorutine());
+        }
         targetCheckCollider.transform.position = Vector3.zero;
         targetCheckCollider.Rotate(fixVecX, 90);
     }
@@ -55,7 +61,7 @@ public class Radar : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("RadarTarget"))
+        if (other.CompareTag("RadarTarget") && isTargetCheck)
         {
             Vector3 ditectedPos;
             VirtualTarget vt = DisplayTarget(other.transform.position, out ditectedPos);
@@ -79,7 +85,7 @@ public class Radar : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1.25f);
             MapCheck(otherVec);
         }
     }
@@ -104,21 +110,33 @@ public class Radar : MonoBehaviour
             if(Physics.Raycast(mapChecker.position, dir, out hit, 10000f, mapCheckLayer))
             {
                 Vector3 ditectedPos;
-                VirtualTarget vt = DisplayTarget(hit.point, out ditectedPos);
+                VirtualTarget vt = null;
+                if (isLocalMapCheck)
+                {
+                    vt = DisplayTarget(hit.point, out ditectedPos, mapChecker.position);
+                }
+                else
+                {
+                    vt = DisplayTarget(hit.point, out ditectedPos);
+                }
                 if (vt != null)
                 {
                     vt.transform.localScale = Vector3.one * 0.1f;
+                    if(state == RadarStat.YZ || state == RadarStat.XZ)
+                    {
+                        ditectedPos = new Vector3(ditectedPos.z, 0.15f, ditectedPos.x);
+                    }
                     vt.Set(ditectedPos, mapCheckSprite, EnqueueObject);
                 }
             }
             mapChecker.Rotate(axis, fixAngle);
         }
     }
-    public VirtualTarget DisplayTarget(Vector3 targetPos, out Vector3 outPos)
+    public VirtualTarget DisplayTarget(Vector3 targetPos, out Vector3 outPos, Vector3 localPos = default(Vector3))
     {
         if (virtualTarget.Count <= 0)
             virtualTarget.Enqueue(Instantiate(virtualTargetTamplate, transform));
-        Vector3 pivotVec = targetPos;
+        Vector3 pivotVec = targetPos - localPos;
         Vector3 tgtVecX = new Vector3(pivotVec.x * fixVecX.x, pivotVec.y * fixVecX.y, pivotVec.z * fixVecX.z);
         Vector3 tgtVecY = new Vector3(pivotVec.x * fixVecY.x, pivotVec.y * fixVecY.y, pivotVec.z * fixVecY.z);
         float xPos = tgtVecX.magnitude * Mathf.Sign(tgtVecX.x != 0 ? tgtVecX.x : tgtVecX.y != 0 ? tgtVecX.y : tgtVecX.z);
