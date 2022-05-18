@@ -42,6 +42,8 @@ public class Gun : MonoBehaviour
     }
     public void Update()
     {
+        if (!PlayerStat.IsCanControll)
+            return;
         if (Input.GetKeyDown(KeyCode.R) && !isReload)
         {
             StartCoroutine(Reload());
@@ -80,7 +82,7 @@ public class Gun : MonoBehaviour
                     yield return new WaitUntil(() => Input.GetKey(KeyCode.Mouse0) && curAmmo >= 0);
                     break;
             }
-            if (!isCanShoot) continue;
+            if (!isCanShoot || !PlayerStat.IsCanControll) continue;
             DisplayAmmo();
             Recoil();
             PlayAudio(shootClip);

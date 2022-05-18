@@ -46,7 +46,7 @@ public class PlayerHealth : MonoBehaviour
     [Space(2f)]
     [Header("플레이어 기본 정보")]
     [SerializeField]
-    private GetPlayerScript playerStatusData;//ScriptableObject로 불러온 데이터
+    private PlayerStateData playerStatusData;//ScriptableObject로 불러온 데이터
 
     private PlayerMove_GiJoo playerMove;
     private GameManager_Gijoo gameManager;
@@ -623,5 +623,4 @@ public class PlayerHealth : MonoBehaviour
         }
     }
     #endregion
-
 }

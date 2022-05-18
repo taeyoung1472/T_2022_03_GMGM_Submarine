@@ -23,18 +23,22 @@ public class Analysis : MonoBehaviour
             _description = value;
         }
     }*/
-    public void Start()
+    public void OnEnable()
     {
         CheckNext();
     }
+    public void Set(DescriptionItemSO[] items)
+    {
+        analysisDatas.AddRange(items);
+    }
     public void Storage()
     {
-        print($"보관했습니다! 이름 : {currentViewDescriptionDataSO._productName}");
+        ItemSOManager.Instance.ItemDataSO.Add(currentViewDescriptionDataSO);
         CheckNext();
     }
     public void Sell()
     {
-        print($"팔았습니다! 가격 : {currentViewDescriptionDataSO._disposalPrice}");
+        MoneyManager.instance.Money += currentViewDescriptionDataSO._disposalPrice;
         CheckNext();
     }
     public void CheckNext()
@@ -44,7 +48,6 @@ public class Analysis : MonoBehaviour
             EndAnalysis();
             return;
         }
-        print("디음 분석자료 불러오기");
         DescriptionItemSO descObjectSO = analysisDatas[0];
         _productName.text = descObjectSO._productName;
         _productExplain.text = descObjectSO._productExplain;
@@ -55,7 +58,6 @@ public class Analysis : MonoBehaviour
     }
     public void EndAnalysis()
     {
-        print("분석 종료!");
         analysisPanel.SetActive(false);
         suplliesPanel.SetActive(true);
     }

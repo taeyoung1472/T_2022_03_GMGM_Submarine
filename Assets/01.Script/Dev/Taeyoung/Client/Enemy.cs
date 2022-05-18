@@ -10,24 +10,42 @@ public class Enemy : MonoBehaviour
     float speed;
     [SerializeField] private Transform[] players;
     [SerializeField] private float searchRange;
+    [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerLayerMask;
     [SerializeField] private LayerMask searchLayerMask;
     [SerializeField] private NavMeshAgent navMeshAgent;
     [SerializeField] private Transform eye;
     [SerializeField] private float hp;//Enemy Data 만들기
+    [SerializeField] private float attackDelay = 1f;
+    [SerializeField] private AudioClip[] attackClips;
+    float attackChecker;
     void Start()
     {
         animator = GetComponent<Animator>();
         Search();
         StartCoroutine(AIBrain());
         speed = navMeshAgent.speed;
+        navMeshAgent.stoppingDistance = attackRange * 0.5f;
+        attackChecker = Time.time;
     }
     IEnumerator AIBrain()
     {
         while (!isDead)
         {
-            Chase(CheckPlayer());
-            yield return new WaitForSeconds(1f);
+            Transform nearPlayer = CheckPlayer();
+            if(nearPlayer != null)
+            {
+                float dist = Vector3.Distance(transform.position, nearPlayer.position);
+                if (dist < attackRange && Time.time > attackChecker)
+                {
+                    Attack(nearPlayer.GetComponent<HpManager>());
+                }
+                else if (dist < searchRange)
+                {
+                    Chase(nearPlayer);
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
         }
     }
     IEnumerator Stun(float time)
@@ -35,13 +53,6 @@ public class Enemy : MonoBehaviour
         navMeshAgent.speed = 0;
         yield return new WaitForSeconds(time);
         navMeshAgent.speed = speed;
-    }
-    public void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.layer == playerLayerMask)
-        {
-            Attack(collision.transform.GetComponent<PlayerMove>());
-        }
     }
     void Search()
     {
@@ -94,9 +105,13 @@ public class Enemy : MonoBehaviour
         navMeshAgent.SetDestination(target.position);
         animator.SetBool("IsMove", true);
     }
-    void Attack(PlayerMove move)
+    void Attack(HpManager health)
     {
-        print("공격!");
+        health.Damaged(25, Define.RandomEnum<PartType>());
+        AudioPoolManager.instance.Play(attackClips[Random.Range(0, attackClips.Length)], transform.position);
+        animator.Play("Attack");
+        
+        attackChecker = Time.time + attackDelay;
     }
     public void Damaged(float damage) 
     {
@@ -109,7 +124,7 @@ public class Enemy : MonoBehaviour
             navMeshAgent.enabled = false;
             return;
         }
-        animator.SetTrigger("Hit");
+        animator.Play("Hit");
         StartCoroutine(Stun(0.5f));
     }
     enum State

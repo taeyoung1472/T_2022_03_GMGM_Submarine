@@ -21,7 +21,6 @@ public class BuyGoods : MonoBehaviour
         set
         {
             _description = value;
-
         }
     }
     float _delayTime = 0.2f;
@@ -62,7 +61,7 @@ public class BuyGoods : MonoBehaviour
                     break;
             }
             GameObject obj = Instantiate(_panel, _content[index].transform);
-            obj.GetComponent<ItemPanel>().SetBuyGoods(this, _description[i]);
+            obj.GetComponent<ItemPanel>().SetInfo(_description[i], true);
             obj.SetActive(true);
             index = 0;
         }
@@ -95,7 +94,7 @@ public class BuyGoods : MonoBehaviour
 
         _isSelect = false;
         _clickInitButton.raycastTarget = false;
-        Debug.Log("잘바뀔듯");
+        Debug.Log("?�바?�듯");
     }
 
 
@@ -161,15 +160,15 @@ public class BuyGoods : MonoBehaviour
     {
         if (_cnt.text == null || int.Parse(_cnt.text) <= 0|| _descriptionItemSO == null) return;
 
-        if (MoManager.instance.Money <= _descriptionItemSO._disposalPrice)
+        if (MoneyManager.instance.Money <= _descriptionItemSO._disposalPrice)
         {
-            Debug.Log("돈을 쳐 모아");
+            Debug.Log("?�을 �?모아");
             return;
         }
 
         int amount = int.Parse(_cnt.text);
-        MoManager.instance.Money -= _descriptionItemSO._disposalPrice * amount;
-        Debug.Log(MoManager.instance.Money -= _descriptionItemSO._disposalPrice);
+        MoneyManager.instance.Money -= _descriptionItemSO._disposalPrice * amount;
+        Debug.Log(MoneyManager.instance.Money -= _descriptionItemSO._disposalPrice);
         _descriptionItemSO._productCount += amount;
         Debug.Log(amount);
 
@@ -180,8 +179,8 @@ public class BuyGoods : MonoBehaviour
         _buyPanel.gameObject.SetActive(false);
         Tooltip(false);
         _storeRoom.gameObject.SetActive(true);
-        Debug.Log("사졌음");
+        //Debug.Log("?�졌??);
         storeroom.Print();
-        //만약 저장고가 꽉 차있을때 저장과 처리 화면으로 이동
+        //만약 ?�?�고가 �?차있?�때 ?�?�과 처리 ?�면?�로 ?�동
     }
 }

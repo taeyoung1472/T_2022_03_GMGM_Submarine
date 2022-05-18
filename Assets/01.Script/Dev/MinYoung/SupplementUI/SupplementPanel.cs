@@ -10,7 +10,7 @@ public class SupplementPanel : MonoBehaviour
 
     public void Set(DescriptionItemSO desc)
     {
-        _nameText.text = desc.name;
+        _nameText.text = desc._productName;
         _productImage.sprite = desc._productPainting;
     }
 }

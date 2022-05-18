@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   layerMask:
     serializedVersion: 2
-    m_Bits: 12095
+    m_Bits: 12087
 --- !u!120 &5997485642990962604
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -303,7 +303,7 @@ MonoBehaviour:
   hitParticle: {fileID: 1000011945391522, guid: 106370216fc5c194f8cd4b141c3f1d77, type: 3}
   cullingLayer:
     serializedVersion: 2
-    m_Bits: 12095
+    m_Bits: 12087
 --- !u!1 &5997485644318448918
 GameObject:
   m_ObjectHideFlags: 0

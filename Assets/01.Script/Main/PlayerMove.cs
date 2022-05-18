@@ -6,7 +6,7 @@ using DG.Tweening;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private CharacterController cc;
-    [SerializeField] private float speed, sensitivity;
+    [SerializeField] private float sensitivity;
     [SerializeField] private Transform cam;
     [SerializeField] private float camLimit;
     [SerializeField] private float jumpForce;
@@ -15,8 +15,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private AnimationCurve curve;
     [SerializeField] private Vector2 recoilValue = Vector2.zero;
     [SerializeField] private int id;
+    [SerializeField] private PlayerStateData stateData;
+    [SerializeField] private PlayerStat stat;
     public int ID { get { return id; } }
-    public float Speed { get { return speed; } set { speed = value; } }
+    public float Speed { get { return stateData.PSpd * stat.MoveSpeedFixValue; } }
     UseAbleObject useAbleObject;
     Vector3 moveDir;
     RaycastHit hit;
@@ -24,9 +26,12 @@ public class PlayerMove : MonoBehaviour
     public bool IsCanMove { get { return isCanMove; } set { isCanMove = value; } }
     void Update()
     {
-        PlayerRotate();
-        Move();
-        Ray();
+        if (PlayerStat.IsCanControll)
+        {
+            PlayerRotate();
+            Move();
+            Ray();
+        }
     }
     public void PlayerRotate()
     {
@@ -62,8 +67,8 @@ public class PlayerMove : MonoBehaviour
         {
 
         }
-        moveDir.y -= 9.8f * Time.deltaTime;
-        cc.Move(moveDir * Time.deltaTime * speed);
+        //moveDir.y -= 9.8f * Time.deltaTime;
+        cc.Move(moveDir * Time.deltaTime * stateData.PSpd * stat.MoveSpeedFixValue + (Vector3.down * 9.8f * Time.deltaTime));
     }
     public void Ray()
     {

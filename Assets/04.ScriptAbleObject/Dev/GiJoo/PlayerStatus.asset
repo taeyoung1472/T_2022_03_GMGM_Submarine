@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMaxHp: 100
   playerMaxMental: 100
-  playerSpeed: 10
-  playerRunningSpeed: 20
-  playerHandlingSpeed: 10
+  playerSpeed: 5
+  playerRunningSpeed: 10
+  playerHandlingSpeed: 1

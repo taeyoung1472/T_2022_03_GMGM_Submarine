@@ -30,4 +30,8 @@ public class SupplementaryGoods: MonoBehaviour
             i++;
         }
     }
+    public void Add()
+    {
+        ItemSOManager.Instance.ItemDataSO.AddRange(_description);
+    }
 }
