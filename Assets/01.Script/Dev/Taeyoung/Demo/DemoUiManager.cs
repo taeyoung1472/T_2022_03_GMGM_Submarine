@@ -16,6 +16,7 @@ public class DemoUiManager : MonoBehaviour
     public void OnOff(bool isOn)
     {
         panel.SetActive(isOn);
+        DemoSoundManager.instance.Click(isOn);
         PlayerStat.IsCanControll = !isOn;
     }
     public void ResetActive()

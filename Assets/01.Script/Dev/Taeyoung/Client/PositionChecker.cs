@@ -8,7 +8,6 @@ public class PositionChecker : MonoBehaviour
     [SerializeField] private int id;
     public void OnTriggerEnter(Collider other)
     {
-        print(other.GetComponent<PlayerMove>());
         positionDisplayManager.SetPlayerPosition(other.GetComponent<PlayerMove>().ID, id);
     }
 }

@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class DemoSoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static DemoSoundManager instance;
+    [SerializeField] private AudioClip postiveClick;
+    [SerializeField] private AudioClip negativeClick;
+    public void Awake()
     {
-        
+        if(instance == null)
+        {
+            instance = this;
+        }
     }
-
-    // Update is called once per frame
-    void Update()
+    public void Click(bool isPostive)
     {
-        
+        if (isPostive)
+            AudioPoolManager.instance.Play(postiveClick, transform.position);
+        else
+            AudioPoolManager.instance.Play(negativeClick, transform.position);
     }
 }
