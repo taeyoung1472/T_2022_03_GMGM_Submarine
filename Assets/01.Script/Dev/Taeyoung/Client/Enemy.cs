@@ -18,13 +18,14 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float hp;//Enemy Data ¸¸µé±â
     [SerializeField] private float attackDelay = 1f;
     [SerializeField] private AudioClip[] attackClips;
+    [SerializeField] private AudioClip[] hitClips;
     float attackChecker;
     void Start()
     {
         animator = GetComponent<Animator>();
         Search();
         StartCoroutine(AIBrain());
-        speed = navMeshAgent.speed;
+        speed = navMeshAgent.speed; 
         navMeshAgent.stoppingDistance = attackRange * 0.5f;
         attackChecker = Time.time;
     }
@@ -36,9 +37,12 @@ public class Enemy : MonoBehaviour
             if(nearPlayer != null)
             {
                 float dist = Vector3.Distance(transform.position, nearPlayer.position);
-                if (dist < attackRange && Time.time > attackChecker)
+                if (dist < attackRange)
                 {
-                    Attack(nearPlayer.GetComponent<HpManager>());
+                    if (Time.time > attackChecker)
+                    {
+                        Attack(nearPlayer.GetComponent<HpManager>());
+                    }
                 }
                 else if (dist < searchRange)
                 {
@@ -108,7 +112,7 @@ public class Enemy : MonoBehaviour
     void Attack(HpManager health)
     {
         health.Damaged(25, Define.RandomEnum<PartType>());
-        AudioPoolManager.instance.Play(attackClips[Random.Range(0, attackClips.Length)], transform.position);
+        AudioPoolManager.instance.Play(attackClips, transform.position);
         animator.Play("Attack");
         
         attackChecker = Time.time + attackDelay;
@@ -117,6 +121,7 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) return;
         hp -= damage;
+        AudioPoolManager.instance.Play(hitClips, transform.position, 1f, 1.5f);
         if(hp <= 0)
         {
             isDead = true;
