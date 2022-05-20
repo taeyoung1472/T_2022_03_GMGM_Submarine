@@ -9,6 +9,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GunData gunData;
     [SerializeField] private GameObject soundObject;
     [SerializeField] private AudioClip shootClip;
+    [SerializeField] private AudioClip reloadClip;
     [SerializeField] private Transform gun;
     [SerializeField] private MeshRenderer flashEffect;
     [SerializeField] private Transform firePos;
@@ -46,6 +47,7 @@ public class Gun : MonoBehaviour
             return;
         if (Input.GetKeyDown(KeyCode.R) && !isReload)
         {
+            PlayAudio(reloadClip);
             StartCoroutine(Reload());
         }
         if (Input.GetKeyDown(KeyCode.Mouse1))

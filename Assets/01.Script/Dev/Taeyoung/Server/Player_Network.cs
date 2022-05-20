@@ -26,9 +26,12 @@ public class Player_Network : MonoBehaviour
     public void SetPositionAndRotation(Vector3 pos, Quaternion rot, Vector2 dir)
     {
         dir.Normalize();
-        moveDir = Vector2.Lerp(moveDir, dir, Time.deltaTime * 2.5f);
-        animator.SetFloat("X", moveDir.x);
-        animator.SetFloat("Y", moveDir.y);
+        moveDir = Vector2.Lerp(moveDir, dir, Time.deltaTime * 5f);
+        Vector2 calculDir;
+        calculDir.x = moveDir.x < 0.2f ? 0 : moveDir.x;
+        calculDir.y = moveDir.y < 0.2f ? 0 : moveDir.y;
+        animator.SetFloat("X", calculDir.x);
+        animator.SetFloat("Y", calculDir.y);
         transform.SetPositionAndRotation(pos, rot);
         model.localPosition = Vector3.zero;
     }

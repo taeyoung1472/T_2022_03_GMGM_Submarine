@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _productName: "\uBD95\uB300"
   _disposalPrice: 200
-  _productExplain: "\uBD95\uB300\uB2E4\uC6A9"
+  _productExplain: "\uC0C1\uCC98\uB97C \uCE58\uB8CC\uD560\uC218 \uC788\uB294 \uBD95\uB300\uC785\uB2C8\uB2E4"
   _productPainting: {fileID: 21300000, guid: 8b3a9479f3f6e467c886d3a545048297, type: 3}
   _productCount: 0
   isAnalsiys: 0

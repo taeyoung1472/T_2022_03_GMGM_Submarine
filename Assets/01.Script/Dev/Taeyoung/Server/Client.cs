@@ -267,7 +267,7 @@ public class Client : MonoBehaviour
         Debug.Log("패킷 초기설정 완료");
     }
 
-    private void Disconnect()
+    public void Disconnect()
     {
         if (isConnected)
         {

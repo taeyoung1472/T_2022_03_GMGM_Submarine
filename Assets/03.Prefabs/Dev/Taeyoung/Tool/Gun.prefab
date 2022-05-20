@@ -297,6 +297,7 @@ MonoBehaviour:
   gunData: {fileID: 11400000, guid: 597c935895dfb6f4e9c60833d445a583, type: 2}
   soundObject: {fileID: 246815314276692541, guid: 9407968b0e9de9d4cb1f1b288d957294, type: 3}
   shootClip: {fileID: 8300000, guid: d8957aa03d0523743a803999a8edb053, type: 3}
+  reloadClip: {fileID: 8300000, guid: d1b7981bed755284391dcda5b2e37865, type: 3}
   gun: {fileID: 5997485643741234485}
   flashEffect: {fileID: 5997485644318448916}
   firePos: {fileID: 5997485644318448919}
