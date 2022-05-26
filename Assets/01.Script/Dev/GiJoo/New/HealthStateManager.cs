@@ -19,7 +19,7 @@ public class HealthStateManager : MonoBehaviour
             Instance = this;
         }
     }
-    public void Add(PartType type, HealthStateDataSO data)
+    public void Add(PlayerPartType type, HealthStateDataSO data)
     {
         string keyString = $"{type}:{data.stateName}";
         if(displayQueue.Count > 0)
@@ -44,7 +44,7 @@ public class HealthStateManager : MonoBehaviour
             item.transform.SetAsFirstSibling();
         }
     }
-    public void Remove(PartType type, HealthStateDataSO data)
+    public void Remove(PlayerPartType type, HealthStateDataSO data)
     {
         string keyString = $"{type}:{data.stateName}";
         if (displayiedObjects.ContainsKey(keyString))

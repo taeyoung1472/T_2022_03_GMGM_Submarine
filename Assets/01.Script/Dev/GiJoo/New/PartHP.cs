@@ -6,7 +6,7 @@ public class PartHP : MonoBehaviour
 {
     [SerializeField] private float hp = 100;
     [SerializeField] private HpManager hpManager;
-    [SerializeField] private PartType type;
+    [SerializeField] private PlayerPartType type;
     [SerializeField] private HealthStateDataSO lightInjureData;
     [SerializeField] private HealthStateDataSO heavyInjureData;
     [SerializeField] private HealthStateDataSO blackoutInjureData;

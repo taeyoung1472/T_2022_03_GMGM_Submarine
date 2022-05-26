@@ -14,7 +14,7 @@ public class HealthStateDisplay : MonoBehaviour
     [SerializeField] private Color severeColor;
     HealthStateDataSO currentData;
     public HealthStateDataSO CurrentData { get { return currentData; } }
-    public void Set(HealthStateDataSO data, PartType type)
+    public void Set(HealthStateDataSO data, PlayerPartType type)
     {
         nameText.text = $"{data.stateName} ({type})";
         descText.text = data.stateDescription;

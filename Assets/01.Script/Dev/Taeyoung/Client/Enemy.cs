@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour
     }
     void Attack(HpManager health)
     {
-        health.Damaged(25, Define.RandomEnum<PartType>());
+        health.Damaged(25, Define.RandomEnum<PlayerPartType>());
         AudioPoolManager.instance.Play(attackClips, transform.position);
         animator.Play("Attack");
         

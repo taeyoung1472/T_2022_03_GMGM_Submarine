@@ -25,7 +25,7 @@ public class PlayerPartDisplay : MonoBehaviour
             Instance = this;
         }
     }
-    public void SetPartColor(PartType type, float hp)
+    public void SetPartColor(PlayerPartType type, float hp)
     {
         Color targetColor;
         if (hp <= 0)
@@ -43,22 +43,22 @@ public class PlayerPartDisplay : MonoBehaviour
 
         switch (type)
         {
-            case PartType.Head:
+            case PlayerPartType.Head:
                 head.color = targetColor;
                 break;
-            case PartType.Thorax:
+            case PlayerPartType.Thorax:
                 thorax.color = targetColor;
                 break;
-            case PartType.RightArm:
+            case PlayerPartType.RightArm:
                 rArm.color = targetColor;
                 break;
-            case PartType.LeftArm:
+            case PlayerPartType.LeftArm:
                 lArm.color = targetColor;
                 break;
-            case PartType.RightLeg:
+            case PlayerPartType.RightLeg:
                 rLeg.color = targetColor;
                 break;
-            case PartType.LeftLeg:
+            case PlayerPartType.LeftLeg:
                 lLeg.color = targetColor;
                 break;
         }
