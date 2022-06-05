@@ -30,6 +30,7 @@ public enum ServerPackets
     networkPosition,
     networkRotation,
     networkTransformInit,
+    lobby_Update,
     sync,
 }
 
@@ -48,6 +49,7 @@ public enum ClientPackets
     requestSpawnObject,
     controll,
     enemyHit,
+    lobby_Ready,
     sync,
 }
 

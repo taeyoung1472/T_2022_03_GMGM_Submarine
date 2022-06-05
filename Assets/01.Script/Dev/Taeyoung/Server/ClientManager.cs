@@ -141,6 +141,10 @@ public class ClientManager : MonoBehaviour
         Vector3 pos = packet.ReadVector3();
         EnemySpawner.instance.SpawnEnemy(id, pos);
     }
+    public static void Lobby_Update(Packet packet)
+    {
+        LobbyManager.instance.UpdateUserData(packet);
+    }
     public static void Sync(Packet packet)
     {
         SyncManager.instance.Sync(packet);

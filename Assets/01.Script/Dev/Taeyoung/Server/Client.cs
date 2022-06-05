@@ -262,6 +262,7 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.networkPosition, ClientManager.NetworkPosition },
             { (int)ServerPackets.networkRotation, ClientManager.NetworkRotation },
             { (int)ServerPackets.networkTransformInit, ClientManager.NetworkTransformInit },
+            { (int)ServerPackets.lobby_Update, ClientManager.Lobby_Update },
             { (int)ServerPackets.sync, ClientManager.Sync },
         };
         Debug.Log("패킷 초기설정 완료");

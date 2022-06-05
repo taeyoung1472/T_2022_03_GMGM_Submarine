@@ -138,6 +138,16 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
+    public static void Lobby_Ready(string _name, bool _value)
+    {
+        using (Packet packet = new Packet((int)ClientPackets.lobby_Ready))
+        {
+            packet.Write(_name);
+            packet.Write(_value);
+
+            SendTCPData(packet);
+        }
+    }
     /*public static void ReturnInitCheck(int id, string name)
     {
         using (Packet packet = new Packet((int)ClientPackets.returnInitNetworkTransform))
