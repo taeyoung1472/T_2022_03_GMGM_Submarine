@@ -255,14 +255,11 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerPositionAndRotation, ClientManager.PlayerPositionAndRotation},
             { (int)ServerPackets.mapPositionAndRotation, ClientManager.MapPositionAndRotation},
             { (int)ServerPackets.playerDisconnected, ClientManager.PlayerDisconnected},
-            { (int)ServerPackets.spawnEnemy, ClientManager.SpawnEnemy },
             { (int)ServerPackets.textSended, ClientManager.TextSended},
             { (int)ServerPackets.audioSended, ClientManager.AudioSended},
-            { (int)ServerPackets.objectSended, ClientManager.ObjectSended},
             { (int)ServerPackets.networkPosition, ClientManager.NetworkPosition },
             { (int)ServerPackets.networkRotation, ClientManager.NetworkRotation },
             { (int)ServerPackets.networkTransformInit, ClientManager.NetworkTransformInit },
-            { (int)ServerPackets.lobby_Update, ClientManager.Lobby_Update },
             { (int)ServerPackets.sync, ClientManager.Sync },
         };
         Debug.Log("패킷 초기설정 완료");

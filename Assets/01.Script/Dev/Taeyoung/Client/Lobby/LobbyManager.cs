@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LobbyManager : MonoBehaviour
 {
-    public static LobbyManager instance;
+    /*public static LobbyManager instance;
+    [SerializeField] private LobbyPlayerListManager playerListManager;
     private UserData myData;
     private Dictionary<string, UserData> users = new Dictionary<string, UserData>();
     int userCount;
@@ -12,10 +13,6 @@ public class LobbyManager : MonoBehaviour
     {
         if(instance == null)
             instance = this;
-    }
-    public void Ready()
-    {
-        ClientSend.Lobby_Ready(myData.Name, !myData.IsReady);
     }
     public void UpdateUserData(Packet packet)
     {
@@ -32,6 +29,7 @@ public class LobbyManager : MonoBehaviour
                 data.IsReady = isReady;
                 data.IsLeader = isLeader;
                 users.Add(name, data);
+                playerListManager.AddPlayer(data);
                 print($"User({name}) 을 등록함");
             }
             else
@@ -41,5 +39,5 @@ public class LobbyManager : MonoBehaviour
                 print($"User({name}) 의 정보를 업데이트함");
             }
         }
-    }
+    }*/
 }

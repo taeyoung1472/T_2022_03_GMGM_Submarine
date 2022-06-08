@@ -27,9 +27,10 @@ public class Player_Network : MonoBehaviour
     {
         dir.Normalize();
         moveDir = Vector2.Lerp(moveDir, dir, Time.deltaTime * 5f);
+        Vector2 absMoveDir = new Vector2(Mathf.Abs(moveDir.x), Mathf.Abs(moveDir.y));
         Vector2 calculDir;
-        calculDir.x = moveDir.x < 0.2f ? 0 : moveDir.x;
-        calculDir.y = moveDir.y < 0.2f ? 0 : moveDir.y;
+        calculDir.x = absMoveDir.x < 0.2f ? 0 : moveDir.x;
+        calculDir.y = absMoveDir.y < 0.2f ? 0 : moveDir.y;
         animator.SetFloat("X", calculDir.x);
         animator.SetFloat("Y", calculDir.y);
         transform.SetPositionAndRotation(pos, rot);

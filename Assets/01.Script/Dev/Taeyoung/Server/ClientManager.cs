@@ -99,14 +99,6 @@ public class ClientManager : MonoBehaviour
 
         AudioPacket.Instance.PlayAudio(id, pos);
     }
-    public static void ObjectSended(Packet packet)
-    {
-        int id = packet.ReadInt();
-        int index = packet.ReadInt();
-        Vector3 pos = packet.ReadVector3();
-        Quaternion rot = packet.ReadQuaternion();
-        InstantObjectManager_Network.Instance.InstantObject(id, index, pos, rot);
-    }
     public static void NetworkPosition(Packet packet)
     {
         try
@@ -126,24 +118,6 @@ public class ClientManager : MonoBehaviour
     public static void NetworkTransformInit(Packet packet)
     {
         GameManager_Network.Instance.InitNetworkTransform(packet.ReadInt(), packet.ReadString());
-    }
-    public static void Raycast(Packet packet)
-    {
-        RaycastHit hit;
-        if (RaycastManager.instance.ShootRaycast(packet.ReadVector3(), packet.ReadVector3(),packet.ReadInt(), out hit, packet.ReadFloat()))
-        {
-            print(hit.transform.name);
-        }
-    }
-    public static void SpawnEnemy(Packet packet)
-    {
-        int id = packet.ReadInt();
-        Vector3 pos = packet.ReadVector3();
-        EnemySpawner.instance.SpawnEnemy(id, pos);
-    }
-    public static void Lobby_Update(Packet packet)
-    {
-        LobbyManager.instance.UpdateUserData(packet);
     }
     public static void Sync(Packet packet)
     {

@@ -5,51 +5,35 @@ using UnityEngine;
 
 /// <summary>Sent from server to client.</summary>
 public enum ServerPackets
-{
+{//asdasdasd
     welcome = 1,
+    //slobby_Update,
     spawnPlayer,
     playerPositionAndRotation,
     mapPositionAndRotation,
     playerDisconnected,
-    playerHealth,
-    playerRespawned,
-    createItemSpawner,
-    itemSpawned,
-    itemPickedUp,
-    spawnProjectile,
-    projectilePosition,
-    projectileExploded,
-    spawnEnemy,
-    enemyPosition,
-    enemyHealth,
-    enemyThrowItem,
     textSended,
     audioSended,
-    objectSended,
-    objectPositionAndRotation,
     networkPosition,
     networkRotation,
     networkTransformInit,
-    lobby_Update,
     sync,
 }
 
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
-{
+{//assdasdad
     welcomeReceived = 1,
+    //lobby_Ready,
+    //lobby_Start,
+    succesToLoadGameScene,
     playerMovement,
+    requestSpawnAgain,
     handlePlayerMove,
     submarineMovement,
-    playerShoot,
-    playerThrowItem,
     textSend,
     audioSend,
-    requestSpawnAgain,
-    requestSpawnObject,
     controll,
-    enemyHit,
-    lobby_Ready,
     sync,
 }
 

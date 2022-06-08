@@ -60,24 +60,6 @@ public class ClientSend : MonoBehaviour
             SendUDPData(_packet);
         }
     }
-    public static void PlayerShoot(Vector3 _facing)
-    {
-        using (Packet _packet = new Packet((int)ClientPackets.playerShoot))
-        {
-            _packet.Write(_facing);
-
-            SendTCPData(_packet);
-        }
-    }
-    public static void PlayerThrowItem(Vector3 _facing)
-    {
-        using (Packet _packet = new Packet((int)ClientPackets.playerThrowItem))
-        {
-            _packet.Write(_facing);
-
-            SendTCPData(_packet);
-        }
-    }
     public static void SendText(string text)
     {
         using (Packet _packet = new Packet((int)ClientPackets.textSend))
@@ -107,17 +89,6 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
-    public static void RequestInstantObject(ObjectEnum index, Vector3 pos, Quaternion rot)
-    {
-        using (Packet packet = new Packet((int)ClientPackets.requestSpawnObject))
-        {
-            packet.Write((int)index);
-            packet.Write(pos);
-            packet.Write(rot);
-
-            SendTCPData(packet);
-        }
-    }
     public static void Controll(int id, bool isPostive)
     {
         using (Packet packet = new Packet((int)ClientPackets.controll))
@@ -128,35 +99,5 @@ public class ClientSend : MonoBehaviour
             SendTCPData(packet);
         }
     }
-    public static void EnemyHit(int id, float damage)
-    {
-        using (Packet packet = new Packet((int)ClientPackets.enemyHit))
-        {
-            packet.Write(id);
-            packet.Write(damage);
-
-            SendTCPData(packet);
-        }
-    }
-    public static void Lobby_Ready(string _name, bool _value)
-    {
-        using (Packet packet = new Packet((int)ClientPackets.lobby_Ready))
-        {
-            packet.Write(_name);
-            packet.Write(_value);
-
-            SendTCPData(packet);
-        }
-    }
-    /*public static void ReturnInitCheck(int id, string name)
-    {
-        using (Packet packet = new Packet((int)ClientPackets.returnInitNetworkTransform))
-        {
-            packet.Write(id);
-            packet.Write(bool);
-
-            SendTCPData(packet);
-        }
-    }*/
     #endregion
 }

@@ -29,7 +29,7 @@ public class Enemy_Network : MonoBehaviour
     public void Damaged(float damage) 
     {
         if (isDead) return;
-        ClientSend.EnemyHit(id, damage);
+        //ClientSend.EnemyHit(id, damage);
         animator.SetTrigger("Hit");
     }
     enum State

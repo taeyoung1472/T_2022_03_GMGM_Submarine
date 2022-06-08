@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/00.Scenes/Dev/MenuUI_Dev.unity
     guid: 3f6254e52473370409cb7002349df385
   - enabled: 1
-    path: Assets/00.Scenes/Dev/Taeyoung/Submarine_Dev_Taeyoung.unity
+    path: Assets/00.Scenes/Dev/Taeyoung/Submarine.unity
     guid: e40d5ba945bfd7f4387ab7b4ba1b8ee3
   - enabled: 1
     path: Assets/00.Scenes/Dev/Taeyoung/DarkSea_Dev_Taeyoung.unity
