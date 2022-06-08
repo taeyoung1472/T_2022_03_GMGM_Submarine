@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 4
   lightInjureData: {fileID: 11400000, guid: 14f42666914579f40b592359fc00090a, type: 2}
@@ -1012,7 +1012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &412282323
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 2
   lightInjureData: {fileID: 11400000, guid: 3cdd88e4b547fd843864853b341d7925, type: 2}
@@ -2757,7 +2757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 1
   lightInjureData: {fileID: 11400000, guid: a3fb56f2abbf875428e4e4659ed14317, type: 2}
@@ -3362,7 +3362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 3
   lightInjureData: {fileID: 11400000, guid: 3cdd88e4b547fd843864853b341d7925, type: 2}
@@ -3456,7 +3456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6575857515772489286, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6575857515772489290, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
       propertyPath: m_Pivot.x
@@ -4229,7 +4229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 5
   lightInjureData: {fileID: 11400000, guid: 79a879935a9effb4aa855578dba062ac, type: 2}
@@ -4504,7 +4504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  maxHp: 100
   hpManager: {fileID: 1322934769}
   type: 0
   lightInjureData: {fileID: 11400000, guid: a3fb56f2abbf875428e4e4659ed14317, type: 2}

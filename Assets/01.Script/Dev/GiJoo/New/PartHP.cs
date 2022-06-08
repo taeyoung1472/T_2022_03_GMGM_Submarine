@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PartHP : MonoBehaviour
 {
-    [SerializeField] private float hp = 100;
+    private float hp;
+    public float maxHp = 100;
     [SerializeField] private HpManager hpManager;
     [SerializeField] private PlayerPartType type;
     [SerializeField] private HealthStateDataSO lightInjureData;
@@ -12,7 +13,8 @@ public class PartHP : MonoBehaviour
     [SerializeField] private HealthStateDataSO blackoutInjureData;
     InjureType injureType = InjureType.Default;
     public InjureType Type { get { return injureType; } }
-    public float Hp { get { return hp; } set { hp = value; CheckHp(); } }
+    bool isTryAccessFirst = true;
+    public float Hp { get { if (isTryAccessFirst) { hp = maxHp; isTryAccessFirst = false; } return hp; } set { hp = value; CheckHp(); } }
     public void Start()
     {
         PlayerPartDisplay.Instance.SetPartColor(type, hp);

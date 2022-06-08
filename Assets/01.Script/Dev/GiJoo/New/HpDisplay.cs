@@ -27,6 +27,6 @@ public class HpDisplay : MonoBehaviour
         hpTotal += player.Parts.LeftLeg.Hp;
         hpTotal += player.Parts.Thorax.Hp;
         hpTotal += player.Parts.Head.Hp;
-        hpText.text = $"{hpTotal} / 600";
+        hpText.text = $"{Mathf.RoundToInt(hpTotal)} / 600";
     }
 }
