@@ -9,24 +9,24 @@ public class DamageManager : MonoBehaviour
     int hole = 0;
     int flood = 0;
     int submergence = 0;
-    float mrSpeed ;
+    float mrSpeed;
     public static DamageManager instance;
-    [SerializeField] private PlayerMove playerMove;
+    [SerializeField] PlayerMove playerMove;
     float move;
     [SerializeField] List<Room> rooms = new List<Room>();
 
     public Action<int, int> OnHit;
     private void Awake()
     {
-        move = playerMove.Speed;
-        mrSpeed = move;
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
     }
     void Start()
     {
+        move = playerMove.Speed;
+        mrSpeed = move;
         int i = 0;
         foreach (Room room in rooms)
         {
@@ -43,66 +43,65 @@ public class DamageManager : MonoBehaviour
         Debug.Log($"초당 침수  :{flood}");
         Debug.Log($"침수       :{submergence}");
 
-            timer+=Time.deltaTime;
-            if(timer>1)
-            {
-                submergence += flood;
-                timer=0;
-            }
-        
+        timer += Time.deltaTime;
+        if (timer > 1)
+        {
+            submergence += flood;
+            timer = 0;
+        }
+
     }
-     public void FloodHole(int id, int hp)
+    public void FloodHole(int id, int hp)
     {
         Mathf.Clamp(hp, 0, 1000);
-        Mathf.Clamp(submergence,0,1000);
-        if (hp >= 700 && hp < 850)
+        Mathf.Clamp(submergence, 0, 1000);
+        if (hp >= 760 && hp < 880)
         {
-           
             hole = 1;
             flood = 1;
         }
-        else if (hp >= 550 && hp < 700)
+        else if (hp >= 640 && hp < 760)
         {
             hole = 2;
             flood = 2;
         }
-        else if (hp >= 500 && hp < 550)
+        else if (hp >= 520 && hp < 640)
         {
             hole = 3;
-            flood = 4;
+            flood = 3;
         }
-        else if (hp >= 350 && hp < 500)
+        else if (hp >= 400 && hp < 520)
         {
             hole = 4;
-            flood = 6;
+            flood = 4;
         }
-        else if (hp >= 200 && hp < 350)
+        else if (hp >= 280 && hp < 400)
         {
             hole = 5;
-            flood = 8;
+            flood = 5;
         }
-        else if (hp >= 50 && hp < 200)
+        else if (hp >= 160 && hp < 280)
         {
             hole = 6;
-            flood = 10;
+            flood = 6;
         }
-        else if ( hp < 50)
+        else if (hp < 160)
         {
             hole = 7;
-            flood = 12;
+            flood = 7;
         }
 
-        if ( submergence < 10)
+        if (submergence < 10)
         {
-           move = mrSpeed;
+            move = mrSpeed;
         }
         else if (10 <= submergence && submergence < 20)
         {
-           move = mrSpeed * 9 / 10;
+            move = mrSpeed * 9 / 10;
         }
         else if (20 <= submergence && submergence < 30)
         {
-            move= mrSpeed * 8 / 10;
+            move = mrSpeed * 8 / 10;
         }
         else if (30 <= submergence && submergence < 40)
         {
@@ -110,7 +109,7 @@ public class DamageManager : MonoBehaviour
         }
         else if (40 <= submergence && submergence < 50)
         {
-            move= mrSpeed * 6 / 10;
+            move = mrSpeed * 6 / 10;
         }
         else if (50 <= submergence && submergence < 80)
         {
@@ -119,7 +118,7 @@ public class DamageManager : MonoBehaviour
         }
         else if (80 <= submergence && submergence < 100)
         {
-            move= mrSpeed * 4 / 10;
+            move = mrSpeed * 4 / 10;
             Debug.Log("상호 작용 불가능");
         }
         else if (submergence == 100)
@@ -129,8 +128,8 @@ public class DamageManager : MonoBehaviour
             Debug.Log("숨 못쉼 컥컥");
             Debug.Log("상호 작용 불가능");
         }
-     
+
 
     }
- 
+
 }

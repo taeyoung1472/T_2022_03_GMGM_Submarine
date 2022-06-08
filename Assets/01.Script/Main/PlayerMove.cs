@@ -60,7 +60,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     moveDir.y = jumpForce;
                 }
-                moveDir = this.transform.TransformDirection(moveDir);
+                moveDir = transform.TransformDirection(moveDir);
             }
         }
         else

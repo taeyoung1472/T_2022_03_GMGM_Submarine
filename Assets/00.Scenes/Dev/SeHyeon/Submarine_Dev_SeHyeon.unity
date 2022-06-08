@@ -519,6 +519,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765abfa7bf423434dbb454008711091e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &835505095 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7578344472464101627, guid: 1165b8e29a6374542bc15854c8452def, type: 3}
+  m_PrefabInstance: {fileID: 951537237}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &835505096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835505095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41cc27484f3397044b3efa817eda83b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeedFixValue: 1
+  workSpeedFixValue: 1
+  coughChance: 0
+  infectionChance: 0
 --- !u!114 &848042040 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3031174323123042983, guid: cc42a994a82813f42ab8508505f0d9c2, type: 3}
@@ -545,6 +566,14 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1413353522}
+    - target: {fileID: 7578344472464101628, guid: 1165b8e29a6374542bc15854c8452def, type: 3}
+      propertyPath: stat
+      value: 
+      objectReference: {fileID: 835505096}
+    - target: {fileID: 7578344472464101628, guid: 1165b8e29a6374542bc15854c8452def, type: 3}
+      propertyPath: stateData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8bde7199c2fa6c0499c4078368852d0f, type: 2}
     - target: {fileID: 7578344472464101628, guid: 1165b8e29a6374542bc15854c8452def, type: 3}
       propertyPath: rayInnfo_Name
       value: 
@@ -1130,7 +1159,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7578344472464101628, guid: 1165b8e29a6374542bc15854c8452def, type: 3}
   m_PrefabInstance: {fileID: 951537237}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 835505095}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b50fbc8e64614944b9b6e00f072080d3, type: 3}
