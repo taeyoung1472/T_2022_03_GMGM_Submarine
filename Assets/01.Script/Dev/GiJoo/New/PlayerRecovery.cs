@@ -12,6 +12,8 @@ public class PlayerRecovery : MonoBehaviour
     private float dirHpArea = 0;
     private float indirHpArea = 0;
 
+    private float timer = 0f;
+
     public void UseItem(HpItemStateSO item)
     {
         if (PartHP.Hp < PartHP.maxHp)
@@ -24,5 +26,14 @@ public class PlayerRecovery : MonoBehaviour
     {
         yield return new WaitForSeconds(item.CoolDown);
         PartHP.Hp += dirHpArea * item.DirectRecovery * 0.01f;
+        while(timer < item.IndirectRecoveryTime)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+            if(timer >= item.IndirSecond && timer % item.IndirSecond <= 0.01f)
+            {
+                PartHP.Hp += indirHpArea * 0.01f;
+            }
+        }
     }
 }
