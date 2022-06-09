@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerRecovery : MonoBehaviour
 {
+
     [SerializeField]
     private HpItemStateSO[] hpItems;
     [SerializeField]
@@ -13,6 +14,7 @@ public class PlayerRecovery : MonoBehaviour
     private float dirHpArea = 0;
     private float indirHpArea = 0;
 
+    double test = 1.23;
 
     private void Start()
     {
@@ -42,7 +44,7 @@ public class PlayerRecovery : MonoBehaviour
         yield return new WaitForSeconds(item.CoolDown);
 
 
-        partHp.Hp += dirHpArea * item.DirectRecovery * 0.01f;
+        partHp.Hp += (float)System.Math.Round(dirHpArea * item.DirectRecovery * 0.01f, 1,System.MidpointRounding.AwayFromZero);
         Debug.Log($"직접 치료, 현재 Hp : {partHp.Hp}");
         yield return null;
 
@@ -54,7 +56,7 @@ public class PlayerRecovery : MonoBehaviour
             yield return null;
             if(indirTimer >= item.IndirSecond)
             {
-                partHp.Hp += indirHpArea * 0.01f;
+                partHp.Hp += (float)System.Math.Round(indirHpArea * 0.01f,2,System.MidpointRounding.AwayFromZero);
                 Debug.Log($"간접 치료, 현재 Hp : {partHp.Hp}");
                 partHp.CheckHp();
                 indirTimer = 0;

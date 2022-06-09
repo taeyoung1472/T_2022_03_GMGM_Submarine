@@ -26,12 +26,7 @@ public class PartHP : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.P))
         {
-            hpManager.Damaged(10f, PlayerPartType.Head);
-            hpManager.Damaged(10f, PlayerPartType.LeftArm);
-            hpManager.Damaged(10f, PlayerPartType.RightArm);
-            hpManager.Damaged(10f, PlayerPartType.LeftLeg);
-            hpManager.Damaged(10f, PlayerPartType.RightLeg);
-            hpManager.Damaged(10f, PlayerPartType.Thorax);
+            hpManager.Damaged(10f, type);
             Debug.Log($"ÇöÀç HP : {hp}");
             playerRecovery.SetHpArea();
         }

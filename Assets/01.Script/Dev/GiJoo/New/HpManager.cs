@@ -17,6 +17,7 @@ public class HpManager : MonoBehaviour
     }
     public void Damaged(float physicsDmg, PlayerPartType partType, float mentalDmg = 0)
     {
+        print($"Part : {partType} DMG : {physicsDmg}");
         switch (partType)
         {
             case PlayerPartType.RightArm:
