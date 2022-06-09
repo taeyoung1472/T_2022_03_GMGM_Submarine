@@ -40,9 +40,12 @@ public class PlayerRecovery : MonoBehaviour
     {
         Debug.Log("치료 준비중...");
         yield return new WaitForSeconds(item.CoolDown);
+
+
         partHp.Hp += dirHpArea * item.DirectRecovery * 0.01f;
         Debug.Log($"직접 치료, 현재 Hp : {partHp.Hp}");
         yield return null;
+
         float totalTimer = 0f, indirTimer = 0f;
         while(totalTimer < item.IndirectRecoveryTime)
         {
@@ -51,8 +54,9 @@ public class PlayerRecovery : MonoBehaviour
             yield return null;
             if(indirTimer >= item.IndirSecond)
             {
-                Debug.Log($"간접 치료, 현재 Hp : {partHp.Hp}");
                 partHp.Hp += indirHpArea * 0.01f;
+                Debug.Log($"간접 치료, 현재 Hp : {partHp.Hp}");
+                partHp.CheckHp();
                 indirTimer = 0;
             }
         }

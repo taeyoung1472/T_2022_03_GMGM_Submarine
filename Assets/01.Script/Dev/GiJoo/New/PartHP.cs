@@ -29,7 +29,7 @@ public class PartHP : MonoBehaviour
             hp-=10f;
             Debug.Log($"ÇöÀç HP : {hp}");
             playerRecovery.SetHpArea();
-            hpDisplay.DisplayHp();
+            CheckHp();
         }
     }
     public void CheckHp()
