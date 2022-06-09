@@ -5,6 +5,8 @@ using System;
 
 public class DamageManager : MonoBehaviour
 {
+
+    int hp = 0;
     float timer = 0;
     int hole = 0;
     int flood = 0;
@@ -16,6 +18,10 @@ public class DamageManager : MonoBehaviour
     [SerializeField] List<Room> rooms = new List<Room>();
 
     public Action<int, int> OnHit;
+    public static DamageManager Instance
+    {
+        get { return instance; }
+    }
     private void Awake()
     {
         if (instance == null)
@@ -39,6 +45,8 @@ public class DamageManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //playerMove.Speed = move;
+        submergence = Mathf.Clamp(submergence, 0, 100);
         Debug.Log($"스피드     :{move}");
         Debug.Log($"초당 침수  :{flood}");
         Debug.Log($"침수       :{submergence}");
@@ -51,10 +59,33 @@ public class DamageManager : MonoBehaviour
         }
 
     }
+    public void PartHole()
+    {
+        hp = Mathf.Clamp(hp, 0, 1000);
+        if (hp<1000&&hp>=980)
+        {
+
+        }
+        else if(hp<980&&hp>=960)
+        {
+
+        }else if(hp<960&&hp>=940)
+        {
+
+        }
+        else if(hp<940&&hp>=920)
+        {
+
+        }
+        else if(hp<920&&hp>=900)
+        {
+
+        }
+    }    
+    //대충 반환값을 speed로 해서 각 구역에 speed를 따로 반환하게 만들 계획
     public void FloodHole(int id, int hp)
     {
-        Mathf.Clamp(hp, 0, 1000);
-        Mathf.Clamp(submergence, 0, 1000);
+        hp = Mathf.Clamp(hp, 0, 1000);
         if (hp >= 760 && hp < 880)
         {
             hole = 1;

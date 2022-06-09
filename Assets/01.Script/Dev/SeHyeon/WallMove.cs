@@ -10,8 +10,8 @@ public class WallMove : MonoBehaviour
         rb= GetComponent<Rigidbody>();  
     }
    
-    private void FixedUpdate()
+     void Update()
     {
-        rb.velocity = new Vector3(1, 0, 0);
+        rb.velocity = new Vector3(-4, 0, 0);
     }
 }

@@ -18,7 +18,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private PlayerStateData stateData;
     [SerializeField] private PlayerStat stat;
     public int ID { get { return id; } }
-    public float Speed { get { return stateData.PSpd * stat.MoveSpeedFixValue; } }
+    public float Speed { get { return stateData.PSpd * stat.MoveSpeedFixValue; } set { Speed = value; } }
     UseAbleObject useAbleObject;
     Vector3 moveDir;
     RaycastHit hit;
