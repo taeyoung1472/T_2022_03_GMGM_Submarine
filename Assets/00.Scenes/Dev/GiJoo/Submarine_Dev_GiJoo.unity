@@ -1446,7 +1446,6 @@ GameObject:
   m_Component:
   - component: {fileID: 482842954}
   - component: {fileID: 482842955}
-  - component: {fileID: 482842956}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1481,20 +1480,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dayCount: 1
---- !u!114 &482842956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482842953}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696e1a60aa5b37d48a9caa0f72dd297c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1322934769}
-  hpText: {fileID: 1261400458}
 --- !u!1 &503339892
 GameObject:
   m_ObjectHideFlags: 0
