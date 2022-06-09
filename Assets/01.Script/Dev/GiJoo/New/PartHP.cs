@@ -7,7 +7,7 @@ public class PartHP : MonoBehaviour
     [SerializeField]PlayerRecovery playerRecovery;
 
     private float hp;
-    public float maxHp = 100f;
+    private float maxHp = 100f;
     [SerializeField] private HpManager hpManager;
     [SerializeField] private HpDisplay hpDisplay;
     [SerializeField] private PlayerPartType type;
@@ -17,6 +17,7 @@ public class PartHP : MonoBehaviour
     InjureType injureType = InjureType.Default;
     public InjureType Type { get { return injureType; } }
     bool isTryAccessFirst = true;
+    public float MaxHp { get { return maxHp; }set { maxHp = value; } }
     public float Hp { get { if (isTryAccessFirst) { hp = maxHp; isTryAccessFirst = false; } return hp; } set { hp = value; CheckHp(); } }
     public void Start()
     {

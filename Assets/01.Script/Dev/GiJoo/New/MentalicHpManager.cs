@@ -9,6 +9,6 @@ public class MentalicHpManager : MonoBehaviour
     public void GetDamage(float dmg)
     {
         mentalHp -= dmg;
-        print($"정신적 피해 입음 적신력 : {mentalHp}");
+        print($"정신적 피해 입음 정신력 : {mentalHp}");
     }
 }

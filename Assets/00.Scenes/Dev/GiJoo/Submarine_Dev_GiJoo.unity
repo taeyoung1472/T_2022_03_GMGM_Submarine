@@ -501,7 +501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 4
@@ -1034,6 +1033,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 80224815ceedb8743b0637449892cb26, type: 2}
   - {fileID: 11400000, guid: 2fb9ca7d5ea78ce49804d24837175da2, type: 2}
   partParent: {fileID: 1865402406}
+  hpManager: {fileID: 1322934769}
+  type: 0
 --- !u!4 &403140847
 Transform:
   m_ObjectHideFlags: 0
@@ -1299,7 +1300,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 2
@@ -1886,7 +1886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &583192513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2804,7 +2804,7 @@ GameObject:
   - component: {fileID: 1322934773}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3008,7 +3008,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 1
@@ -3773,7 +3772,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 3
@@ -4775,7 +4773,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 5
@@ -5052,7 +5049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRecovery: {fileID: 403140846}
-  maxHp: 100
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 0
