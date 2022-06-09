@@ -503,6 +503,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 4
   lightInjureData: {fileID: 11400000, guid: 14f42666914579f40b592359fc00090a, type: 2}
   heavyInjureData: {fileID: 11400000, guid: 7b20e38ed27147a49ae55038c264d916, type: 2}
@@ -1299,6 +1300,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 2
   lightInjureData: {fileID: 11400000, guid: 3cdd88e4b547fd843864853b341d7925, type: 2}
   heavyInjureData: {fileID: 11400000, guid: 3b9cf75913613414f80fe51253b4d0e7, type: 2}
@@ -2889,6 +2891,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 1
   lightInjureData: {fileID: 11400000, guid: a3fb56f2abbf875428e4e4659ed14317, type: 2}
   heavyInjureData: {fileID: 11400000, guid: e71e5b170fb585144beb6b304b832732, type: 2}
@@ -3495,6 +3498,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 3
   lightInjureData: {fileID: 11400000, guid: 3cdd88e4b547fd843864853b341d7925, type: 2}
   heavyInjureData: {fileID: 11400000, guid: 3b9cf75913613414f80fe51253b4d0e7, type: 2}
@@ -4363,6 +4367,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 5
   lightInjureData: {fileID: 11400000, guid: 79a879935a9effb4aa855578dba062ac, type: 2}
   heavyInjureData: {fileID: 11400000, guid: c54766ce16e33cb46bcc801d2afd4a08, type: 2}
@@ -4639,6 +4644,7 @@ MonoBehaviour:
   playerRecovery: {fileID: 403140846}
   maxHp: 100
   hpManager: {fileID: 1322934769}
+  hpDisplay: {fileID: 559642209}
   type: 0
   lightInjureData: {fileID: 11400000, guid: a3fb56f2abbf875428e4e4659ed14317, type: 2}
   heavyInjureData: {fileID: 11400000, guid: e71e5b170fb585144beb6b304b832732, type: 2}

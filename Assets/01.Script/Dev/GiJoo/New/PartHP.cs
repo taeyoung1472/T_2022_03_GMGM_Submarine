@@ -9,6 +9,7 @@ public class PartHP : MonoBehaviour
     private float hp;
     public float maxHp = 100;
     [SerializeField] private HpManager hpManager;
+    [SerializeField] private HpDisplay hpDisplay;
     [SerializeField] private PlayerPartType type;
     [SerializeField] private HealthStateDataSO lightInjureData;
     [SerializeField] private HealthStateDataSO heavyInjureData;
@@ -28,6 +29,7 @@ public class PartHP : MonoBehaviour
             hp-=10f;
             Debug.Log($"ÇöÀç HP : {hp}");
             playerRecovery.SetHpArea();
+            hpDisplay.DisplayHp();
         }
     }
     public void CheckHp()
