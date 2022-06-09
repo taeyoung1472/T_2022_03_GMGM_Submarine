@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerRecovery : MonoBehaviour
 {
-
+    [SerializeField]
+    private MentalicHpManager mentalicHp;
     [SerializeField]
     private HpItemStateSO[] hpItems;
     [SerializeField]
@@ -40,11 +41,12 @@ public class PlayerRecovery : MonoBehaviour
     }
     public IEnumerator Recovery(HpItemStateSO item)
     {
-        Debug.Log("치료 준비중...");
+        Debug.Log($"{item.name} 치료 준비중...");
         yield return new WaitForSeconds(item.CoolDown);
 
 
         partHp.Hp += (float)System.Math.Round(dirHpArea * item.DirectRecovery * 0.01f, 1,System.MidpointRounding.AwayFromZero);
+        mentalicHp.GetDamage(mentalicHp.MentalHp * item.NoMachMentalDown * 0.01f);
         Debug.Log($"직접 치료, 현재 Hp : {partHp.Hp}");
         yield return null;
 
