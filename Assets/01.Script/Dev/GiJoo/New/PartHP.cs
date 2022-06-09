@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PartHP : MonoBehaviour
 {
+    [SerializeField]PlayerRecovery playerRecovery;
+
     private float hp;
     public float maxHp = 100;
     [SerializeField] private HpManager hpManager;
@@ -18,6 +20,15 @@ public class PartHP : MonoBehaviour
     public void Start()
     {
         PlayerPartDisplay.Instance.SetPartColor(type, hp);
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            hp-=10f;
+            Debug.Log($"ÇöÀç HP : {hp}");
+            playerRecovery.SetHpArea();
+        }
     }
     public void CheckHp()
     {
