@@ -15,11 +15,13 @@ public class PartHP : MonoBehaviour
     public float Hp { get { return hp; } set { hp = value; CheckHp(); } }
     public void Start()
     {
-        PlayerPartDisplay.Instance.SetPartColor(type, hp);
+        PartHpDisplay.instance.SetPartColor(type, Hp);
+        //PlayerPartDisplay.Instance.SetPartColor(type, hp);
     }
     public void CheckHp()
     {
-        PlayerPartDisplay.Instance.SetPartColor(type, hp);
+        PartHpDisplay.instance.SetPartColor(type, Hp);
+        //PlayerPartDisplay.Instance.SetPartColor(type, hp);
         if (hp <= 0)
         {
             hp = 0;
@@ -49,31 +51,37 @@ public class PartHP : MonoBehaviour
                 AddInjure(InjureType.Default);
             }
         }
-        HpDisplay.Instance.DisplayHp();
+        //HpDisplay.Instance.DisplayHp();
     }
     void ResetInjure()
     {
-        HealthStateManager.Instance.Remove(type, lightInjureData);
-        HealthStateManager.Instance.Remove(type, heavyInjureData);
-        HealthStateManager.Instance.Remove(type, blackoutInjureData);
+        HealStateDisplay.instance.MinusState(type);
+        //HealthStateManager.Instance.Remove(type, lightInjureData);
+        //HealthStateManager.Instance.Remove(type, heavyInjureData);
+        //HealthStateManager.Instance.Remove(type, blackoutInjureData);
     }
     void AddInjure(InjureType injureType)
     {
         ResetInjure();
+        HealthStateDataSO data = null;
         switch (injureType)
         {
             case InjureType.Default:
                 break;
             case InjureType.Light:
-                HealthStateManager.Instance.Add(type, lightInjureData);
+                data = lightInjureData;
+                //HealthStateManager.Instance.Add(type, lightInjureData);
                 break;
             case InjureType.Heavy:
-                HealthStateManager.Instance.Add(type, heavyInjureData);
+                data = heavyInjureData;
+                //HealthStateManager.Instance.Add(type, heavyInjureData);
                 break;
             case InjureType.Blackout:
-                HealthStateManager.Instance.Add(type, blackoutInjureData);
+                data = blackoutInjureData;
+                //HealthStateManager.Instance.Add(type, blackoutInjureData);
                 break;
         }
+        HealStateDisplay.instance.AddState(data, type);
     }
 }
 public enum InjureType

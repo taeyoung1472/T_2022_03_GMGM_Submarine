@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/00.Scenes/Dev/Taeyoung/Submarine.unity
     guid: e40d5ba945bfd7f4387ab7b4ba1b8ee3
   - enabled: 1
-    path: Assets/00.Scenes/Dev/Taeyoung/DarkSea_Dev_Taeyoung.unity
+    path: Assets/00.Scenes/Dev/Taeyoung/Demo.unity
     guid: bbb4fb06a01bd3546bd8f4c306f4f16e
   m_configObjects: {}
