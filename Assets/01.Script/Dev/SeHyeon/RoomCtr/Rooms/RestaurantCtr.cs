@@ -23,4 +23,9 @@ public class RestaurantCtr : Room
             a.hp -= a.damageValue;
         }
     }
+
+    protected override void SuriBuwi()
+    {
+        throw new System.NotImplementedException();
+    }
 }
