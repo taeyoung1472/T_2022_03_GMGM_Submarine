@@ -11,27 +11,29 @@ public class PlayerCheck : MonoBehaviour
     private Text recoveryText;
     [SerializeField]
     private GameObject recoveryTextObj;
+    
     private float distance = 10f;
+    private bool isItemOn = false;
 
-    public void TakeOutItem()
+    private void Update()
     {
-        recoveryTextObj.SetActive(true);
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            isItemOn = !isItemOn;
+        }
         CheckPlayer();
-    }
-
-    public void TakeInItem()
-    {
-        recoveryTextObj.SetActive(false);
     }
 
     public void CheckPlayer()
     {
+        recoveryTextObj.SetActive(isItemOn);
         RaycastHit hitInfo;
-        Debug.DrawRay(objTransform.position, objTransform.forward, Color.red, 100f * Time.deltaTime);
-        Physics.Raycast(objTransform.position, objTransform.forward, out hitInfo, distance);
-        if (hitInfo.collider.CompareTag("Player"))
+        if (Physics.Raycast(objTransform.position, objTransform.forward, out hitInfo, distance))
         {
-            recoveryText.text = "F 치료해주기";
+            if (hitInfo.collider.CompareTag("Player"))
+            {
+                recoveryText.text = "F 치료해주기";
+            }
         }
         else
         {

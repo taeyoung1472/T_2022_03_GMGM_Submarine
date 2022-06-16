@@ -1886,7 +1886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &583192513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2168,6 +2168,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671251711}
   m_CullTransparentMesh: 1
+--- !u!1 &677680734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6575857513975619688, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
+  m_PrefabInstance: {fileID: 1558901072}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &678880882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,7 +2706,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6575857513975619690, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
   m_PrefabInstance: {fileID: 1558901072}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 677680734}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -5099,6 +5104,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mentalHp: 100
+--- !u!1 &2080651089
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2080651090}
+  - component: {fileID: 2080651091}
+  m_Layer: 0
+  m_Name: CheckPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2080651090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080651089}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 977.0393, y: 543.1242, z: -1.4405533}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2080651091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080651089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9231e41e0a18c7148add4a04a23a560d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objTransform: {fileID: 1322934772}
+  recoveryText: {fileID: 1115653747}
+  recoveryTextObj: {fileID: 677680734}
 --- !u!1 &2081131135
 GameObject:
   m_ObjectHideFlags: 0
