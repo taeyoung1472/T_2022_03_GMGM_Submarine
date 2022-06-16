@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class BedRoomCtr : Room
 {
-    BedRoomCtr a;
-    private void Start()
+    BedRoomCtr bedRoomCtr;
+      void Start()
     {
-        a=GetComponent<BedRoomCtr>();
+        bedRoomCtr = GetComponent<BedRoomCtr>();
     }
     private void Update()
     {
-        DamageManager.Instance.FloodHole(a.id, a.hp);
-        Debug.Log($"지금 HP : {a.id} {a.hp}");
+        DamageManager.Instance.PartHole(hp);
+        DamageManager.Instance.FloodHole(bedRoomCtr.id, bedRoomCtr.hp);
+        Debug.Log($"지금 HP : {bedRoomCtr.id} {bedRoomCtr.hp}");
     }
     protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            Debug.Log($"{a.id}: 충돌함");
-            a.hp -= a.damageValue;
+            Debug.Log($"{bedRoomCtr.id}: 충돌함");
+            bedRoomCtr.hp -= bedRoomCtr.damageValue;
         }
     }
 
-    protected override void SuriBuwi()
-    {
-        throw new System.NotImplementedException();
-    }
+  
 }

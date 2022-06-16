@@ -4,27 +4,26 @@ using UnityEngine;
 
 public class EngineRoomCtr : Room
 {
-    EngineRoomCtr a;
-    private void Start()
+    EngineRoomCtr engineRoomCtr;
+    void Start()
     {
-        a=GetComponent<EngineRoomCtr>();
+        engineRoomCtr = GetComponent<EngineRoomCtr>();
+       
     }
     private void Update()
     {
-        DamageManager.Instance.FloodHole(a.id, a.hp);
-        Debug.Log($"지금 HP : {a.id} {a.hp}");
+        DamageManager.Instance.PartHole(hp);
+        DamageManager.Instance.FloodHole(engineRoomCtr.id, engineRoomCtr.hp);
+        Debug.Log($"지금 HP : {engineRoomCtr.id} {engineRoomCtr.hp}");
     }
     protected override void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Wall"))
         {
-            Debug.Log($"{a.id}: 충돌함");
-            a.hp -= a.damageValue;
+            Debug.Log($"{engineRoomCtr.id}: 충돌함");
+            engineRoomCtr.hp -= engineRoomCtr.damageValue;
         }
     }
 
-    protected override void SuriBuwi()
-    {
-        throw new System.NotImplementedException();
-    }
+  
 }

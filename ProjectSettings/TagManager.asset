@@ -9,6 +9,9 @@ TagManager:
   - HitBox
   - Wall
   - Floor
+  - Ceiling
+  - Front
+  - Back
   layers:
   - Default
   - TransparentFX
