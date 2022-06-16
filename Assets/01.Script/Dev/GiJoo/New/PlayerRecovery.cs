@@ -19,6 +19,8 @@ public class PlayerRecovery : MonoBehaviour
     [SerializeField]
     private PlayerPartType type;
 
+    private float operateBuff = 1f;
+
     private void Start()
     {
         //partHp = partParent.GetComponentInChildren<PartHP>();
@@ -60,6 +62,7 @@ public class PlayerRecovery : MonoBehaviour
         foreach (var element in hpElements)
         {
             element.part.Hp += (float)System.Math.Round(element.dirHp * item.DirectRecovery * 0.01f, 1, System.MidpointRounding.AwayFromZero);
+            element.dirHp = (element.part.MaxHp - element.part.Hp) * 0.5f;
         }
 
         float totalTimer = 0f, indirTimer = 0f;
@@ -68,7 +71,7 @@ public class PlayerRecovery : MonoBehaviour
             totalTimer += Time.deltaTime;
             indirTimer += Time.deltaTime;
             yield return null;
-            if (indirTimer >= item.IndirSecond)
+            if (indirTimer * operateBuff >= item.IndirSecond)
             {
                 foreach (var element in hpElements)
                 {
@@ -79,27 +82,24 @@ public class PlayerRecovery : MonoBehaviour
                 indirTimer = 0;
             }
         }
-        /*
-        partHp.Hp += (float)System.Math.Round(dirHpArea * item.DirectRecovery * 0.01f, 1, System.MidpointRounding.AwayFromZero);
-        mentalicHp.GetDamage(mentalicHp.MentalHp * item.NoMachMentalDown * 0.01f);
-        Debug.Log($"직접 치료, 현재 Hp : {partHp.Hp}");
-        yield return null;
+    }
 
-        float totalTimer = 0f, indirTimer = 0f;
-        while(totalTimer < item.IndirectRecoveryTime)
+    public void Operate()
+    {
+        foreach (var element in hpElements)
         {
-            totalTimer += Time.deltaTime;
-            indirTimer += Time.deltaTime;
-            yield return null;
-            if(indirTimer >= item.IndirSecond)
-            {
-                partHp.Hp += (float)System.Math.Round(indirHpArea * 0.01f,2,System.MidpointRounding.AwayFromZero);
-                Debug.Log($"간접 치료, 현재 Hp : {partHp.Hp}");
-                partHp.CheckHp();
-                indirTimer = 0;
-            }
+            element.part.Hp += element.dirHp;
+            operateBuff = 3f;
         }
-        Debug.Log("치료 종료.");*/
+    }
+
+    public void GandanOper()
+    {
+        foreach (var element in hpElements)
+        {
+            element.part.Hp += element.dirHp * 0.7f;
+            operateBuff = 2f;
+        }
     }
 }
 public class HpElement
