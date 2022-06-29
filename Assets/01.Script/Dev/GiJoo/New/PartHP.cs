@@ -84,10 +84,23 @@ public class PartHP : MonoBehaviour
                 break;
             case InjureType.Heavy:
                 HealthStateManager.Instance.Add(type, heavyInjureData);
+                StartCoroutine(WoundInfectionCheck());
                 break;
             case InjureType.Blackout:
                 HealthStateManager.Instance.Add(type, blackoutInjureData);
                 break;
+        }
+    }
+    public IEnumerator WoundInfectionCheck()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(120f);
+            heavyInjureData.infectionChance += 10;
+            if (Random.Range(0, 100) <= heavyInjureData.infectionChance)
+            {
+                
+            }
         }
     }
 }

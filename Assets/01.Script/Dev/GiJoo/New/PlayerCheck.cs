@@ -11,33 +11,41 @@ public class PlayerCheck : MonoBehaviour
     private Text recoveryText;
     [SerializeField]
     private GameObject recoveryTextObj;
+    [SerializeField]
+    private RecoveryItemManager recoveryItemManager;
     
     private float distance = 10f;
-    private bool isItemOn = false;
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            isItemOn = !isItemOn;
-        }
         CheckPlayer();
     }
 
     public void CheckPlayer()
     {
-        recoveryTextObj.SetActive(isItemOn);
+        recoveryTextObj.SetActive(recoveryItemManager.IsItemOn);
         RaycastHit hitInfo;
         if (Physics.Raycast(objTransform.position, objTransform.forward, out hitInfo, distance))
         {
             if (hitInfo.collider.CompareTag("Player"))
             {
                 recoveryText.text = "F 치료해주기";
+                if(Input.GetKeyDown(KeyCode.F))
+                {
+                    hitInfo.collider.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO); //상대 치료해주는 코드
+                    //itemCount--; //아이템 갯수 줄어듦
+                }
             }
         }
         else
         {
             recoveryText.text = "F 치료하기";
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                Debug.Log(recoveryItemManager.NowHpItemSO);
+                objTransform.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO); //치료하는 코드
+                //itemCount--; //아이템 갯수 줄어듦
+            }
         }
     }
 }
