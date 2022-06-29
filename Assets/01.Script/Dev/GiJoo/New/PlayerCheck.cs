@@ -24,27 +24,28 @@ public class PlayerCheck : MonoBehaviour
     public void CheckPlayer()
     {
         recoveryTextObj.SetActive(recoveryItemManager.IsItemOn);
-        RaycastHit hitInfo;
-        if (Physics.Raycast(objTransform.position, objTransform.forward, out hitInfo, distance))
+        if (recoveryItemManager.IsItemOn)
         {
-            if (hitInfo.collider.CompareTag("Player"))
+            RaycastHit hitInfo;
+            if (Physics.Raycast(objTransform.position, objTransform.forward, out hitInfo, distance))
             {
-                recoveryText.text = "F 치료해주기";
-                if(Input.GetKeyDown(KeyCode.F))
+                if (hitInfo.collider.CompareTag("Player"))
                 {
-                    hitInfo.collider.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO); //상대 치료해주는 코드
-                    //itemCount--; //아이템 갯수 줄어듦
+                    recoveryText.text = "F 치료해주기";
+                    if (Input.GetKeyDown(KeyCode.F))
+                    {
+                        hitInfo.collider.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO);
+                    }
                 }
             }
-        }
-        else
-        {
-            recoveryText.text = "F 치료하기";
-            if (Input.GetKeyDown(KeyCode.F))
+            else
             {
-                Debug.Log(recoveryItemManager.NowHpItemSO);
-                objTransform.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO); //치료하는 코드
-                //itemCount--; //아이템 갯수 줄어듦
+                recoveryText.text = "F 치료하기";
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    Debug.Log(recoveryItemManager.NowHpItemSO);
+                    objTransform.GetComponent<PlayerRecovery>().UseItem(recoveryItemManager.NowHpItemSO);
+                }
             }
         }
     }

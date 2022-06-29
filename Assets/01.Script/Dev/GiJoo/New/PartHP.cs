@@ -84,7 +84,6 @@ public class PartHP : MonoBehaviour
                 break;
             case InjureType.Heavy:
                 HealthStateManager.Instance.Add(type, heavyInjureData);
-                StartCoroutine(WoundInfectionCheck());
                 break;
             case InjureType.Blackout:
                 HealthStateManager.Instance.Add(type, blackoutInjureData);
@@ -93,13 +92,14 @@ public class PartHP : MonoBehaviour
     }
     public IEnumerator WoundInfectionCheck()
     {
+        yield return new WaitUntil(() => injureType == InjureType.Heavy);
         while (true)
         {
             yield return new WaitForSeconds(120f);
             heavyInjureData.infectionChance += 10;
             if (Random.Range(0, 100) <= heavyInjureData.infectionChance)
             {
-                
+                //상처감염 함수 실행되게 해야함
             }
         }
     }
