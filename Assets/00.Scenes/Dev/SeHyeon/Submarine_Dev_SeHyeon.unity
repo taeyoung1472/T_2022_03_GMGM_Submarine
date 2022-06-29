@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 001108da0d408fe439fe0b21d9dd8bc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!1001 &230001783732347664
@@ -11120,7 +11120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f05a394e3637546b6356551a78deeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!1 &1355516601071768650
@@ -14386,7 +14386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb8f49050718d974ea70cca213e2de86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!4 &2031157027701746468
@@ -25846,7 +25846,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38076e302f07aea4fbeb9c833c4e9b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!33 &4624000000974070524
@@ -28760,7 +28760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db61eb4b61a8b1441a13c432134c8744, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!1 &5200998608993213915
@@ -35147,7 +35147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765abfa7bf423434dbb454008711091e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!33 &6465464127565397787
@@ -46274,7 +46274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6adf1abfa20f4fb47844fc91c49e7916, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageValue: 400
+  damageValue: 0
   hp: 1000
   id: 0
 --- !u!4 &8813985695799604040

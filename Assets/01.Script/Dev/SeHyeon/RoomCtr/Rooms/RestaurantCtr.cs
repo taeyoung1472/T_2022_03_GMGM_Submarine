@@ -12,6 +12,7 @@ public class RestaurantCtr : Room
 
     private void Update()
     {
+       
         DamageManager.Instance.PartHole(hp);
         DamageManager.Instance.FloodHole(restaurantCtr.id, restaurantCtr.hp);
         Debug.Log($"Áö±İ HP : {restaurantCtr.id} {restaurantCtr.hp}");
