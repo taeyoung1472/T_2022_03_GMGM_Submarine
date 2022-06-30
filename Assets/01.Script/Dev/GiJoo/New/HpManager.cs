@@ -9,6 +9,8 @@ public class HpManager : MonoBehaviour
     [Header("테스트용")]
     [SerializeField] private PlayerPartType targetType;
     [SerializeField] private float dmg;
+    InjureType worstType;
+    public InjureType WorstType { get { return worstType; } }
     public PlayerPartHpStruct Parts { get { return parts; } }
     [ContextMenu("Test")]
     public void GetDMG()
@@ -39,6 +41,14 @@ public class HpManager : MonoBehaviour
                 parts.Head.Hp -= physicsDmg;
                 break;
         }
+        worstType = InjureType.Default;
+        foreach (PartHP part in parts.parts)
+        {
+            if((int)part.InjureType > (int)worstType)
+            {
+                worstType = part.InjureType;
+            }
+        }
     }
     public void DefaultState(PlayerPartType part)
     {
@@ -66,6 +76,7 @@ public struct PlayerPartHpStruct
     public PartHP LeftLeg;
     public PartHP Thorax;
     public PartHP Head;
+    public PartHP[] parts;
 }
 public enum PlayerPartType
 {

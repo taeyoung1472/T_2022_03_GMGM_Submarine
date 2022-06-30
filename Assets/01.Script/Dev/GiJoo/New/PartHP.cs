@@ -14,14 +14,15 @@ public class PartHP : MonoBehaviour
     [SerializeField] private HealthStateDataSO lightInjureData;
     [SerializeField] private HealthStateDataSO heavyInjureData;
     [SerializeField] private HealthStateDataSO blackoutInjureData;
-    InjureType injureType = InjureType.Default;
-    public InjureType Type { get { return injureType; } }
+    InjureType myInjureType = InjureType.Default;
+    public InjureType InjureType { get { return myInjureType; } }
     bool isTryAccessFirst = true;
     public float MaxHp { get { return maxHp; }set { maxHp = value; } }
     public float Hp { get { if (isTryAccessFirst) { hp = maxHp; isTryAccessFirst = false; } return hp; } set { hp = value; CheckHp(); } }
     public void Start()
     {
         PlayerPartDisplay.Instance.SetPartColor(type, hp);
+        StartCoroutine(WoundInfectionCheck());
     }
     private void Update()
     {
@@ -38,28 +39,28 @@ public class PartHP : MonoBehaviour
         if (hp <= 0)
         {
             hp = 0;
-            if(injureType != InjureType.Blackout)
+            if(myInjureType != InjureType.Blackout)
             {
                 AddInjure(InjureType.Blackout);
             }
         }
         else if (hp <= 50)
         {
-            if (injureType != InjureType.Heavy)
+            if (myInjureType != InjureType.Heavy)
             {
                 AddInjure(InjureType.Heavy);
             }
         }
         else if (hp <= 80)
         {
-            if (injureType != InjureType.Light)
+            if (myInjureType != InjureType.Light)
             {
                 AddInjure(InjureType.Light);
             }
         }
         else
         {
-            if (injureType != InjureType.Default)
+            if (myInjureType != InjureType.Default)
             {
                 AddInjure(InjureType.Default);
             }
@@ -78,21 +79,25 @@ public class PartHP : MonoBehaviour
         switch (injureType)
         {
             case InjureType.Default:
+                myInjureType = InjureType.Default;
                 break;
             case InjureType.Light:
+                myInjureType = InjureType.Light;
                 HealthStateManager.Instance.Add(type, lightInjureData);
                 break;
             case InjureType.Heavy:
+                myInjureType = InjureType.Heavy;
                 HealthStateManager.Instance.Add(type, heavyInjureData);
                 break;
             case InjureType.Blackout:
+                myInjureType = InjureType.Blackout;
                 HealthStateManager.Instance.Add(type, blackoutInjureData);
                 break;
         }
     }
     public IEnumerator WoundInfectionCheck()
     {
-        yield return new WaitUntil(() => injureType == InjureType.Heavy);
+        yield return new WaitUntil(() => myInjureType == InjureType.Heavy);
         while (true)
         {
             yield return new WaitForSeconds(120f);
@@ -106,8 +111,8 @@ public class PartHP : MonoBehaviour
 }
 public enum InjureType
 {
-    Default,
-    Light,
-    Heavy,
-    Blackout
+    Default = 0,
+    Light = 1,
+    Heavy = 2,
+    Blackout = 3
 }

@@ -500,7 +500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 4
@@ -998,57 +998,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364259696}
   m_CullTransparentMesh: 1
---- !u!1 &403140845
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 403140847}
-  - component: {fileID: 403140846}
-  m_Layer: 0
-  m_Name: PlayerRecovery
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &403140846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403140845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a66fa8dfb706544fa7a28134633216b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mentalicHp: {fileID: 2061283293}
-  hpItems:
-  - {fileID: 11400000, guid: 6446c08e6edc87f408c2322e4405a7b9, type: 2}
-  - {fileID: 11400000, guid: 80224815ceedb8743b0637449892cb26, type: 2}
-  - {fileID: 11400000, guid: 2fb9ca7d5ea78ce49804d24837175da2, type: 2}
-  partParent: {fileID: 1865402406}
-  hpManager: {fileID: 1322934769}
-  type: 0
---- !u!4 &403140847
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403140845}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7530152, y: -0.075359344, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405747839
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,7 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 2
@@ -2298,11 +2247,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671251711}
   m_CullTransparentMesh: 1
---- !u!1 &677680734 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6575857513975619688, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
-  m_PrefabInstance: {fileID: 1558901072}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &678880882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,7 +2780,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6575857513975619690, guid: 5ea092778ffcdc94585c84c01deecc92, type: 3}
   m_PrefabInstance: {fileID: 1558901072}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677680734}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -2938,6 +2882,8 @@ GameObject:
   - component: {fileID: 1322934775}
   - component: {fileID: 1322934773}
   - component: {fileID: 1322934776}
+  - component: {fileID: 1322934777}
+  - component: {fileID: 1322934778}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2983,6 +2929,13 @@ MonoBehaviour:
     LeftLeg: {fileID: 1527144506}
     Thorax: {fileID: 203505248}
     Head: {fileID: 1934485782}
+    parts:
+    - {fileID: 2060351789}
+    - {fileID: 1331553127}
+    - {fileID: 435649664}
+    - {fileID: 1527144506}
+    - {fileID: 203505248}
+    - {fileID: 1934485782}
   physicalHpManager: {fileID: 2001724948}
   targetType: 3
   dmg: 20
@@ -3121,6 +3074,32 @@ MonoBehaviour:
   partParent: {fileID: 1865402406}
   hpManager: {fileID: 1322934769}
   type: 0
+--- !u!114 &1322934777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322934767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9231e41e0a18c7148add4a04a23a560d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1322934778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1322934767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c8e96c910911848baa5c8da242ec90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpManager: {fileID: 1322934769}
+  IsWouned: 0
 --- !u!1 &1331553125
 GameObject:
   m_ObjectHideFlags: 0
@@ -3164,7 +3143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 1
@@ -3928,7 +3907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 3
@@ -4103,7 +4082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1558901072
 PrefabInstance:
@@ -5024,7 +5003,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 5
@@ -5074,6 +5053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43c8e96c910911848baa5c8da242ec90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpManager: {fileID: 1322934769}
+  IsWouned: 0
 --- !u!4 &2001724949
 Transform:
   m_ObjectHideFlags: 0
@@ -5300,7 +5281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1b8b5262574c845b7a3e19b657efb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerRecovery: {fileID: 403140846}
+  playerRecovery: {fileID: 1322934776}
   hpManager: {fileID: 1322934769}
   hpDisplay: {fileID: 559642209}
   type: 0
@@ -5351,53 +5332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mentalHp: 100
---- !u!1 &2080651089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2080651090}
-  - component: {fileID: 2080651091}
-  m_Layer: 0
-  m_Name: CheckPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2080651090
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080651089}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 977.0393, y: 543.1242, z: -1.4405533}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2080651091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080651089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9231e41e0a18c7148add4a04a23a560d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objTransform: {fileID: 1322934772}
-  recoveryText: {fileID: 1115653747}
-  recoveryTextObj: {fileID: 677680734}
-  recoveryItemManager: {fileID: 559642213}
 --- !u!1 &2081131135
 GameObject:
   m_ObjectHideFlags: 0
