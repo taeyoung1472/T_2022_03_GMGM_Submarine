@@ -63,68 +63,75 @@ public class DamageManager : MonoBehaviour
         }
 
     }
-    public void SuriBuwi()
+   
+    public void SuriBuwi(Transform mytrans)
     {
-        GameObject g = transform.GetChild(Random.Range(0, transform.childCount)).gameObject; // 랜덤번째 자식을 갖고오기
-        if (g.CompareTag("Wall"))
-        {
-            float minZ = g.transform.position.z - g.transform.localScale.x / 2;
-            float maxZ = g.transform.position.z + g.transform.localScale.x / 2;
-            float minY = g.transform.position.y - g.transform.localScale.y / 2;
-            float maxY = g.transform.position.y + g.transform.localScale.y / 2;
-            float x = g.transform.position.x;
-            float z = Random.Range(minZ, maxZ);
-            float y = Random.Range(minY, maxY);
-            Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
-        }
-        else if (g.CompareTag("Ceiling"))
-        {
-            float minX = g.transform.position.x - g.transform.localScale.x / 2;
-            float maxX = g.transform.position.x + g.transform.localScale.x / 2;
-            float minZ = g.transform.position.z - g.transform.localScale.y / 2;
-            float maxZ = g.transform.position.z + g.transform.localScale.y / 2;
-            float y = g.transform.position.y;
+        GameObject g = mytrans.GetChild(Random.Range(0, mytrans.childCount)).gameObject; // 랜덤번째 자식을 갖고오기
+        //g.Hole();
+        //print(Random.Range(0, mytrans.childCount));
+        print(g.tag);
+            if (g.CompareTag("Wall"))
+            {
+                float minZ = g.transform.position.z - g.transform.localScale.x / 2;
+                float maxZ = g.transform.position.z + g.transform.localScale.x / 2;
+                float minY = g.transform.position.y - g.transform.localScale.y / 2;
+                float maxY = g.transform.position.y + g.transform.localScale.y / 2;
+                float x = g.transform.position.x;
+                float z = Random.Range(minZ, maxZ);
+                float y = Random.Range(minY, maxY);
+                Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
+            }
+            else if (g.CompareTag("Ceiling"))
+            {
+                float minX = g.transform.position.x - g.transform.localScale.x / 2;
+                float maxX = g.transform.position.x + g.transform.localScale.x / 2;
+                float minZ = g.transform.position.z - g.transform.localScale.y / 2;
+                float maxZ = g.transform.position.z + g.transform.localScale.y / 2;
+                float y = g.transform.position.y;
 
-            float z = Random.Range(minZ, maxZ);
-            float x = Random.Range(minX, maxX);
-            Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
-        }
-        else if (g.CompareTag("Floor"))
-        {
-            float minX = g.transform.position.x - g.transform.localScale.x / 2;
-            float maxX = g.transform.position.x + g.transform.localScale.x / 2;
-            float minZ = g.transform.position.z - g.transform.localScale.y / 2;
-            float maxZ = g.transform.position.z + g.transform.localScale.y / 2;
-            float y = g.transform.position.y;
+                float z = Random.Range(minZ, maxZ);
+                float x = Random.Range(minX, maxX);
+                Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
+            }
+            else if (g.CompareTag("Floor"))
+            {
+                float minX = g.transform.position.x - g.transform.localScale.z / 2;
+                float maxX = g.transform.position.x + g.transform.localScale.z / 2;
+                float minZ = g.transform.position.z - g.transform.localScale.x / 2;
+                float maxZ = g.transform.position.z + g.transform.localScale.x / 2;
+                float y = g.transform.position.y;
 
-            float z = Random.Range(minZ, maxZ);
-            float x = Random.Range(minX, maxX);
-            Instantiate(suri, new Vector3(x, -y, z), Quaternion.identity);
-        }
-        else if (g.CompareTag("Front"))
-        {
-            float minX = g.transform.position.x - g.transform.localScale.x / 2;
-            float maxX = g.transform.position.x + g.transform.localScale.x / 2;
-            float minY = g.transform.position.z - g.transform.localScale.y / 2;
-            float maxY = g.transform.position.z + g.transform.localScale.y / 2;
-            float y = g.transform.position.y;
+                float z = Random.Range(minZ, maxZ);
+                float x = Random.Range(minX, maxX);
+                Instantiate(suri, new Vector3(x, -y, z), Quaternion.identity);
+            }
+            else if (g.CompareTag("Front"))
+            {
+                float minX = g.transform.position.x - g.transform.localScale.x / 2;
+                float maxX = g.transform.position.x + g.transform.localScale.x / 2;
+                float minY = g.transform.position.z - g.transform.localScale.y / 2;
+                float maxY = g.transform.position.z + g.transform.localScale.y / 2;
+                float y = g.transform.position.y;
 
-            float z = Random.Range(minY, maxY);
-            float x = Random.Range(minX, maxX);
-            Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
-        }
-        else if (g.CompareTag("Back"))
-        {
-            float minX = g.transform.position.x - g.transform.localScale.x / 2;
-            float maxX = g.transform.position.x + g.transform.localScale.x / 2;
-            float minY = g.transform.position.z - g.transform.localScale.y / 2;
-            float maxY = g.transform.position.z + g.transform.localScale.y / 2;
-            float y = g.transform.position.y;
+                float z = Random.Range(minY, maxY);
+                float x = Random.Range(minX, maxX);
+                Instantiate(suri, new Vector3(x, y, z), Quaternion.identity);
+            }
+            else if (g.CompareTag("Back"))
+            {
+                float minX = g.transform.position.x - g.transform.localScale.x / 2;
+                float maxX = g.transform.position.x + g.transform.localScale.x / 2;
+                float minY = g.transform.position.y - g.transform.localScale.y / 2;
+                float maxY = g.transform.position.y + g.transform.localScale.y / 2;
+                float y = g.transform.position.y;
 
-            float z = Random.Range(minY, maxY);
-            float x = Random.Range(minX, maxX);
-            Instantiate(suri, new Vector3(x, y, -z), Quaternion.identity);
-        }
+                float z = Random.Range(minY, maxY);
+                float x = Random.Range(minX, maxX);
+                Instantiate(suri, new Vector3(x, y, -z), Quaternion.identity);
+            }
+           
+        
+        
     }
     public void PartHole(int hp)
     {
@@ -132,7 +139,7 @@ public class DamageManager : MonoBehaviour
         hp = Mathf.Clamp(hp, 0, 1000);
         if (hp < 1000 && hp >= 980)
         {
-            SuriBuwi();
+            
         }
         else if (hp < 980 && hp >= 960)
         {

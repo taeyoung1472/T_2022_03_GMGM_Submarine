@@ -2,14 +2,20 @@ using UnityEngine;
 
 public class StorageCtr : Room
 {
+    Transform dd;
     StorageCtr storageCtr;
+    private void Awake()
+    {
+        
+        dd = GetComponent<Transform>();
+        storageCtr = GetComponent<StorageCtr>();
+    }
     void Start()
     {
-        storageCtr = GetComponent<StorageCtr>();
+        DamageManager.Instance.SuriBuwi(dd);
     }
     private void Update()
     {
-        DamageManager.Instance.SuriBuwi();
         DamageManager.Instance.PartHole(hp);
         DamageManager.Instance.FloodHole(storageCtr.id, storageCtr.hp);
         print($"Áö±Ý HP : {storageCtr.id} {storageCtr.hp}");
