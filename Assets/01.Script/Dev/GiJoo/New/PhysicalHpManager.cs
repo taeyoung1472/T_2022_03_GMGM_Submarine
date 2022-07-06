@@ -67,5 +67,9 @@ public class PhysicalHpManager : MonoBehaviour
             yield return new WaitForSeconds(10f);
             player.GetComponent<MentalicHpManager>().GetDamage(1);
         }
+        if(woundInfectionCount == 3)
+        {
+            //상처 괴사 코드 작성
+        }
     }
 }
