@@ -16,8 +16,9 @@ public class RandomPosGetter : MonoBehaviour
         rand = randVec;
     }
 #if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position + pos, size);
         Gizmos.DrawWireSphere(rand, 0.1f);
     }
