@@ -35,10 +35,10 @@ public class PlayerMove_Improve : MonoBehaviour
         }
         transform.eulerAngles = new Vector3(0, x, 0);
     }
-    public void DisableMove(bool isDiable)
+    public void DisableMove(bool isDisable)
     {
-        IsCanMove = isDiable;
-        cc.enabled = isDiable;
+        IsCanMove = isDisable;
+        cc.enabled = isDisable;
     }
     public void Move()
     {
@@ -57,9 +57,8 @@ public class PlayerMove_Improve : MonoBehaviour
         }
         else
         {
-
+            moveDir.y -= 9.8f * Time.deltaTime;
         }
-        moveDir.y -= 9.8f * Time.deltaTime;
         if (Input.GetKey(KeyCode.LeftShift))
         {
             if (isCanRun)

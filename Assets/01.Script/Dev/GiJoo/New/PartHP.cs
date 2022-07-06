@@ -22,7 +22,6 @@ public class PartHP : MonoBehaviour
     public void Start()
     {
         PlayerPartDisplay.Instance.SetPartColor(type, hp);
-        StartCoroutine(WoundInfectionCheck());
     }
     private void Update()
     {
@@ -93,19 +92,6 @@ public class PartHP : MonoBehaviour
                 myInjureType = InjureType.Blackout;
                 HealthStateManager.Instance.Add(type, blackoutInjureData);
                 break;
-        }
-    }
-    public IEnumerator WoundInfectionCheck()
-    {
-        yield return new WaitUntil(() => myInjureType == InjureType.Heavy);
-        while (true)
-        {
-            yield return new WaitForSeconds(120f);
-            heavyInjureData.infectionChance += 10;
-            if (Random.Range(0, 100) <= heavyInjureData.infectionChance)
-            {
-                //상처감염 함수 실행되게 해야함
-            }
         }
     }
 }
