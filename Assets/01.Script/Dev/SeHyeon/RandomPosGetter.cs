@@ -8,12 +8,13 @@ public class RandomPosGetter : MonoBehaviour
     [SerializeField] Vector3 size = Vector3.one;
     Vector3 rand;
     [ContextMenu("AAA")]
-    public void GetRandomPos()
+    public Vector3 GetRandomPos()
     {
         Vector3 ancher = transform.position + pos;
         Vector3 randVec = ancher;
         randVec += new Vector3(Random.Range(-0.5f, 0.5f) * size.x, Random.Range(-0.5f, 0.5f) * size.y, Random.Range(-0.5f, 0.5f) * size.z);
         rand = randVec;
+        return rand;
     }
 #if UNITY_EDITOR
     private void OnDrawGizmos()
