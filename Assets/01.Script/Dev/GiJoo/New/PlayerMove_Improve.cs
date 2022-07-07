@@ -10,12 +10,19 @@ public class PlayerMove_Improve : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private PlayerStateData playerStateData;
     [SerializeField] private PlayerStat playerStat;
+
     private CharacterController cc;
+
     float speed;
+    public float nowSpeed = 1;
+    public float handlingSpeed = 1;
+
     Vector3 moveDir;
+
     bool isCanMove = true;
     public bool isCanRun = true;
     public bool IsCanMove { get { return isCanMove; } set { isCanMove = value; } }
+
     public void Awake()
     {
         cc = GetComponent<CharacterController>();
@@ -63,16 +70,16 @@ public class PlayerMove_Improve : MonoBehaviour
         {
             if (isCanRun)
             {
-                speed = playerStateData.PRSp;//GetComponent<PlayerHealth>().playerRunningSpeedNow;
+                speed = playerStateData.PRSp * nowSpeed;//GetComponent<PlayerHealth>().playerRunningSpeedNow;
             }
             else
             {
-                speed = playerStateData.PSpd;//GetComponent<PlayerHealth>().playerSpeedNow;
+                speed = playerStateData.PSpd * nowSpeed;//GetComponent<PlayerHealth>().playerSpeedNow;
             }
         }
         else
         {
-            speed = playerStateData.PSpd;//GetComponent<PlayerHealth>().playerSpeedNow;
+            speed = playerStateData.PSpd * nowSpeed;//GetComponent<PlayerHealth>().playerSpeedNow;
         }
         cc.Move(moveDir * Time.deltaTime * speed * playerStat.MoveSpeedFixValue);
     }

@@ -8,6 +8,7 @@ public class PhysicalHpManager : MonoBehaviour
     [SerializeField] private GameObject player;
     
     private PlayerStateData playerSO;
+    private PlayerMove_Improve playerMove;
 
     int woundInfectionCount = 0;
     float percent = 0;
@@ -16,6 +17,7 @@ public class PhysicalHpManager : MonoBehaviour
 
     public void Start()
     {
+        playerMove = player.GetComponent<PlayerMove_Improve>();
         StartCoroutine(HurtSystem());
     }
     private IEnumerator HurtSystem()
@@ -51,17 +53,16 @@ public class PhysicalHpManager : MonoBehaviour
             percent = 0;
         }
     }
-    void WoundInfection()
+    void WoundInfection(HealthStateDataSO data)
     {
         IsWound = true;
         woundInfectionCount++;
-        StartCoroutine(WoundInfectionStep());
+        StartCoroutine(WoundInfectionStep(data));
     }
-    private IEnumerator WoundInfectionStep()
+    private IEnumerator WoundInfectionStep(HealthStateDataSO data)
     {
-        playerSO.PSpd -= 0.05f;
-        playerSO.PRSp -= 0.05f;
-        playerSO.PMHS -= 0.05f;
+        playerMove.nowSpeed -= 0.05f;
+        playerMove.handlingSpeed -= 0.05f;
         while(woundInfectionCount == 2)
         {
             yield return new WaitForSeconds(10f);
@@ -69,7 +70,14 @@ public class PhysicalHpManager : MonoBehaviour
         }
         if(woundInfectionCount == 3)
         {
-            //상처 괴사 코드 작성
+            playerSO.PRSp *= 0.9f;
+            playerSO.PSpd *= 0.9f;
+            playerSO.PMHS *= 0.9f;
         }
+    }
+    public void SimpleOperation()
+    {
+        woundInfectionCount = 0;
+
     }
 }
