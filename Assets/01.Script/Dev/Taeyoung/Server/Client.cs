@@ -17,7 +17,8 @@ public class Client : MonoBehaviour
 
     private bool isConnected = false;
     private delegate void PacketHandler(Packet _packet);
-    private static Dictionary<int, PacketHandler> packetHandlers;
+    private static Dictionary<int, PacketHandler> packetHandlers = new Dictionary<int, PacketHandler>();
+    public Dictionary<int, Enemy_Network> enemies = new Dictionary<int, Enemy_Network>();
 
     private void Awake()
     {
@@ -255,12 +256,16 @@ public class Client : MonoBehaviour
             { (int)ServerPackets.playerPositionAndRotation, ClientManager.PlayerPositionAndRotation},
             { (int)ServerPackets.mapPositionAndRotation, ClientManager.MapPositionAndRotation},
             { (int)ServerPackets.playerDisconnected, ClientManager.PlayerDisconnected},
+            { (int)ServerPackets.playerConnected, ClientManager.PlayerConnected},
             { (int)ServerPackets.textSended, ClientManager.TextSended},
             { (int)ServerPackets.audioSended, ClientManager.AudioSended},
             { (int)ServerPackets.networkPosition, ClientManager.NetworkPosition },
             { (int)ServerPackets.networkRotation, ClientManager.NetworkRotation },
             { (int)ServerPackets.networkTransformInit, ClientManager.NetworkTransformInit },
             { (int)ServerPackets.sync, ClientManager.Sync },
+            { (int)ServerPackets.enemySpawn, ClientManager.SpawnEnemy },
+            { (int)ServerPackets.enemyPositionAndRotation, ClientManager.EnemyPosAndRot },
+            { (int)ServerPackets.enemyAction, ClientManager.EnemyAction },
         };
         Debug.Log("패킷 초기설정 완료");
     }

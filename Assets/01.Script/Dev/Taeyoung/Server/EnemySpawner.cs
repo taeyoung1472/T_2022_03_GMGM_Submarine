@@ -13,8 +13,9 @@ public class EnemySpawner : MonoBehaviour
             instance = this;
         }
     }
-    public void SpawnEnemy(int id, Vector3 pos)
+    public void SpawnEnemy(int id, Vector3 pos, Quaternion rot)
     {
-        Instantiate(enemy, pos, Quaternion.identity).GetComponent<Enemy_Network>().Initialize(id);
+        Enemy_Network e = Instantiate(enemy, pos, Quaternion.identity).GetComponent<Enemy_Network>();
+        Client.Instance.enemies.Add(id, e);
     }
 }

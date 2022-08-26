@@ -5,35 +5,50 @@ using UnityEngine;
 
 /// <summary>Sent from server to client.</summary>
 public enum ServerPackets
-{//asdasdasd
+{
+    /*기본*/
     welcome = 1,
-    //slobby_Update,
+    /*플레이어*/
     spawnPlayer,
     playerPositionAndRotation,
-    mapPositionAndRotation,
     playerDisconnected,
-    textSended,
-    audioSended,
+    playerConnected,
+    /*적*/
+    enemySpawn,
+    enemyPositionAndRotation,
+    enemyAction,
+    /*공용*/
+    mapPositionAndRotation,
     networkPosition,
     networkRotation,
+    audioSended,
+    textSended,
+    gameStart,
+    /*로비*/
+    lobbyDataSend,
+    /*싱크*/
     networkTransformInit,
     sync,
 }
 
 /// <summary>Sent from client to server.</summary>
 public enum ClientPackets
-{//assdasdad
+{
+    /*기본*/
     welcomeReceived = 1,
-    //lobby_Ready,
-    //lobby_Start,
-    succesToLoadGameScene,
+    /*플레이어*/
     playerMovement,
-    requestSpawnAgain,
     handlePlayerMove,
-    submarineMovement,
+    /*적*/
+    enemyHit,
+    /*공용*/
     textSend,
     audioSend,
+    /*잠수함*/
     controll,
+    submarineMovement,
+    /*싱크*/
+    requestSpawnAgain,
     sync,
 }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 public class ClientManager : MonoBehaviour
 {
+    #region 기본
     public static void Welcome(Packet _packet)
     {
         string _msg = _packet.ReadString();
@@ -17,6 +18,9 @@ public class ClientManager : MonoBehaviour
 
         Client.Instance.udp.Connect(((IPEndPoint)Client.Instance.tcp.socket.Client.LocalEndPoint).Port);
     }
+    #endregion
+
+    #region 플레이어
     public static void SpawnPlayer(Packet _packet)
     {
         int _id = _packet.ReadInt();
@@ -63,6 +67,47 @@ public class ClientManager : MonoBehaviour
             ClientSend.RequestSpawnAgain(_id);
         }
     }
+    public static void PlayerDisconnected(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        Destroy(GameManager_Network.players[_id].gameObject);
+        GameManager_Network.players.Remove(_id);
+    }
+    public static void PlayerConnected(Packet _packet)
+    {
+        int _id = _packet.ReadInt();
+
+        LobbyManager.instance.PlayerConnected(_id);
+    }
+    #endregion
+
+    #region 적
+    public static void SpawnEnemy(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 pos = packet.ReadVector3();
+        Quaternion rot = packet.ReadQuaternion();
+
+        EnemySpawner.instance.SpawnEnemy(id, pos, rot);
+    }
+    public static void EnemyPosAndRot(Packet packet)
+    {
+        int id = packet.ReadInt();
+        Vector3 pos = packet.ReadVector3();
+        Quaternion rot = packet.ReadQuaternion();
+
+        Client.Instance.enemies[id].transform.SetPositionAndRotation(pos, rot);
+    }
+    public static void EnemyAction(Packet packet)
+    {
+        int id = packet.ReadInt();
+
+        print($"Enemy가 행동함(ID : {id})");
+    }
+    #endregion
+
+    #region 공용
     public static void MapPositionAndRotation(Packet _packet)
     {
         try
@@ -76,13 +121,6 @@ public class ClientManager : MonoBehaviour
         {
             Debug.Log(ex);
         }
-    }
-    public static void PlayerDisconnected(Packet _packet)
-    {
-        int _id = _packet.ReadInt();
-
-        Destroy(GameManager_Network.players[_id].gameObject);
-        GameManager_Network.players.Remove(_id);
     }
     public static void TextSended(Packet packet)
     {
@@ -115,6 +153,13 @@ public class ClientManager : MonoBehaviour
         }
         catch { /*아직 초기화(Init)이 되지 않은상황*/}
     }
+    #endregion
+
+    #region 잠수함
+
+    #endregion
+
+    #region 싱크
     public static void NetworkTransformInit(Packet packet)
     {
         GameManager_Network.Instance.InitNetworkTransform(packet.ReadInt(), packet.ReadString());
@@ -123,4 +168,11 @@ public class ClientManager : MonoBehaviour
     {
         SyncManager.instance.Sync(packet);
     }
+    #endregion
 }
+/*  
+    public static void Welcome(Packet _packet)
+    {
+        //해야하일
+    }
+*/
